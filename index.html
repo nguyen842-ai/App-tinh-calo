@@ -79,9 +79,7 @@
         /* HEADER TRAVEL ADVENTURE THUẦN TÚY */
         /* ---------------------------------------------------- */
         #main-app { display: none; } 
-        .main-header {
-            padding: 30px 0 15px 0; text-align: left;
-        }
+        .main-header { padding: 30px 0 15px 0; text-align: left; }
         .header-subtitle { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.8); font-weight: 700; margin-bottom: 5px;}
         .header-title { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.5); line-height: 1.2; margin-bottom: 5px;}
         .header-desc { font-size: 14px; color: rgba(255,255,255,0.95); text-shadow: 0 1px 5px rgba(0,0,0,0.6); font-style: italic; font-weight: 500;}
@@ -98,11 +96,9 @@
         .goal-header span:last-child { font-weight: 900; color: var(--iris-bloom); font-size: 18px; }
         .goal-bar-bg { width: 100%; height: 8px; background: rgba(0,0,0,0.1); border-radius: 4px; position: relative; overflow: visible; }
         .goal-bar-fill { 
-            height: 100%; border-radius: 4px; 
-            background: linear-gradient(90deg, var(--iris-bloom), var(--malibu-blue)); 
+            height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--iris-bloom), var(--malibu-blue)); 
             transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s; position: relative;
         }
-        /* Dấu chấm phát sáng đầu thanh trượt */
         .goal-bar-fill::after {
             content: ''; position: absolute; right: -4px; top: -2px; width: 12px; height: 12px; 
             background: white; border-radius: 50%; box-shadow: 0 0 8px rgba(255,255,255,0.9);
@@ -113,8 +109,7 @@
         /* 3 Ô TRẠNG THÁI (Kính mờ 50%) */
         .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 25px; }
         .card { 
-            padding: 15px 10px; text-align: center; 
-            background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 15px 10px; text-align: center; background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
         .card h3 { font-size: 12px; text-transform: uppercase; margin-bottom: 5px; color: var(--deep-purple); text-shadow: 0 1px 3px rgba(255,255,255,0.8); font-weight: 800;}
@@ -124,8 +119,7 @@
         .hp-container { margin-bottom: 30px; text-align: center; }
         .hp-labels { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.9); text-shadow: 0 1px 3px rgba(0,0,0,0.8); margin-bottom: 6px; letter-spacing: 0.5px;}
         .hp-bar-wrapper {
-            width: 100%; height: 16px; background: rgba(0,0,0,0.4); border-radius: 8px;
-            border: 1.5px solid rgba(255,255,255,0.5); position: relative; overflow: hidden; display: flex; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            width: 100%; height: 16px; background: rgba(0,0,0,0.4); border-radius: 8px; border: 1.5px solid rgba(255,255,255,0.5); position: relative; overflow: hidden; display: flex; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
         .hp-in { background: var(--bleu-ciel); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .hp-out { background: var(--malibu-blue); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -140,7 +134,6 @@
             background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.6); padding: 22px; border-radius: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 25px;
         }
-
         .section h2, .section h3 { font-size: 18px; margin-bottom: 15px; color: var(--deep-purple); font-weight: 800;}
         .section h2 { padding-bottom: 10px; border-bottom: 1px solid rgba(91,69,167,0.15); }
         
@@ -160,7 +153,6 @@
         button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         
         .btn-ai-calc { white-space: nowrap; font-size: 13px; background: var(--malibu-blue); }
-
         .ai-camera-btn { 
             display: block; width: 100%; text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.4); 
             border: 2px dashed var(--iris-bloom); color: var(--iris-bloom); border-radius: 16px; 
@@ -245,8 +237,19 @@
         .widget-main { font-size: 24px; font-weight: 900; margin-bottom: 2px;}
         .widget-sub { font-size: 12px; opacity: 0.9; }
         
-        .countdown-box { text-align: center; background: rgba(255,255,255,0.6); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.6);}
-        .countdown-days { font-size: 36px; font-weight: 900; color: var(--iris-bloom); line-height: 1;}
+        /* DANH SÁCH SỰ KIỆN ĐẾM NGƯỢC (GRID 2 CỘT) */
+        .countdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
+        .countdown-card { 
+            background: rgba(255,255,255,0.6); padding: 15px; border-radius: 20px; 
+            border: 1px solid rgba(255,255,255,0.6); text-align: center; position: relative;
+        }
+        .countdown-card .cd-title { font-size: 11px; font-weight: 800; color: var(--darkest-purple); text-transform: uppercase; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .countdown-card .cd-days { font-size: 28px; font-weight: 900; color: var(--iris-bloom); line-height: 1; margin: 5px 0;}
+        .countdown-card .cd-label { font-size: 10px; font-weight: 800; color: var(--darkest-purple); margin-top: 2px; }
+        .countdown-card .cd-delete {
+            position: absolute; top: 5px; right: 5px; background: none; border: none; color: var(--red); font-size: 18px; cursor: pointer; padding: 0; line-height: 1; box-shadow: none; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 50%;
+        }
+        .countdown-card .cd-delete:hover { background: rgba(231,76,60,0.1); transform: scale(1.1); }
     </style>
 </head>
 <body>
@@ -442,19 +445,18 @@
                 </div>
             </div>
 
-            <!-- Đếm ngược -->
+            <!-- Nhiều sự kiện Đếm ngược -->
             <div class="section">
                 <h3>Đếm ngược Sự kiện</h3>
                 <form class="form-group" id="countdown-form" style="margin-top: 15px;">
-                    <input type="text" id="cd-title" placeholder="Tên sự kiện (VD: Chuyến đi Đà Lạt)" required>
+                    <input type="text" id="cd-title" placeholder="Tên sự kiện (VD: Sinh nhật)" required>
                     <input type="date" id="cd-date" required>
-                    <button type="submit" style="background: var(--malibu-blue);">Lưu Sự Kiện</button>
+                    <button type="submit" style="background: var(--malibu-blue);">Thêm Sự Kiện</button>
                 </form>
-                <div class="countdown-box" id="cd-display" style="display: none; margin-top: 15px;">
-                    <div class="widget-title" id="cd-display-title" style="color: var(--darkest-purple);">Đang đếm ngược...</div>
-                    <div class="countdown-days" id="cd-display-days">0</div>
-                    <div class="widget-sub" style="color: var(--darkest-purple); font-weight: bold; margin-top: 5px;">NGÀY NỮA</div>
-                    <button onclick="clearCountdown()" style="margin-top:15px; padding: 10px; font-size: 12px; font-weight: bold; background: transparent; color: var(--red); border: 2px solid var(--red); border-radius: 12px; width: 100%;">Xóa sự kiện</button>
+                
+                <!-- Bảng ghim danh sách sự kiện (Grid 2 cột) -->
+                <div id="countdown-list" class="countdown-grid">
+                    <!-- Javascript sẽ vẽ các thẻ sự kiện vào đây -->
                 </div>
             </div>
 
@@ -581,7 +583,7 @@
 
     // Xử lý Tên người dùng và Lời chào
     function updateHeaderInfo() {
-        const name = currentUser?.user_metadata?.display_name || "bạn";
+        const name = currentUser?.user_metadata?.display_name || "Bạn";
         document.getElementById('greeting-name').innerText = `Xin chào, ${name} 👋`;
         document.getElementById('prof-name-input').value = currentUser?.user_metadata?.display_name || "";
 
@@ -748,7 +750,7 @@
     async function deleteLog(logId) { await supabaseClient.from('daily_logs').delete().eq('id', logId); loadDataForSelectedDate(); }
 
     // ---------------------------------------------------------------------
-    // 5. CHỨC NĂNG DASHBOARD HỒ SƠ 
+    // 5. CHỨC NĂNG DASHBOARD HỒ SƠ & NHIỀU COUNTDOWN
     // ---------------------------------------------------------------------
     function saveMood(index, btnElem) {
         document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
@@ -775,7 +777,7 @@
             async (pos) => fetchWeather(pos.coords.latitude, pos.coords.longitude),
             () => fetchWeather(10.7626, 106.6602) 
         );
-        loadCountdown();
+        loadCountdowns();
     }
 
     async function fetchWeather(lat, lon) {
@@ -790,26 +792,64 @@
         } catch(e) {}
     }
 
+    // Logic Quản lý Nhiều Sự kiện Đếm ngược
     document.getElementById('countdown-form').addEventListener('submit', function(e){
         e.preventDefault();
         const title = document.getElementById('cd-title').value, date = document.getElementById('cd-date').value;
-        localStorage.setItem(`cd_${currentUser.id}`, JSON.stringify({title, date}));
-        loadCountdown(); this.reset();
+        let savedList = JSON.parse(localStorage.getItem(`cd_list_${currentUser.id}`)) || [];
+        
+        if(savedList.length >= 4) {
+            alert("Bạn chỉ nên tạo tối đa 4 sự kiện để giao diện gọn gàng nhất!");
+            return;
+        }
+        
+        savedList.push({title, date});
+        localStorage.setItem(`cd_list_${currentUser.id}`, JSON.stringify(savedList));
+        loadCountdowns(); this.reset();
     });
 
-    function loadCountdown() {
-        const saved = JSON.parse(localStorage.getItem(`cd_${currentUser?.id}`));
-        if(saved && saved.date) {
-            const diffTime = Math.abs(new Date(saved.date) - new Date());
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            document.getElementById('cd-display-title').innerText = saved.title;
-            document.getElementById('cd-display-days').innerText = diffDays;
-            document.getElementById('cd-display').style.display = 'block'; document.getElementById('countdown-form').style.display = 'none';
-        } else {
-            document.getElementById('cd-display').style.display = 'none'; document.getElementById('countdown-form').style.display = 'block';
+    function loadCountdowns() {
+        const listElem = document.getElementById('countdown-list');
+        listElem.innerHTML = '';
+        let savedList = JSON.parse(localStorage.getItem(`cd_list_${currentUser?.id}`)) || [];
+        
+        // Cập nhật mượt mà dữ liệu từ phiên bản 1 sự kiện cũ (nếu có)
+        const oldSingle = JSON.parse(localStorage.getItem(`cd_${currentUser?.id}`));
+        if(oldSingle && oldSingle.date && savedList.length === 0) {
+            savedList.push(oldSingle);
+            localStorage.removeItem(`cd_${currentUser?.id}`);
+            localStorage.setItem(`cd_list_${currentUser?.id}`, JSON.stringify(savedList));
         }
+
+        if(savedList.length === 0) {
+            listElem.innerHTML = '<p style="grid-column: span 2; font-size: 13px; color: var(--text-muted); text-align: center; font-style: italic;">Chưa có sự kiện nào được ghim.</p>';
+            return;
+        }
+
+        savedList.forEach((item, index) => {
+            // So sánh đúng ngày (bỏ qua khác biệt giờ giấc)
+            const diffTime = new Date(item.date).setHours(0,0,0,0) - new Date().setHours(0,0,0,0);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const displayDays = Math.abs(diffDays);
+            const labelText = diffDays > 0 ? 'NGÀY NỮA' : (diffDays < 0 ? 'NGÀY TRƯỚC' : 'HÔM NAY');
+            
+            listElem.innerHTML += `
+                <div class="countdown-card">
+                    <button type="button" class="cd-delete" onclick="deleteCountdown(${index})">×</button>
+                    <div class="cd-title" title="${item.title}">${item.title}</div>
+                    <div class="cd-days">${displayDays}</div>
+                    <div class="cd-label">${labelText}</div>
+                </div>
+            `;
+        });
     }
-    function clearCountdown() { localStorage.removeItem(`cd_${currentUser.id}`); loadCountdown(); }
+
+    function deleteCountdown(index) { 
+        let savedList = JSON.parse(localStorage.getItem(`cd_list_${currentUser?.id}`)) || [];
+        savedList.splice(index, 1);
+        localStorage.setItem(`cd_list_${currentUser?.id}`, JSON.stringify(savedList));
+        loadCountdowns(); 
+    }
 
     // Gọi API Vercel Nhận diện ảnh
     document.getElementById('camera-input').addEventListener('change', function(e) {
