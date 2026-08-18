@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-    // --- BẮT ĐẦU PHẦN CẤU HÌNH LỖI CORS ---
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*'); 
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -9,7 +8,6 @@ export default async function handler(req, res) {
         res.status(200).end();
         return;
     }
-    // --- KẾT THÚC PHẦN CẤU HÌNH CORS ---
 
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Chỉ chấp nhận phương thức POST' });
@@ -30,14 +28,14 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: 'Không tìm thấy dữ liệu hình ảnh' });
         }
 
-        // --- ĐÃ CẬP NHẬT LÊN GEMINI 3.5 ---
         const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${API_KEY}`;
         
         const payload = {
             contents: [{
                 parts: [
                     { 
-                        text: "Bạn là một chuyên gia dinh dưỡng. Hãy nhìn hình ảnh này và cho biết đây là món ăn gì. Bạn PHẢI trả về kết quả theo đúng định dạng JSON sau, tuyệt đối không kèm theo bất kỳ đoạn văn bản hay ký tự nào khác: {\"name\": \"Tên món ăn (tiếng Việt)\", \"cal\": Số_calo_ước_tính_để_trống_chỉ_ghi_số}" 
+                        // ĐÂY LÀ ĐOẠN ĐƯỢC NÂNG CẤP
+                        text: "Bạn là một chuyên gia dinh dưỡng. Hãy nhìn ảnh này và phân tích món ăn. TRẢ VỀ ĐÚNG ĐỊNH DẠNG JSON NÀY, không kèm văn bản khác: {\"name\": \"Tên món\", \"cal\": Số_calo, \"protein\": Số_gram_đạm, \"carbs\": Số_gram_tinh_bột, \"fat\": Số_gram_chất_béo}" 
                     },
                     { 
                         inline_data: { mime_type: "image/jpeg", data: imageBase64 } 
