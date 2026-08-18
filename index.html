@@ -3,78 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Theo Dõi Calo & Tập Luyện</title>
+    <title>Theo Dõi Calo & Lượng Chất</title>
     <style>
         :root {
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-main: #333333;
-            --text-muted: #7f8c8d;
-            --green: #2ecc71;
-            --orange: #e67e22;
-            --blue: #3498db;
-            --border: #e0e0e0;
+            --bg-color: #f4f7f6; --card-bg: #ffffff; --text-main: #333333; --text-muted: #7f8c8d;
+            --green: #2ecc71; --orange: #e67e22; --blue: #3498db; --red: #e74c3c; --border: #e0e0e0;
         }
-
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
         body { background: var(--bg-color); color: var(--text-main); padding: 20px; line-height: 1.6; }
         .container { max-width: 900px; margin: 0 auto; }
+        h1 { text-align: center; margin-bottom: 20px; color: #2c3e50; }
         
-        h1 { text-align: center; margin-bottom: 30px; color: #2c3e50; }
-
-        /* Summary Cards */
-        .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px; }
         .card { padding: 20px; border-radius: 12px; text-align: center; color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .card h3 { font-size: 14px; text-transform: uppercase; margin-bottom: 10px; opacity: 0.9; }
         .card p { font-size: 28px; font-weight: bold; }
-        .card.in { background: var(--green); }
-        .card.out { background: var(--orange); }
-        .card.net { background: var(--blue); }
+        .card.in { background: var(--green); } .card.out { background: var(--orange); } .card.net { background: var(--blue); }
+        
+        /* Box hiển thị Macros mới */
+        .macros-summary { display: flex; justify-content: space-around; background: white; padding: 15px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center;}
+        .macro-item span { display: block; font-size: 12px; color: var(--text-muted); text-transform: uppercase; font-weight: bold;}
+        .macro-item strong { font-size: 18px; color: var(--text-main); }
+        .macro-p strong { color: var(--red); } .macro-c strong { color: var(--blue); } .macro-f strong { color: var(--orange); }
 
-        /* Main Grid */
         .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
         @media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } }
-
-        /* Sections */
         .section { background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .section h2 { font-size: 18px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
-
-        /* Forms */
-        .form-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
-        input { padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; outline: none; }
-        input:focus { border-color: var(--blue); }
         
+        .form-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+        .macro-inputs { display: flex; gap: 10px; }
+        input { padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; outline: none; width: 100%; }
+        input:focus { border-color: var(--blue); }
         button { padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: white; transition: 0.2s; }
         button:hover { opacity: 0.9; }
-        .btn-add-food { background: var(--green); }
-        .btn-add-workout { background: var(--orange); }
-
-        /* Camera Button */
-        .ai-camera-btn { 
-            display: block; width: 100%; text-align: center; padding: 15px; 
-            background: #f8f9fa; border: 2px dashed var(--blue); color: var(--blue); 
-            border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 15px;
-            transition: all 0.2s;
-        }
+        .btn-add-food { background: var(--green); } .btn-add-workout { background: var(--orange); }
+        
+        .ai-camera-btn { display: block; width: 100%; text-align: center; padding: 15px; background: #f8f9fa; border: 2px dashed var(--blue); color: var(--blue); border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 15px; transition: all 0.2s; }
         .ai-camera-btn:hover { background: #eef2f5; }
         input[type="file"] { display: none; }
         #ai-status { font-size: 13px; color: var(--text-muted); text-align: center; margin-bottom: 15px; display: none; }
 
-        /* Lists */
         .list-header { font-weight: bold; font-size: 14px; color: var(--text-muted); margin-bottom: 10px; }
         ul { list-style: none; max-height: 250px; overflow-y: auto; }
-        li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
-        li:last-child { border-bottom: none; }
+        li { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+        .item-details span { display: block; }
+        .item-macros { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
         .del-btn { color: #e74c3c; cursor: pointer; font-weight: bold; margin-left: 10px; font-size: 16px; border: none; background: none; padding: 0;}
-
-        /* Footer */
-        .footer { text-align: center; margin-top: 30px; font-size: 13px; color: var(--text-muted); }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Theo Dõi Calo & Tập Luyện</h1>
+    <h1>Theo Dõi Calo & Lượng Chất</h1>
 
     <div class="summary">
         <div class="card in"><h3>Nạp vào</h3><p id="total-in">0 kcal</p></div>
@@ -82,21 +63,28 @@
         <div class="card net"><h3>Thực nhận</h3><p id="total-net">0 kcal</p></div>
     </div>
 
+    <!-- BẢNG HIỂN THỊ MACROS MỚI -->
+    <div class="macros-summary">
+        <div class="macro-item macro-p"><span>Protein</span><strong id="total-protein">0g</strong></div>
+        <div class="macro-item macro-c"><span>Carbs</span><strong id="total-carbs">0g</strong></div>
+        <div class="macro-item macro-f"><span>Fat</span><strong id="total-fat">0g</strong></div>
+    </div>
+
     <div class="main-grid">
-        <!-- Khu vực Ăn uống -->
         <div class="section">
             <h2>Nhật ký ăn uống</h2>
-            
-            <!-- Nút gọi AI -->
-            <label class="ai-camera-btn" for="camera-input">
-                📷 CHỤP ẢNH ĐỒ ĂN (AI Phân tích)
-            </label>
+            <label class="ai-camera-btn" for="camera-input">📷 CHỤP ẢNH ĐỒ ĂN (AI Phân tích)</label>
             <input type="file" id="camera-input" accept="image/*" capture="environment">
             <div id="ai-status">⏳ Đang gửi ảnh lên trạm AI...</div>
 
             <form class="form-group" id="food-form">
                 <input type="text" id="food-name" placeholder="Tên món ăn (VD: Phở bò)" required>
                 <input type="number" id="food-cal" placeholder="Số calo (kcal)" required>
+                <div class="macro-inputs">
+                    <input type="number" id="food-p" placeholder="Đạm (g)">
+                    <input type="number" id="food-c" placeholder="Tinh bột (g)">
+                    <input type="number" id="food-f" placeholder="Béo (g)">
+                </div>
                 <button type="submit" class="btn-add-food">Thêm món ăn</button>
             </form>
 
@@ -104,7 +92,6 @@
             <ul id="food-list"></ul>
         </div>
 
-        <!-- Khu vực Tập luyện -->
         <div class="section">
             <h2>Kế hoạch tập luyện</h2>
             <form class="form-group" id="workout-form">
@@ -112,79 +99,64 @@
                 <input type="number" id="workout-cal" placeholder="Calo tiêu hao (kcal)" required>
                 <button type="submit" class="btn-add-workout">Thêm bài tập</button>
             </form>
-
             <div class="list-header">Danh sách đã tập</div>
             <ul id="workout-list"></ul>
         </div>
     </div>
-
-    <div class="footer">
-        💾 Dữ liệu được lưu trữ an toàn trong LocalStorage trên thiết bị của bạn.
-    </div>
 </div>
 
 <script>
-    // 1. KHỞI TẠO DỮ LIỆU
     let foods = JSON.parse(localStorage.getItem('foods')) || [];
     let workouts = JSON.parse(localStorage.getItem('workouts')) || [];
 
-    // 2. XỬ LÝ FORM THÊM MÓN ĂN & BÀI TẬP
     document.getElementById('food-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const name = document.getElementById('food-name').value;
-        const cal = parseInt(document.getElementById('food-cal').value);
+        const cal = parseInt(document.getElementById('food-cal').value) || 0;
+        const p = parseInt(document.getElementById('food-p').value) || 0;
+        const c = parseInt(document.getElementById('food-c').value) || 0;
+        const f = parseInt(document.getElementById('food-f').value) || 0;
         
-        foods.push({ id: Date.now(), name, cal });
-        saveData();
-        updateUI();
-        this.reset();
-        document.getElementById('ai-status').style.display = 'none'; // Ẩn thông báo AI nếu có
+        foods.push({ id: Date.now(), name, cal, p, c, f });
+        saveData(); updateUI(); this.reset();
+        document.getElementById('ai-status').style.display = 'none';
     });
 
     document.getElementById('workout-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const name = document.getElementById('workout-name').value;
         const cal = parseInt(document.getElementById('workout-cal').value);
-        
         workouts.push({ id: Date.now(), name, cal });
-        saveData();
-        updateUI();
-        this.reset();
+        saveData(); updateUI(); this.reset();
     });
 
-    // 3. XÓA MỤC
     function deleteItem(type, id) {
-        if (type === 'food') {
-            foods = foods.filter(item => item.id !== id);
-        } else {
-            workouts = workouts.filter(item => item.id !== id);
-        }
-        saveData();
-        updateUI();
+        if (type === 'food') foods = foods.filter(item => item.id !== id);
+        else workouts = workouts.filter(item => item.id !== id);
+        saveData(); updateUI();
     }
 
-    // 4. LƯU DỮ LIỆU LOCALSTORAGE
     function saveData() {
         localStorage.setItem('foods', JSON.stringify(foods));
         localStorage.setItem('workouts', JSON.stringify(workouts));
     }
 
-    // 5. CẬP NHẬT GIAO DIỆN
     function updateUI() {
         const foodListElement = document.getElementById('food-list');
         const workoutListElement = document.getElementById('workout-list');
+        foodListElement.innerHTML = ''; workoutListElement.innerHTML = '';
         
-        foodListElement.innerHTML = '';
-        workoutListElement.innerHTML = '';
-        
-        let totalIn = 0;
-        let totalOut = 0;
+        let totalIn = 0, totalOut = 0, totalP = 0, totalC = 0, totalF = 0;
 
         foods.forEach(food => {
             totalIn += food.cal;
+            totalP += food.p || 0; totalC += food.c || 0; totalF += food.f || 0;
             foodListElement.innerHTML += `
                 <li>
-                    <span>${food.name}</span>
+                    <div class="item-details">
+                        <span>${food.name}</span>
+                        <div class="item-macros">P: ${food.p||0}g | C: ${food.c||0}g | F: ${food.f||0}g</div>
+                    </div>
                     <div>
                         <strong>+${food.cal} kcal</strong>
                         <button class="del-btn" onclick="deleteItem('food', ${food.id})">×</button>
@@ -197,19 +169,18 @@
             workoutListElement.innerHTML += `
                 <li>
                     <span>${workout.name}</span>
-                    <div>
-                        <strong>-${workout.cal} kcal</strong>
-                        <button class="del-btn" onclick="deleteItem('workout', ${workout.id})">×</button>
-                    </div>
+                    <div><strong>-${workout.cal} kcal</strong><button class="del-btn" onclick="deleteItem('workout', ${workout.id})">×</button></div>
                 </li>`;
         });
 
         document.getElementById('total-in').innerText = `${totalIn} kcal`;
         document.getElementById('total-out').innerText = `${totalOut} kcal`;
         document.getElementById('total-net').innerText = `${totalIn - totalOut} kcal`;
+        document.getElementById('total-protein').innerText = `${totalP}g`;
+        document.getElementById('total-carbs').innerText = `${totalC}g`;
+        document.getElementById('total-fat').innerText = `${totalF}g`;
     }
 
-    // 6. XỬ LÝ ẢNH & GỌI API VERCEL (SERVERLESS)
     document.getElementById('camera-input').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -220,11 +191,9 @@
 
         const reader = new FileReader();
         reader.onloadend = async function() {
-            // Lấy chuỗi base64 (bỏ phần header data:image/jpeg;base64,)
             const base64String = reader.result.split(',')[1]; 
-
             try {
-                // Gọi tới Vercel Serverless Function của bạn
+                // Sửa lại đường dẫn Vercel của bạn nếu đang chạy trên GitHub Pages
                 const response = await fetch('https://app-tinh-calo.vercel.app/api/analyze', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -232,32 +201,26 @@
                 });
 
                 const data = await response.json();
-
                 if (data.name && data.cal) {
-                    // Tự động điền dữ liệu nhận diện được vào ô input
                     document.getElementById('food-name').value = data.name;
                     document.getElementById('food-cal').value = data.cal;
+                    document.getElementById('food-p').value = data.protein || 0;
+                    document.getElementById('food-c').value = data.carbs || 0;
+                    document.getElementById('food-f').value = data.fat || 0;
                     statusNode.innerText = '✅ Phân tích xong! Vui lòng bấm "Thêm món ăn"';
                 } else {
                     statusNode.innerText = '❌ AI không nhận diện được món ăn.';
                 }
             } catch (error) {
-                console.error(error);
                 statusNode.innerText = '❌ Lỗi kết nối đến máy chủ AI!';
             }
-            
-            // Xóa file input để có thể chụp lại ảnh khác nếu cần
             e.target.value = ""; 
         };
-        
-        // Đọc file ảnh dưới dạng Data URL (Base64)
         reader.readAsDataURL(file);
     });
 
-    // Chạy render lần đầu
     updateUI();
 </script>
 
 </body>
 </html>
-
