@@ -9,6 +9,7 @@
     <meta name="theme-color" content="#5B45A7">
     <link rel="apple-touch-icon" href="./my-logo.png">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <!-- SUPABASE & LUNAR CALENDAR API -->
@@ -32,30 +33,52 @@
         
         * { box-sizing: border-box; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent;}
         
+        /* ---------------------------------------------------- */
+        /* FIX BOUNCE EFFECT IOS (TỪ ẢNH HƯỚNG DẪN) */
+        /* ---------------------------------------------------- */
         html, body {
+            position: fixed;
+            width: 100%;
             height: 100%;
-            overscroll-behavior-y: none; 
+            overflow: hidden; /* Khóa cuộn trang tổng */
         }
 
         body { 
             color: var(--text-main); 
             line-height: 1.6; 
-            overflow-x: hidden;
             background-color: var(--darkest-purple);
+            -webkit-user-select: none;    /* Chống bôi đen text */
+            -webkit-touch-callout: none;  /* Chống menu popup khi đè lâu */
         }
 
-        /* LỚP NỀN CỐ ĐỊNH */
+        /* Ngoại lệ: Cho phép bôi đen & gõ chữ trong ô nhập liệu */
+        input, select, textarea {
+            -webkit-user-select: auto;
+            user-select: auto;
+        }
+
         #bg-layer {
             position: fixed; 
-            top: -10px; bottom: -10px; left: -10px; right: -10px; 
-            background-size: cover; background-position: center;
-            z-index: -1; transition: background-image 0.8s ease-in-out;
+            top: 0; bottom: 0; left: 0; right: 0; 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -1; 
+            transition: background-image 0.8s ease-in-out;
         }
         
+        /* Khung chứa nội dung tự cuộn độc lập */
         .container { 
-            max-width: 900px; margin: 0 auto; 
-            padding: 0 20px 90px 20px; 
-            min-height: 100vh;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            /* Chừa không gian cho Thanh Bottom Nav (khoảng 60px + vùng an toàn iPhone) */
+            bottom: calc(65px + env(safe-area-inset-bottom)); 
+            width: 100%; 
+            max-width: 900px; 
+            margin: 0 auto; 
+            overflow-y: auto; /* Chỉ cuộn khu vực này */
+            -webkit-overflow-scrolling: touch; /* Mượt mà trên iOS */
+            padding: 0 20px 20px 20px; 
         }
 
         /* ---------------------------------------------------- */
@@ -114,6 +137,7 @@
             display: flex; flex-direction: column; justify-content: space-between; align-items: center; 
             z-index: 9999; 
             padding: calc(env(safe-area-inset-top) + 60px) 30px calc(env(safe-area-inset-bottom) + 30px) 30px;
+            overflow-y: auto;
         }
         
         .auth-title-container { width: 100%; text-align: left; margin-top: 20px; }
@@ -384,7 +408,7 @@
     </div>
 </div>
 
-<!-- GIAO DIỆN CHÍNH APP -->
+<!-- GIAO DIỆN CHÍNH APP (Vùng chứa cuộn được) -->
 <div id="main-app">
     <div class="container">
         
@@ -596,6 +620,16 @@
 
 <script>
     // ---------------------------------------------------------------------
+    // SCRIPT: NGĂN CHẶN BOUNCE EFFECT TRÊN IOS TỪ ẢNH HƯỚNG DẪN
+    // ---------------------------------------------------------------------
+    document.body.addEventListener('touchmove', function(e) {
+        // Chỉ cho phép cuộn bên trong class .container hoặc #auth-screen
+        if (!e.target.closest('.container') && !e.target.closest('#auth-screen')) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // ---------------------------------------------------------------------
     // 1. NỀN & VUỐT CHUYỂN TAB
     // ---------------------------------------------------------------------
     function setRandomBackground() {
@@ -628,6 +662,7 @@
         if(document.getElementById('main-app').style.display === 'none') return;
         let touchEndX = e.changedTouches[0].screenX;
         let diff = touchStartX - touchEndX;
+        // Chỉ vuốt khi di chuyển tay rõ ràng trên trục X
         if(Math.abs(diff) > 80) { 
             let currentIndex = tabsOrder.indexOf(document.querySelector('.tab-content.active').id);
             if(diff > 0 && currentIndex < 2) switchTab(tabsOrder[currentIndex + 1]); 
