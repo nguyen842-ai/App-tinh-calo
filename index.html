@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Nhật Ký Dinh Dưỡng</title>
     
     <link rel="manifest" href="manifest.json">
@@ -33,7 +33,9 @@
         
         * { box-sizing: border-box; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent;}
         
-        /* CẤU TRÚC CUỘN NỀN CƠ BẢN */
+        /* ---------------------------------------------------- */
+        /* CẤU TRÚC CUỘN NỀN CƠ BẢN (ĐÃ GỠ HẾT CODE FIX RUBBER) */
+        /* ---------------------------------------------------- */
         html, body {
             width: 100%;
             height: 100%;
@@ -72,11 +74,13 @@
             padding: 0 20px calc(80px + env(safe-area-inset-bottom)) 20px; 
         }
 
+        /* ---------------------------------------------------- */
         /* ĐỒNG BỘ BOX TĂNG ĐỘ TRONG SUỐT & GIẢM BLUR */
+        /* ---------------------------------------------------- */
         .glass-panel, .section, .my-goal-section, .daily-summary-box, .body-metrics-result, .countdown-card {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(3px);
-            -webkit-backdrop-filter: blur(3px);
+            background: rgba(255, 255, 255, 0.15); /* Trong suốt hơn */
+            backdrop-filter: blur(2px);             /* Giảm độ mờ xuống 3px */
+            -webkit-backdrop-filter: blur(2px);
             border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 20px;
             padding: 20px;
@@ -84,7 +88,9 @@
             margin-bottom: 20px;
         }
         
-        /* CỠ CHỮ */
+        /* ---------------------------------------------------- */
+        /* CỠ CHỮ (FONT SCALING CLASSES) */
+        /* ---------------------------------------------------- */
         body.font-large { font-size: 18px; }
         body.font-large input, body.font-large select { font-size: 16px; padding: 16px; }
         body.font-large button { font-size: 16px; }
@@ -96,7 +102,7 @@
         body.font-large .nav-item { font-size: 12px; }
 
         body.font-small { font-size: 14px; }
-        body.font-small input, body.font-small select { font-size: 16px; padding: 12px; }
+        body.font-small input, body.font-small select { font-size: 13px; padding: 12px; }
         body.font-small button { font-size: 13px; }
         body.font-small .header-title { font-size: 28px; }
         body.font-small .section h2, body.font-small .section h3 { font-size: 16px; }
@@ -105,7 +111,9 @@
         body.font-small .cal-day { font-size: 13px; }
         body.font-small .nav-item { font-size: 10px; }
         
+        /* ---------------------------------------------------- */
         /* GIAO DIỆN ĐĂNG NHẬP */
+        /* ---------------------------------------------------- */
         #auth-screen {
             position: fixed; 
             top: 0; left: 0; right: 0; bottom: 0; 
@@ -126,8 +134,8 @@
         .auth-form-container input[type="email"], .auth-form-container input[type="password"] {
             width: 100%; padding: 18px 24px; margin-bottom: 15px;
             border: 1.5px solid rgba(255,255,255,0.5); border-radius: 30px; 
-            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
-            font-size: 16px; color: var(--darkest-purple); font-weight: 700;
+            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+            font-size: 15px; color: var(--darkest-purple); font-weight: 700;
             outline: none; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
         .auth-form-container input::placeholder { color: rgba(36,26,76,0.7); font-weight: 600; }
@@ -156,17 +164,21 @@
         }
         .btn-signup:hover { color: #a29bfe; }
 
-        /* CÁC THÀNH PHẦN INPUT CHUNG APP (SỬA FONT-SIZE 16PX) */
+        /* ---------------------------------------------------- */
+        /* CÁC THÀNH PHẦN INPUT CHUNG APP */
+        /* ---------------------------------------------------- */
         input, select { 
             padding: 14px; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 14px; 
-            font-size: 16px; outline: none; width: 100%; max-width: 100%; box-sizing: border-box;
+            font-size: 14px; outline: none; width: 100%; max-width: 100%; box-sizing: border-box;
             background: rgba(255, 255, 255, 0.35); color: var(--darkest-purple); font-weight: 700;
             margin: 0; display: block; backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
         }
         input[type="date"] { appearance: none; -webkit-appearance: none; width: 100%; }
         input:focus, select:focus { border-color: var(--iris-bloom); background: rgba(255,255,255,0.6); }
 
+        /* ---------------------------------------------------- */
         /* HEADER APP CHÍNH */
+        /* ---------------------------------------------------- */
         #main-app { display: none; } 
         .main-header {
             background: transparent;
@@ -181,7 +193,9 @@
         .header-title { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.7); line-height: 1.2; margin-bottom: 4px;}
         .header-desc { font-size: 14px; color: #ffffff; font-style: italic; font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,0.6);}
 
+        /* ---------------------------------------------------- */
         /* MY GOAL & HP BAR */
+        /* ---------------------------------------------------- */
         .my-goal-section { padding: 18px 22px; }
         .goal-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px; }
         .goal-header span:first-child { font-weight: 800; color: var(--deep-purple); font-size: 15px; }
@@ -200,7 +214,7 @@
         
         .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 25px; }
         .card { 
-            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
             border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 20px;
             padding: 15px 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
@@ -220,7 +234,9 @@
             padding: 2px 6px; border-radius: 8px; border: 1.5px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.5); z-index: 10; transition: left 0.6s ease;
         }
 
+        /* ---------------------------------------------------- */
         /* CÁC BOX GIAO DIỆN CHUẨN MỰC */
+        /* ---------------------------------------------------- */
         .section h2, .section h3 { font-size: 18px; margin-bottom: 15px; color: var(--deep-purple); font-weight: 800;}
         .section h2 { padding-bottom: 10px; border-bottom: 1px solid rgba(91,69,167,0.15); }
         
@@ -258,17 +274,14 @@
         }
         .del-btn:hover { background: var(--deep-purple); transform: scale(1.1); }
 
-        /* TAB LOGIC & BOTTOM NAV (SỬA LỖI MỜ KHI CHUYỂN TAB) */
-        .tab-content { display: none; animation: fadeIn 0.25s ease-in-out; }
+        /* TAB LOGIC & BOTTOM NAV */
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
-        @keyframes fadeIn { 
-            from { opacity: 0; } 
-            to { opacity: 1; } 
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
 
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100%;
-            background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
             border-top: 1px solid rgba(255,255,255,0.4); display: flex; justify-content: space-around; 
             padding: 10px 0; padding-bottom: calc(10px + env(safe-area-inset-bottom)); z-index: 100;
         }
@@ -330,7 +343,7 @@
         .widget-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
         .widget { 
             background: linear-gradient(135deg, rgba(91,69,167,0.7), rgba(57,43,115,0.7)); 
-            backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+            backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 24px; padding: 20px; color: white; text-align: center; box-shadow: 0 6px 15px rgba(36,26,76,0.15);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -591,7 +604,9 @@
 </nav>
 
 <script>
+    // ---------------------------------------------------------------------
     // 1. NỀN & VUỐT CHUYỂN TAB
+    // ---------------------------------------------------------------------
     function setRandomBackground() {
         const bgImages = [
             'pic/IMG_3174.jpeg', 'pic/IMG_3177.jpeg', 'pic/IMG_3178.jpeg', 'pic/IMG_3179.jpeg',
@@ -629,7 +644,9 @@
         }
     }, {passive: true});
 
+    // ---------------------------------------------------------------------
     // 2. SUPABASE AUTH & USER PROFILE
+    // ---------------------------------------------------------------------
     const SUPABASE_URL = 'https://qsfwgjzejggvawcxjkxp.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_6uLn0e1rJtFFBr_hhHjkYA_Carb1WqC';
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -726,7 +743,9 @@
 
     function formatDate(dateObj) { return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`; }
 
+    // ---------------------------------------------------------------------
     // 3. LOGIC LỊCH & CHỈ SỐ CƠ THỂ
+    // ---------------------------------------------------------------------
     let displayDate = new Date(); 
 
     async function fetchAllDataFromCloud() {
@@ -805,7 +824,9 @@
         cloudLogs = logs || []; updateMainAppUI();
     }
 
+    // ---------------------------------------------------------------------
     // 4. CẬP NHẬT TRANG CHỦ & BÁO CÁO CHỐT SỔ
+    // ---------------------------------------------------------------------
     function updateMainAppUI() {
         let inList = '', outList = '', totalIn = 0, totalOut = 0;
         cloudLogs.forEach(log => {
@@ -866,7 +887,9 @@
 
     async function deleteLog(logId) { await supabaseClient.from('daily_logs').delete().eq('id', logId); loadDataForSelectedDate(); }
 
+    // ---------------------------------------------------------------------
     // 5. CHỨC NĂNG DASHBOARD HỒ SƠ
+    // ---------------------------------------------------------------------
     function saveMood(index, btnElem) {
         document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
         btnElem.classList.add('active');
