@@ -26,22 +26,19 @@
             --bleu-ciel: #007AA2;       
             --coral-red: #FF7F50;       
             
-            --text-main: #241A4C; 
-            --text-muted: #555555;
+            --text-main: #1a103c; 
+            --text-muted: #444444;
             --red: #e74c3c;
         }
         
         * { box-sizing: border-box; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent;}
         
         /* ---------------------------------------------------- */
-        /* FIX BOUNCE EFFECT IOS (SAFARI PWA FIX) */
+        /* CẤU TRÚC CUỘN NỀN CƠ BẢN (ĐÃ GỠ HẾT CODE FIX RUBBER) */
         /* ---------------------------------------------------- */
         html, body {
-            position: fixed;
             width: 100%;
             height: 100%;
-            overflow: hidden; /* Khóa cuộn trang tổng */
-            overscroll-behavior-y: none; /* Ngăn hiện tượng nảy lướt iOS */
         }
 
         body { 
@@ -58,7 +55,7 @@
             user-select: auto;
         }
 
-        /* HÌNH NỀN RÕ RÀNG (KHÔNG LÀM MỜ) */
+        /* HÌNH NỀN RÕ RÀNG */
         #bg-layer {
             position: fixed; 
             top: 0; bottom: 0; left: 0; right: 0; 
@@ -67,43 +64,27 @@
             background-attachment: fixed;
             z-index: -1; 
             transition: background-image 0.8s ease-in-out;
-            filter: none; /* Đảm bảo hình nền rõ ràng sắc nét */
         }
         
-        /* Khung chứa nội dung tự cuộn độc lập */
+        /* Khung chứa nội dung */
         .container { 
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            bottom: calc(65px + env(safe-area-inset-bottom)); 
             width: 100%; 
             max-width: 900px; 
             margin: 0 auto; 
-            overflow-y: auto; /* Chỉ cuộn khu vực này */
-            -webkit-overflow-scrolling: touch; /* Mượt mà trên iOS */
-            overscroll-behavior-y: contain; /* Khóa nảy viền trong khung cuộn */
-            padding: 0 20px 20px 20px; 
+            padding: 0 20px calc(80px + env(safe-area-inset-bottom)) 20px; 
         }
 
         /* ---------------------------------------------------- */
-        /* ĐỒNG BỘ BOX TRONG SUỐT NÂNG CẤP (MORE TRANSPARENT GLASS) */
+        /* ĐỒNG BỘ BOX TĂNG ĐỘ TRONG SUỐT & GIẢM BLUR */
         /* ---------------------------------------------------- */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .section, .my-goal-section, .daily-summary-box, .body-metrics-result, .countdown-box, .countdown-card {
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+        .glass-panel, .section, .my-goal-section, .daily-summary-box, .body-metrics-result, .countdown-card {
+            background: rgba(255, 255, 255, 0.25); /* Trong suốt hơn */
+            backdrop-filter: blur(3px);             /* Giảm độ mờ xuống 3px */
+            -webkit-backdrop-filter: blur(3px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 20px;
             padding: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
             margin-bottom: 20px;
         }
         
@@ -141,8 +122,6 @@
             z-index: 9999; 
             padding: calc(env(safe-area-inset-top) + 60px) 30px calc(env(safe-area-inset-bottom) + 30px) 30px;
             overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior-y: contain;
         }
         
         .auth-title-container { width: 100%; text-align: left; margin-top: 20px; }
@@ -154,13 +133,13 @@
         .auth-form-container { width: 100%; max-width: 350px; display: flex; flex-direction: column; margin-bottom: auto; margin-top: 80px; }
         .auth-form-container input[type="email"], .auth-form-container input[type="password"] {
             width: 100%; padding: 18px 24px; margin-bottom: 15px;
-            border: 1.5px solid rgba(255,255,255,0.6); border-radius: 30px; 
-            background: rgba(255, 255, 255, 0.35); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1.5px solid rgba(255,255,255,0.5); border-radius: 30px; 
+            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
             font-size: 15px; color: var(--darkest-purple); font-weight: 700;
             outline: none; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
-        .auth-form-container input::placeholder { color: rgba(36,26,76,0.6); font-weight: 600; }
-        .auth-form-container input:focus { background: rgba(255, 255, 255, 0.7); border-color: white; }
+        .auth-form-container input::placeholder { color: rgba(36,26,76,0.7); font-weight: 600; }
+        .auth-form-container input:focus { background: rgba(255, 255, 255, 0.5); border-color: white; }
 
         .remember-group-new {
             display: flex; justify-content: flex-end; align-items: center; gap: 6px;
@@ -189,20 +168,20 @@
         /* CÁC THÀNH PHẦN INPUT CHUNG APP */
         /* ---------------------------------------------------- */
         input, select { 
-            padding: 14px; border: 1px solid rgba(91,69,167,0.25); border-radius: 14px; 
+            padding: 14px; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 14px; 
             font-size: 14px; outline: none; width: 100%; max-width: 100%; box-sizing: border-box;
-            background: rgba(255,255,255,0.65); color: var(--darkest-purple); font-weight: 600;
-            margin: 0; display: block; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            background: rgba(255, 255, 255, 0.35); color: var(--darkest-purple); font-weight: 700;
+            margin: 0; display: block; backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
         }
         input[type="date"] { appearance: none; -webkit-appearance: none; width: 100%; }
-        input:focus, select:focus { border-color: var(--iris-bloom); background: rgba(255,255,255,0.85); }
+        input:focus, select:focus { border-color: var(--iris-bloom); background: rgba(255,255,255,0.6); }
 
         /* ---------------------------------------------------- */
-        /* HEADER APP CHÍNH (ĐÃ BỎ BOX GRADIENT BỌC NGOÀI) */
+        /* HEADER APP CHÍNH */
         /* ---------------------------------------------------- */
         #main-app { display: none; } 
         .main-header {
-            background: transparent; /* Bỏ box gradient */
+            background: transparent;
             padding: 10px 0 20px 0; 
             padding-top: calc(env(safe-area-inset-top) + 15px);
             text-align: left; 
@@ -210,9 +189,9 @@
             box-shadow: none;
             border-bottom: none;
         }
-        .header-subtitle { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: #ffffff; font-weight: 800; margin-bottom: 4px; text-shadow: 0 2px 8px rgba(0,0,0,0.5);}
-        .header-title { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.6); line-height: 1.2; margin-bottom: 4px;}
-        .header-desc { font-size: 14px; color: #ffffff; font-style: italic; font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,0.5);}
+        .header-subtitle { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: #ffffff; font-weight: 800; margin-bottom: 4px; text-shadow: 0 2px 8px rgba(0,0,0,0.6);}
+        .header-title { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.7); line-height: 1.2; margin-bottom: 4px;}
+        .header-desc { font-size: 14px; color: #ffffff; font-style: italic; font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,0.6);}
 
         /* ---------------------------------------------------- */
         /* MY GOAL & HP BAR */
@@ -221,7 +200,7 @@
         .goal-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px; }
         .goal-header span:first-child { font-weight: 800; color: var(--deep-purple); font-size: 15px; }
         .goal-header span:last-child { font-weight: 900; color: var(--iris-bloom); font-size: 18px; }
-        .goal-bar-bg { width: 100%; height: 8px; background: rgba(0,0,0,0.1); border-radius: 4px; position: relative; overflow: visible; }
+        .goal-bar-bg { width: 100%; height: 8px; background: rgba(0,0,0,0.15); border-radius: 4px; position: relative; overflow: visible; }
         .goal-bar-fill { 
             height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--iris-bloom), var(--malibu-blue)); 
             transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s; position: relative;
@@ -235,8 +214,8 @@
         
         .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 25px; }
         .card { 
-            background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 20px;
+            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+            border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 20px;
             padding: 15px 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
         .card h3 { font-size: 12px; text-transform: uppercase; margin-bottom: 5px; color: var(--deep-purple); font-weight: 800;}
@@ -245,7 +224,7 @@
         .hp-container { margin-bottom: 30px; text-align: center; }
         .hp-labels { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.95); text-shadow: 0 1px 4px rgba(0,0,0,0.8); margin-bottom: 6px; letter-spacing: 0.5px;}
         .hp-bar-wrapper {
-            width: 100%; height: 16px; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1.5px solid rgba(255,255,255,0.6); position: relative; overflow: hidden; display: flex; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            width: 100%; height: 16px; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1.5px solid rgba(255,255,255,0.5); position: relative; overflow: hidden; display: flex; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
         .hp-in { background: var(--bleu-ciel); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .hp-out { background: var(--malibu-blue); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -273,11 +252,11 @@
         
         .btn-ai-calc { white-space: nowrap; font-size: 13px; background: var(--malibu-blue); }
         .ai-camera-btn { 
-            display: block; width: 100%; text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.35); 
+            display: block; width: 100%; text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.25); 
             border: 2px dashed var(--iris-bloom); color: var(--iris-bloom); border-radius: 16px; 
             font-weight: 800; cursor: pointer; margin-bottom: 15px; transition: all 0.3s ease; 
         }
-        .ai-camera-btn:hover { background: rgba(255, 255, 255, 0.6); }
+        .ai-camera-btn:hover { background: rgba(255, 255, 255, 0.45); }
         input[type="file"] { display: none; }
         #ai-status { font-size: 13px; color: var(--iris-bloom); text-align: center; margin-bottom: 15px; display: none; font-weight: bold; }
 
@@ -302,17 +281,17 @@
 
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100%;
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             border-top: 1px solid rgba(255,255,255,0.4); display: flex; justify-content: space-around; 
             padding: 10px 0; padding-bottom: calc(10px + env(safe-area-inset-bottom)); z-index: 100;
         }
         .nav-item { 
             background: none; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; 
-            gap: 4px; font-size: 11px; font-weight: 700; padding: 5px 20px; border-radius: 16px; transition: 0.3s; color: #6c5b9c;
+            gap: 4px; font-size: 11px; font-weight: 700; padding: 5px 20px; border-radius: 16px; transition: 0.3s; color: #4e3e7e;
         }
         .nav-item:hover { background: none; transform: none; box-shadow: none; color: var(--iris-bloom); }
-        .nav-item.active { color: var(--iris-bloom); background: rgba(91,69,167,0.12); }
-        .nav-icon-img { width: 24px; height: 24px; object-fit: contain; filter: grayscale(100%); opacity: 0.5; transition: 0.3s; }
+        .nav-item.active { color: var(--iris-bloom); background: rgba(91,69,167,0.15); }
+        .nav-icon-img { width: 24px; height: 24px; object-fit: contain; filter: grayscale(100%); opacity: 0.6; transition: 0.3s; }
         .nav-item.active .nav-icon-img { filter: grayscale(0%); opacity: 1; }
 
         /* LỊCH & BÁO CÁO */
@@ -347,10 +326,10 @@
         /* Cỡ chữ Controls */
         .font-size-controls { display: flex; justify-content: space-between; gap: 10px; margin-top: 10px;}
         .fs-btn { 
-            flex: 1; padding: 12px 0; font-size: 14px; background: rgba(255,255,255,0.4); 
+            flex: 1; padding: 12px 0; font-size: 14px; background: rgba(255,255,255,0.3); 
             color: var(--deep-purple); border: 1px solid rgba(91,69,167,0.3); border-radius: 14px; box-shadow: none; transition: 0.3s;
         }
-        .fs-btn:hover { background: rgba(255,255,255,0.7); }
+        .fs-btn:hover { background: rgba(255,255,255,0.5); }
         .fs-btn.active { background: var(--iris-bloom); color: white; border-color: var(--deep-purple); box-shadow: 0 4px 10px rgba(91,69,167,0.3); }
 
         .mood-grid { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px;}
@@ -363,9 +342,9 @@
         
         .widget-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
         .widget { 
-            background: linear-gradient(135deg, rgba(91,69,167,0.85), rgba(57,43,115,0.85)); 
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: linear-gradient(135deg, rgba(91,69,167,0.7), rgba(57,43,115,0.7)); 
+            backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 24px; padding: 20px; color: white; text-align: center; box-shadow: 0 6px 15px rgba(36,26,76,0.15);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
@@ -387,7 +366,7 @@
 </head>
 <body>
 
-<!-- LỚP NỀN CỐ ĐỊNH RÕ RÀNG (KHÔNG LÀM MỜ) -->
+<!-- LỚP NỀN CỐ ĐỊNH -->
 <div id="bg-layer"></div>
 
 <!-- MÀN HÌNH ĐĂNG NHẬP -->
@@ -414,11 +393,11 @@
     </div>
 </div>
 
-<!-- GIAO DIỆN CHÍNH APP (Vùng chứa cuộn được) -->
+<!-- GIAO DIỆN CHÍNH APP -->
 <div id="main-app">
     <div class="container">
         
-        <!-- HEADER TRAVEL ADVENTURE (ĐÃ BỎ KHUNG GRADIENT) -->
+        <!-- HEADER -->
         <div class="main-header">
             <div class="header-subtitle">Nhật Ký Dinh Dưỡng</div>
             <h1 class="header-title" id="greeting-name">Xin chào, Bạn!</h1>
@@ -584,7 +563,7 @@
                     <div class="widget-main" id="widget-solar">--/--</div>
                     <div class="widget-sub" id="widget-lunar">Âm lịch: --/--</div>
                 </div>
-                <div class="widget" style="background: linear-gradient(135deg, rgba(0,139,205,0.85), rgba(0,122,162,0.85));">
+                <div class="widget" style="background: linear-gradient(135deg, rgba(0,139,205,0.7), rgba(0,122,162,0.7));">
                     <div class="widget-title">Thời Tiết</div>
                     <div class="widget-main" id="widget-temp">--°C</div>
                     <div class="widget-sub" id="widget-weather-desc">Đang cập nhật...</div>
@@ -626,29 +605,6 @@
 
 <script>
     // ---------------------------------------------------------------------
-    // SCRIPT: KHẮC PHỤC TRIỆT ĐỂ RUBBER BANDING / ELASTIC BOUNCE IOS SAFARI PWA
-    // ---------------------------------------------------------------------
-    document.body.addEventListener('touchmove', function(e) {
-        const scrollableContainer = e.target.closest('.container, #auth-screen, ul');
-        
-        if (!scrollableContainer) {
-            // Chặn hoàn toàn kéo cuộn ở các vùng không phải vùng chứa dữ liệu
-            e.preventDefault();
-        } else {
-            // Kiểm tra các điểm rìa trên/dưới để ngăn Safari kéo trượt nền
-            const top = scrollableContainer.scrollTop;
-            const totalH = scrollableContainer.scrollHeight;
-            const currentH = scrollableContainer.offsetHeight;
-
-            if (top <= 0 && e.touches[0].screenY > e.touches[0].clientY) {
-                // Đang ở đỉnh và cố tình vuốt xuống
-            } else if (top + currentH >= totalH && e.touches[0].screenY < e.touches[0].clientY) {
-                // Đang ở đáy và cố tình vuốt lên
-            }
-        }
-    }, { passive: false });
-
-    // ---------------------------------------------------------------------
     // 1. NỀN & VUỐT CHUYỂN TAB
     // ---------------------------------------------------------------------
     function setRandomBackground() {
@@ -681,7 +637,6 @@
         if(document.getElementById('main-app').style.display === 'none') return;
         let touchEndX = e.changedTouches[0].screenX;
         let diff = touchStartX - touchEndX;
-        // Chỉ vuốt khi di chuyển tay rõ ràng trên trục X
         if(Math.abs(diff) > 80) { 
             let currentIndex = tabsOrder.indexOf(document.querySelector('.tab-content.active').id);
             if(diff > 0 && currentIndex < 2) switchTab(tabsOrder[currentIndex + 1]); 
@@ -767,7 +722,6 @@
         if(!error) { currentUser = data.user; updateHeaderInfo(); alert("Đã lưu tên thành công!");}
     });
 
-    // Tính năng cỡ chữ
     function changeFontSize(size) {
         document.body.classList.remove('font-small', 'font-large');
         if (size === 'small') document.body.classList.add('font-small');
