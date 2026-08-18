@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Nhật Ký Dinh Dưỡng</title>
     
     <link rel="manifest" href="manifest.json">
@@ -18,12 +18,12 @@
     <style>
         :root {
             /* HỆ MÀU PANTONE NGẢ TÍM & XANH ĐẠI DƯƠNG */
-            --iris-bloom: #5B45A7;      /* Tím chủ đạo, Nút bấm */
-            --deep-purple: #392B73;     /* Tím đậm, Text nổi bật */
-            --darkest-purple: #241A4C;  /* Tím nền tối */
-            --malibu-blue: #008BCD;     /* Xanh tươi sáng (Thanh tiến độ) */
-            --bleu-ciel: #007AA2;       /* Xanh lơ */
-            --coral-red: #FF7F50;       /* Đỏ san hô (Cảnh báo vượt calo) */
+            --iris-bloom: #5B45A7;      
+            --deep-purple: #392B73;     
+            --darkest-purple: #241A4C;  
+            --malibu-blue: #008BCD;     
+            --bleu-ciel: #007AA2;       
+            --coral-red: #FF7F50;       
             
             --text-main: #333333; 
             --text-muted: #555555;
@@ -33,34 +33,80 @@
         * { box-sizing: border-box; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent;}
         
         body { 
-            background-color: var(--darkest-purple); 
-            background-size: cover; background-position: center; background-attachment: fixed; 
-            color: var(--text-main); line-height: 1.6; transition: background-image 0.8s ease-in-out; 
+            color: var(--text-main); 
+            line-height: 1.6; 
             overflow-x: hidden;
+            background-color: var(--darkest-purple);
+        }
+
+        /* LỚP NỀN CỐ ĐỊNH */
+        #bg-layer {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-size: cover; background-position: center;
+            z-index: -1; transition: background-image 0.8s ease-in-out;
         }
         
-        .container { max-width: 900px; margin: 0 auto; padding: 0 20px 90px 20px; min-height: 100vh;}
+        .container { 
+            max-width: 900px; margin: 0 auto; 
+            padding: 0 20px 90px 20px; 
+            min-height: 100vh;
+        }
         
         /* ---------------------------------------------------- */
-        /* GIAO DIỆN ĐĂNG NHẬP (GLASSMORPHISM) */
+        /* GIAO DIỆN ĐĂNG NHẬP */
         /* ---------------------------------------------------- */
         #auth-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.4); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; padding: 20px;
+            background: rgba(0,0,0,0.15); 
+            display: flex; flex-direction: column; justify-content: space-between; align-items: center; 
+            z-index: 9999; padding: calc(env(safe-area-inset-top) + 60px) 30px 50px 30px;
         }
-        .auth-box {
-            background: rgba(255, 255, 255, 0.5); padding: 30px; 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border-radius: 24px; /* Squircle */
-            width: 100%; max-width: 400px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.6); text-align: center;
-        }
-        .auth-box h2 { color: var(--deep-purple); margin-bottom: 5px; font-size: 24px; font-weight: 800;}
-        .auth-box p { color: var(--darkest-purple); font-weight: 600; margin-bottom: 20px;}
         
+        /* Tiêu đề nằm thẳng bình thường */
+        .auth-title-container { width: 100%; text-align: left; margin-top: 20px; }
+        .auth-main-title { 
+            font-size: 42px; font-weight: 900; color: #ffffff; 
+            text-shadow: 2px 4px 15px rgba(0,0,0,0.4); line-height: 1.1; letter-spacing: -1px;
+        }
+
+        /* Khung nhập liệu ở giữa */
+        .auth-form-container { width: 100%; max-width: 350px; display: flex; flex-direction: column; margin-bottom: auto; margin-top: 80px; }
+        .auth-form-container input[type="email"], .auth-form-container input[type="password"] {
+            width: 100%; padding: 18px 24px; margin-bottom: 15px;
+            border: 1.5px solid rgba(255,255,255,0.6); border-radius: 30px; 
+            background: rgba(255, 255, 255, 0.35); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            font-size: 15px; color: var(--darkest-purple); font-weight: 700;
+            outline: none; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .auth-form-container input::placeholder { color: rgba(36,26,76,0.6); font-weight: 600; }
+        .auth-form-container input:focus { background: rgba(255, 255, 255, 0.8); border-color: white; }
+
+        .remember-group-new {
+            display: flex; justify-content: flex-end; align-items: center; gap: 6px;
+            font-size: 13px; color: white; font-weight: 700; text-shadow: 0 1px 5px rgba(0,0,0,0.6);
+            cursor: pointer; margin-top: -5px; padding-right: 10px;
+        }
+        .remember-group-new input { width: 16px; height: 16px; accent-color: var(--iris-bloom); cursor: pointer;}
+        
+        .auth-msg { margin-top: 15px; font-size: 13px; font-weight: bold; text-align: center; text-shadow: 0 1px 3px rgba(0,0,0,0.8); padding: 5px; border-radius: 8px;}
+        .auth-msg.error { color: #ff9ff3; background: rgba(0,0,0,0.4); } 
+        .auth-msg.success { color: #a29bfe; background: rgba(0,0,0,0.4); }
+
+        /* Nút bấm dưới cùng */
+        .auth-bottom-container { width: 100%; max-width: 350px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .btn-signin {
+            width: 100%; padding: 18px; background: var(--iris-bloom); border: none; border-radius: 30px; 
+            color: white; font-size: 18px; font-weight: 800; box-shadow: 0 8px 25px rgba(91,69,167,0.5); cursor: pointer; transition: 0.3s;
+        }
+        .btn-signin:hover { transform: translateY(-3px); background: var(--deep-purple); }
+        .btn-signup {
+            background: transparent; border: none; color: white; font-size: 15px; font-weight: 700;
+            text-decoration: underline; text-underline-offset: 4px; cursor: pointer; text-shadow: 0 1px 5px rgba(0,0,0,0.6); transition: 0.2s;
+        }
+        .btn-signup:hover { color: #a29bfe; }
+
         /* ---------------------------------------------------- */
-        /* SỬA LỖI TRÀN Ô NHẬP LIỆU (OVERFLOW FIX CHO MOBILE) */
+        /* CÁC THÀNH PHẦN INPUT CHUNG APP */
         /* ---------------------------------------------------- */
         input, select { 
             padding: 14px; border: 1px solid rgba(91,69,167,0.2); border-radius: 14px; 
@@ -68,46 +114,29 @@
             background: rgba(255,255,255,0.85); color: var(--darkest-purple); font-weight: 500;
             margin: 0; display: block;
         }
-        /* Ép chuẩn riêng cho ô nhập ngày tháng trên iOS/Safari */
-        input[type="date"] {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 100%;
-        }
+        input[type="date"] { appearance: none; -webkit-appearance: none; width: 100%; }
         input:focus, select:focus { border-color: var(--iris-bloom); background: rgba(255,255,255,1); }
-        
-        .remember-group { display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 15px; font-size: 13px; color: var(--darkest-purple); font-weight: 700;}
-        .remember-group input { width: 16px; height: 16px; accent-color: var(--iris-bloom); cursor: pointer;}
-        
-        .auth-btn-group { display: flex; gap: 10px; margin-top: 5px; }
-        .auth-btn-group button { 
-            flex: 1; padding: 14px; border: none; border-radius: 16px; font-weight: bold; cursor: pointer; 
-            color: white; transition: all 0.3s ease; background-color: var(--iris-bloom); box-shadow: 0 4px 10px rgba(91,69,167,0.3); 
-        }
-        .auth-btn-group button:hover { background-color: var(--deep-purple); transform: translateY(-2px); }
-        .auth-msg { margin-top: 15px; font-size: 13px; font-weight: bold; }
-        .auth-msg.error { color: var(--red); } .auth-msg.success { color: var(--iris-bloom); }
 
         /* ---------------------------------------------------- */
-        /* HEADER BOX GRADIENT (ĐÃ NÂNG CẤP) */
+        /* HEADER APP CHÍNH & TAI THỎ */
         /* ---------------------------------------------------- */
         #main-app { display: none; } 
         .main-header {
             background: linear-gradient(135deg, var(--iris-bloom), var(--malibu-blue));
             padding: 25px 22px; 
-            border-radius: 24px;
+            padding-top: calc(env(safe-area-inset-top) + 20px);
+            border-radius: 0 0 24px 24px; 
             text-align: left; 
-            margin-top: 15px;
-            margin-bottom: 25px;
+            margin: 0 -20px 25px -20px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-            border: 1px solid rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
         }
         .header-subtitle { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.85); font-weight: 800; margin-bottom: 8px;}
         .header-title { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.15); line-height: 1.2; margin-bottom: 6px;}
         .header-desc { font-size: 14px; color: rgba(255,255,255,0.95); font-style: italic; font-weight: 500;}
 
         /* ---------------------------------------------------- */
-        /* MY GOAL - THANH TIẾN ĐỘ THANH MẢNH & CẢNH BÁO */
+        /* MY GOAL & HP BAR */
         /* ---------------------------------------------------- */
         .my-goal-section {
             background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
@@ -128,7 +157,6 @@
         .goal-warning { font-size: 12px; font-weight: bold; color: var(--coral-red); margin-top: 10px; display: none; animation: shake 0.5s; }
         @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-3px);} 75% {transform: translateX(3px);} }
         
-        /* 3 Ô TRẠNG THÁI (Kính mờ 50%) */
         .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 25px; }
         .card { 
             padding: 15px 10px; text-align: center; background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -137,7 +165,6 @@
         .card h3 { font-size: 12px; text-transform: uppercase; margin-bottom: 5px; color: var(--deep-purple); text-shadow: 0 1px 3px rgba(255,255,255,0.8); font-weight: 800;}
         .card p { font-size: 24px; font-weight: 900; color: var(--iris-bloom); text-shadow: 0 1px 3px rgba(255,255,255,0.9); }
         
-        /* HP BAR ĐỐI KHÁNG THANH THOÁT HƠN */
         .hp-container { margin-bottom: 30px; text-align: center; }
         .hp-labels { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.9); text-shadow: 0 1px 3px rgba(0,0,0,0.8); margin-bottom: 6px; letter-spacing: 0.5px;}
         .hp-bar-wrapper {
@@ -151,7 +178,9 @@
             padding: 2px 6px; border-radius: 8px; border: 1.5px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.5); z-index: 10; transition: left 0.6s ease;
         }
 
-        /* GIAO DIỆN CHUNG & SQUIRCLE ĐỒNG BỘ TRONG SUỐT 50% */
+        /* ---------------------------------------------------- */
+        /* CÁC BOX GIAO DIỆN & NÚT XÓA CHUẨN MỰC */
+        /* ---------------------------------------------------- */
         .section { 
             background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.6); padding: 22px; border-radius: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 25px;
@@ -184,10 +213,16 @@
         li { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(91,69,167,0.1); font-size: 14px; }
         .item-details span { display: block; font-weight: 700; color: var(--deep-purple);}
         .item-macros { font-size: 11px; color: var(--darkest-purple); margin-top: 4px; }
-        .del-btn { color: #e74c3c; cursor: pointer; font-weight: bold; margin-left: 10px; font-size: 18px; border: none; background: none; padding: 0; box-shadow: none;}
-        .del-btn:hover { background: none; transform: scale(1.2); color: #c0392b;}
+        
+        .del-btn { 
+            background: var(--iris-bloom); color: white; cursor: pointer; font-weight: bold; 
+            margin-left: 10px; font-size: 14px; border: none; width: 26px; height: 26px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(91,69,167,0.3); transition: all 0.2s ease; flex-shrink: 0; padding: 0;
+        }
+        .del-btn:hover { background: var(--deep-purple); transform: scale(1.1); }
 
-        /* TAB LOGIC & BOTTOM NAV VỚI ICON CUSTOM */
+        /* TAB LOGIC & BOTTOM NAV */
         .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
@@ -207,7 +242,7 @@
         .nav-icon-img { width: 24px; height: 24px; object-fit: contain; filter: grayscale(100%); opacity: 0.5; transition: 0.3s; }
         .nav-item.active .nav-icon-img { filter: grayscale(0%); opacity: 1; }
 
-        /* LỊCH & BÁO CÁO CHỐT SỔ & MỤC TIÊU */
+        /* LỊCH & BÁO CÁO */
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-weight: 800; color: var(--iris-bloom);}
         .calendar-header button { padding: 8px 15px; background: rgba(91,69,167,0.1); color: var(--iris-bloom); box-shadow: none; border-radius: 12px;}
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
@@ -232,7 +267,7 @@
         .metric-val { font-weight: 800; color: var(--iris-bloom); text-align: right; }
         .ai-highlight { color: var(--malibu-blue); font-size: 16px; }
 
-        /* DASHBOARD HỒ SƠ TÙY CHỈNH */
+        /* DASHBOARD HỒ SƠ */
         .profile-name-box { display: flex; gap: 10px; margin-bottom: 20px;}
         .profile-name-box input { flex: 1; margin-bottom: 0;}
         
@@ -254,7 +289,6 @@
         .widget-main { font-size: 24px; font-weight: 900; margin-bottom: 2px;}
         .widget-sub { font-size: 12px; opacity: 0.9; }
         
-        /* DANH SÁCH SỰ KIỆN ĐẾM NGƯỢC (GRID 2 CỘT) */
         .countdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
         .countdown-card { 
             background: rgba(255,255,255,0.6); padding: 15px; border-radius: 20px; 
@@ -271,21 +305,30 @@
 </head>
 <body>
 
+<!-- LỚP NỀN CỐ ĐỊNH -->
+<div id="bg-layer"></div>
+
 <!-- MÀN HÌNH ĐĂNG NHẬP -->
 <div id="auth-screen">
-    <div class="auth-box">
-        <h2>🔒 Đăng Nhập</h2>
-        <p>Dữ liệu lưu trữ cá nhân an toàn</p>
-        <input type="email" id="auth-email" placeholder="Nhập Email của bạn">
-        <input type="password" id="auth-password" placeholder="Nhập Mật khẩu">
-        <label class="remember-group">
+    <!-- Tiêu đề thẳng đứng -->
+    <div class="auth-title-container">
+        <h1 class="auth-main-title">Nhật Ký<br>Dinh Dưỡng</h1>
+    </div>
+
+    <!-- Form nhập liệu ở giữa -->
+    <div class="auth-form-container">
+        <input type="email" id="auth-email" placeholder="✉️ Email">
+        <input type="password" id="auth-password" placeholder="🔒 Mật khẩu">
+        <label class="remember-group-new">
             <input type="checkbox" id="remember-me" checked> Ghi nhớ đăng nhập
         </label>
-        <div class="auth-btn-group">
-            <button onclick="handleAuth('login')">Đăng Nhập</button>
-            <button onclick="handleAuth('register')" style="background: var(--darkest-purple);">Đăng Ký</button>
-        </div>
         <div id="auth-message" class="auth-msg"></div>
+    </div>
+
+    <!-- Nút bấm đáy màn hình -->
+    <div class="auth-bottom-container">
+        <button class="btn-signin" onclick="handleAuth('login')">Đăng Nhập</button>
+        <button class="btn-signup" onclick="handleAuth('register')">Tạo tài khoản mới</button>
     </div>
 </div>
 
@@ -293,10 +336,10 @@
 <div id="main-app">
     <div class="container">
         
-        <!-- HEADER TRAVEL ADVENTURE ĐÃ ĐƯỢC CHUYỂN VÀO GRADIENT BOX -->
+        <!-- HEADER TRAVEL ADVENTURE -->
         <div class="main-header">
             <div class="header-subtitle">Nhật Ký Dinh Dưỡng</div>
-            <h1 class="header-title" id="greeting-name">Xin chào, Bạn 👋</h1>
+            <h1 class="header-title" id="greeting-name">Xin chào, Bạn!</h1>
             <p class="header-desc" id="greeting-time">Đang tải...</p>
         </div>
 
@@ -315,7 +358,6 @@
                 <div class="calendar-grid" id="calendar-days"></div>
             </div>
 
-            <!-- Báo cáo chốt sổ -->
             <div class="daily-summary-box" id="daily-summary-box">
                 <div class="ds-title">Báo Cáo Chốt Sổ Ngày <span id="ds-date">...</span></div>
                 <div id="ds-content"></div>
@@ -366,7 +408,6 @@
         <!-- TAB 2: GHI CHÉP (TRANG CHỦ) -->
         <div id="tab-home" class="tab-content active">
             
-            <!-- MY GOAL PROGRESS BAR -->
             <div class="my-goal-section">
                 <div class="goal-header"><span>MỤC TIÊU CALO</span> <span id="goal-text">0 / 2000 kcal</span></div>
                 <div class="goal-bar-bg"><div class="goal-bar-fill" id="goal-bar-fill"></div></div>
@@ -379,7 +420,6 @@
                 <div class="card"><h3>Thực nhận</h3><p id="total-net">0</p></div>
             </div>
 
-            <!-- HP BAR ĐỐI KHÁNG -->
             <div class="hp-container">
                 <div class="hp-labels">
                     <span>NẠP (IN)</span>
@@ -424,9 +464,8 @@
             </div>
         </div>
 
-        <!-- TAB 3: HỒ SƠ (DASHBOARD CÁ NHÂN) -->
+        <!-- TAB 3: HỒ SƠ -->
         <div id="tab-profile" class="tab-content">
-            <!-- Đổi tên -->
             <div class="section">
                 <h3>Tên hiển thị</h3>
                 <form class="profile-name-box" id="name-form">
@@ -435,7 +474,6 @@
                 </form>
             </div>
 
-            <!-- Mood Tracker -->
             <div class="section">
                 <h3>Tâm trạng hôm nay</h3>
                 <div class="mood-grid">
@@ -448,7 +486,6 @@
                 <p id="mood-status" style="text-align:center; font-size:12px; color:var(--iris-bloom); display:none; margin-top:5px;">Đã lưu cảm xúc!</p>
             </div>
 
-            <!-- 2 Widgets -->
             <div class="widget-row">
                 <div class="widget">
                     <div class="widget-title">Lịch Hôm Nay</div>
@@ -462,7 +499,6 @@
                 </div>
             </div>
 
-            <!-- Nhiều sự kiện Đếm ngược -->
             <div class="section">
                 <h3>Đếm ngược Sự kiện</h3>
                 <form class="form-group" id="countdown-form" style="margin-top: 15px;">
@@ -470,11 +506,7 @@
                     <input type="date" id="cd-date" required>
                     <button type="submit" style="background: var(--malibu-blue);">Thêm Sự Kiện</button>
                 </form>
-                
-                <!-- Bảng ghim danh sách sự kiện (Grid 2 cột) -->
-                <div id="countdown-list" class="countdown-grid">
-                    <!-- Javascript sẽ vẽ các thẻ sự kiện vào đây -->
-                </div>
+                <div id="countdown-list" class="countdown-grid"></div>
             </div>
 
             <div class="section" style="text-align: center; margin-top: 30px;">
@@ -484,7 +516,7 @@
     </div>
 </div>
 
-<!-- BOTTOM NAV VỚI ICON CUSTOM -->
+<!-- BOTTOM NAV -->
 <nav class="bottom-nav" id="bottom-nav" style="display: none;">
     <button class="nav-item" onclick="switchTab('tab-history', this)">
         <img src="icon/calendar.webp" class="nav-icon-img" alt="Theo Dõi">
@@ -502,11 +534,11 @@
 
 <script>
     // ---------------------------------------------------------------------
-    // 1. GIAO DIỆN MỞ ĐẦU & VUỐT CHUYỂN TAB
+    // 1. NỀN & VUỐT CHUYỂN TAB
     // ---------------------------------------------------------------------
     function setRandomBackground() {
         const bgImages = ['pic/IMG_3173.jpeg', 'pic/IMG_3174.jpeg', 'pic/IMG_3177.jpeg', 'pic/IMG_3178.jpeg', 'pic/IMG_3179.jpeg'];
-        document.body.style.backgroundImage = `url('${bgImages[Math.floor(Math.random() * bgImages.length)]}')`;
+        document.getElementById('bg-layer').style.backgroundImage = `url('${bgImages[Math.floor(Math.random() * bgImages.length)]}')`;
     }
     setRandomBackground();
 
@@ -523,7 +555,6 @@
         }
     }
 
-    // Logic vuốt màn hình
     let touchStartX = 0;
     document.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX, {passive: true});
     document.addEventListener('touchend', e => {
@@ -572,10 +603,10 @@
         const remember = document.getElementById('remember-me').checked;
         const msg = document.getElementById('auth-message');
         
-        if (!email || !password) { msg.innerText = "Vui lòng nhập đủ thông tin!"; msg.className = "auth-msg error"; return; }
+        if (!email || !password) { msg.innerText = "Vui lòng nhập đủ thông tin!"; msg.className = "auth-msg error"; msg.style.display="block"; return; }
         if (!remember) sessionStorage.setItem('no_remember', 'true'); else sessionStorage.removeItem('no_remember');
 
-        msg.innerText = "Đang xử lý..."; msg.className = "auth-msg";
+        msg.innerText = "Đang xử lý..."; msg.className = "auth-msg"; msg.style.display="block";
         let error;
         if (type === 'register') { const { error: e } = await supabaseClient.auth.signUp({ email, password }); error = e; } 
         else { const { error: e } = await supabaseClient.auth.signInWithPassword({ email, password }); error = e; }
@@ -598,15 +629,14 @@
         document.getElementById('bottom-nav').style.display = 'none';
     }
 
-    // Xử lý Tên người dùng và Lời chào
     function updateHeaderInfo() {
         const name = currentUser?.user_metadata?.display_name || "Bạn";
-        document.getElementById('greeting-name').innerText = `Xin chào, ${name} 👋`;
+        document.getElementById('greeting-name').innerText = `Xin chào, ${name}!`;
         document.getElementById('prof-name-input').value = currentUser?.user_metadata?.display_name || "";
 
         const hour = new Date().getHours();
         let time = hour < 12 ? "sáng" : (hour < 18 ? "chiều" : "tối");
-        document.getElementById('greeting-time').innerText = `Chào buổi ${time}! Hôm nay bạn đã thâm hụt calo chưa? 🥊`;
+        document.getElementById('greeting-time').innerText = `Chào buổi ${time}! Hôm nay bạn đã thâm hụt calo chưa?`;
     }
 
     document.getElementById('name-form').addEventListener('submit', async function(e){
@@ -700,7 +730,7 @@
     }
 
     // ---------------------------------------------------------------------
-    // 4. CẬP NHẬT TRANG CHỦ & BÁO CÁO CHỐT SỔ (HISTORY)
+    // 4. CẬP NHẬT TRANG CHỦ & BÁO CÁO CHỐT SỔ
     // ---------------------------------------------------------------------
     function updateMainAppUI() {
         let inList = '', outList = '', totalIn = 0, totalOut = 0;
@@ -716,7 +746,6 @@
         document.getElementById('food-list').innerHTML = inList; document.getElementById('workout-list').innerHTML = outList;
         document.getElementById('total-in').innerText = totalIn; document.getElementById('total-out').innerText = totalOut; document.getElementById('total-net').innerText = totalIn - totalOut;
 
-        // Báo cáo chốt sổ (History)
         const dsContent = document.getElementById('ds-content');
         if(cloudLogs.length === 0) {
             dsContent.innerHTML = `<div class="ds-empty">Chưa có dữ liệu ghi chép cho ngày này</div>`;
@@ -724,11 +753,9 @@
             dsContent.innerHTML = `<div class="ds-data"><span class="ds-in">Tổng Nạp: ${totalIn}</span><span class="ds-out">Tổng Đốt: ${totalOut}</span></div>`;
         }
 
-        // Target AI
         let targetIn = 2000, targetOut = 0;
         const md = cloudMetrics[selectedDateStr]; if(md && md.ai_recommended_in) { targetIn = md.ai_recommended_in; targetOut = md.ai_recommended_out; }
         
-        // Cập nhật My Goal Progress Bar
         document.getElementById('goal-text').innerText = `${totalIn} / ${targetIn} kcal`;
         let goalPercent = (totalIn / targetIn) * 100;
         let goalFill = document.getElementById('goal-bar-fill');
@@ -744,7 +771,6 @@
             goalWarning.style.display = 'none';
         }
 
-        // HP Bar Đối kháng
         let hpCombatTotal = totalIn + totalOut + 1;
         let hpInPercent = (totalIn / hpCombatTotal) * 100;
         document.getElementById('hp-in-bar').style.width = `${hpInPercent}%`;
@@ -767,7 +793,7 @@
     async function deleteLog(logId) { await supabaseClient.from('daily_logs').delete().eq('id', logId); loadDataForSelectedDate(); }
 
     // ---------------------------------------------------------------------
-    // 5. CHỨC NĂNG DASHBOARD HỒ SƠ & NHIỀU COUNTDOWN
+    // 5. CHỨC NĂNG DASHBOARD HỒ SƠ
     // ---------------------------------------------------------------------
     function saveMood(index, btnElem) {
         document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
@@ -809,7 +835,6 @@
         } catch(e) {}
     }
 
-    // Logic Quản lý Nhiều Sự kiện Đếm ngược
     document.getElementById('countdown-form').addEventListener('submit', function(e){
         e.preventDefault();
         const title = document.getElementById('cd-title').value, date = document.getElementById('cd-date').value;
@@ -830,7 +855,6 @@
         listElem.innerHTML = '';
         let savedList = JSON.parse(localStorage.getItem(`cd_list_${currentUser?.id}`)) || [];
         
-        // Cập nhật mượt mà dữ liệu từ phiên bản 1 sự kiện cũ (nếu có)
         const oldSingle = JSON.parse(localStorage.getItem(`cd_${currentUser?.id}`));
         if(oldSingle && oldSingle.date && savedList.length === 0) {
             savedList.push(oldSingle);
@@ -844,7 +868,6 @@
         }
 
         savedList.forEach((item, index) => {
-            // So sánh đúng ngày (bỏ qua khác biệt giờ giấc)
             const diffTime = new Date(item.date).setHours(0,0,0,0) - new Date().setHours(0,0,0,0);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             const displayDays = Math.abs(diffDays);
@@ -868,7 +891,6 @@
         loadCountdowns(); 
     }
 
-    // Gọi API Vercel Nhận diện ảnh
     document.getElementById('camera-input').addEventListener('change', function(e) {
         const file = e.target.files[0]; if (!file) return;
         document.getElementById('ai-status').style.display = 'block';
