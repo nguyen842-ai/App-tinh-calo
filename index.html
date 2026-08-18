@@ -63,7 +63,7 @@
         /* LỚP NỀN (ÉP TRÀN VIỀN ĐỂ CHỐNG LỘ MÉP) */
         #bg-layer {
             position: fixed;
-            /* Cố tình cho to hơn màn hình 50px ở mọi hướng */
+            /* Cố tình cho to hơn màn hình 50px ở mọi hướng để chèn kín màn hình */
             top: -50px; bottom: -50px; left: -50px; right: -50px;
             background-size: cover;
             background-position: center center;
@@ -101,7 +101,7 @@
             position: absolute;
             top: 0; right: 0; bottom: 0; left: 0;
             z-index: 9999;
-            background: transparent;
+            background: transparent; /* Xóa lớp mờ màu đen, trả lại 100% độ sáng hình nền */
             display: flex; flex-direction: column; justify-content: space-between; align-items: center;
             padding-top: calc(60px + env(safe-area-inset-top, 0px));
             padding-right: 30px; padding-left: 30px;
@@ -283,12 +283,12 @@
         }
         .del-btn:hover { background: var(--deep-purple); transform: scale(1.1); }
 
-        /* TAB LOGIC */
+        /* TAB LOGIC - Animation mượt mà, không bị giật mờ kính */
         .tab-content { display: none; animation: fadeIn 0.25s ease-in-out; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* BOTTOM NAVIGATION */
+        /* BOTTOM NAVIGATION - Làm mỏng & Tăng kích thước Icon */
         .bottom-nav {
             position: fixed;
             left: 0; right: 0; bottom: 0;
@@ -306,7 +306,9 @@
         }
         .nav-item:hover { background: none; transform: none; box-shadow: none; color: var(--iris-bloom); }
         .nav-item.active { color: var(--iris-bloom); background: rgba(91,69,167,0.15); }
-        .nav-icon-img { width: 20px; height: 20px; object-fit: contain; filter: grayscale(100%); opacity: 0.6; transition: 0.3s; }
+        
+        /* TĂNG KÍCH THƯỚC ICON LÊN GẤP RƯỠI (từ 20px -> 30px) */
+        .nav-icon-img { width: 30px; height: 30px; object-fit: contain; filter: grayscale(100%); opacity: 0.6; transition: 0.3s; }
         .nav-item.active .nav-icon-img { filter: grayscale(0%); opacity: 1; }
 
         /* LỊCH & BÁO CÁO */
@@ -379,10 +381,10 @@
 </head>
 <body>
 
-<!-- LỚP NỀN CỐ ĐỊNH -->
+<!-- LỚP NỀN CỐ ĐỊNH TẠI CHỖ CHỐNG HỞ CHÂN -->
 <div id="bg-layer"></div>
 
-<!-- MÀN HÌNH ĐĂNG NHẬP -->
+<!-- MÀN HÌNH ĐĂNG NHẬP (Làm nền trong suốt hoàn toàn, gỡ lớp phủ đen) -->
 <div id="auth-screen">
     <div class="auth-title-container">
         <h1 class="auth-main-title">Nhật Ký<br>Dinh Dưỡng</h1>
@@ -407,7 +409,7 @@
 <div id="main-app">
     <div class="container">
         
-        <!-- HEADER -->
+        <!-- HEADER (Đã gỡ Box Gradient) -->
         <div class="main-header">
             <div class="header-subtitle">Nhật Ký Dinh Dưỡng</div>
             <h1 class="header-title" id="greeting-name">Xin chào, Bạn!</h1>
