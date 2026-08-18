@@ -6,7 +6,7 @@
     <title>Nhật Ký Dinh Dưỡng</title>
     
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#004987">
+    <meta name="theme-color" content="#5B45A7">
     <link rel="apple-touch-icon" href="./my-logo.png">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -17,13 +17,13 @@
 
     <style>
         :root {
-            /* HỆ MÀU PANTONE ĐẠI DƯƠNG */
-            --pacific-depth: #004987;   /* Chữ nhấn mạnh, Nút bấm */
-            --dark-midnight: #001A5F;   /* Hover, Tiêu đề */
-            --prussian: #003153;        /* Chữ tối */
-            --malibu-blue: #008BCD;     /* Thanh HP (Đốt) */
-            --bleu-ciel: #007AA2;       /* Thanh HP (Nạp) */
-            --cobalt-glaze: #0050A0;    /* Điểm hoà VS */
+            /* HỆ MÀU PANTONE NGẢ TÍM & XANH ĐẠI DƯƠNG */
+            --iris-bloom: #5B45A7;      /* Tím chủ đạo, Nút bấm */
+            --deep-purple: #392B73;     /* Tím đậm, Text nổi bật */
+            --darkest-purple: #241A4C;  /* Tím nền tối */
+            --malibu-blue: #008BCD;     /* Xanh tươi sáng (Thanh tiến độ) */
+            --bleu-ciel: #007AA2;       /* Xanh lơ */
+            --coral-red: #FF7F50;       /* Đỏ san hô (Cảnh báo vượt calo) */
             
             --text-main: #333333; 
             --text-muted: #555555;
@@ -33,126 +33,152 @@
         * { box-sizing: border-box; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent;}
         
         body { 
-            background-color: var(--prussian); 
+            background-color: var(--darkest-purple); 
             background-size: cover; background-position: center; background-attachment: fixed; 
             color: var(--text-main); line-height: 1.6; transition: background-image 0.8s ease-in-out; 
             overflow-x: hidden;
         }
         
-        .container { max-width: 900px; margin: 0 auto; padding: 20px 20px 90px 20px; min-height: 100vh;}
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px 90px 20px; min-height: 100vh;}
         
         /* ---------------------------------------------------- */
-        /* GIAO DIỆN ĐĂNG NHẬP (AUTH SCREEN) */
+        /* GIAO DIỆN ĐĂNG NHẬP (GLASSMORPHISM) */
         /* ---------------------------------------------------- */
         #auth-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            background: rgba(0,0,0,0.4); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; padding: 20px;
         }
         .auth-box {
-            background: rgba(255, 255, 255, 0.85); padding: 30px; 
-            border-radius: 24px; /* Squircle Apple */
+            background: rgba(255, 255, 255, 0.5); padding: 30px; 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-radius: 24px; /* Squircle */
             width: 100%; max-width: 400px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.5); text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.6); text-align: center;
         }
-        .auth-box h2 { color: var(--pacific-depth); margin-bottom: 5px; font-size: 24px; }
+        .auth-box h2 { color: var(--deep-purple); margin-bottom: 5px; font-size: 24px; font-weight: 800;}
+        .auth-box p { color: var(--darkest-purple); font-weight: 600; margin-bottom: 20px;}
         .auth-box input[type="email"], .auth-box input[type="password"] { 
-            margin-bottom: 12px; padding: 14px; border: 1px solid rgba(0,73,135,0.2); 
+            margin-bottom: 12px; padding: 14px; border: 1px solid rgba(91,69,167,0.3); 
             border-radius: 14px; font-size: 14px; outline: none; width: 100%; background: rgba(255,255,255,0.9); 
         }
-        .auth-box input:focus { border-color: var(--pacific-depth); }
-        .remember-group { display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 15px; font-size: 13px; color: var(--prussian); font-weight: 500;}
-        .remember-group input { width: 16px; height: 16px; accent-color: var(--pacific-depth); cursor: pointer;}
+        .auth-box input:focus { border-color: var(--iris-bloom); }
+        .remember-group { display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 15px; font-size: 13px; color: var(--darkest-purple); font-weight: 700;}
+        .remember-group input { width: 16px; height: 16px; accent-color: var(--iris-bloom); cursor: pointer;}
         
         .auth-btn-group { display: flex; gap: 10px; margin-top: 5px; }
         .auth-btn-group button { 
-            flex: 1; padding: 14px; border: none; border-radius: 14px; font-weight: bold; cursor: pointer; 
-            color: white; transition: all 0.3s ease; background-color: var(--pacific-depth); box-shadow: 0 4px 10px rgba(0,73,135,0.3); 
+            flex: 1; padding: 14px; border: none; border-radius: 16px; font-weight: bold; cursor: pointer; 
+            color: white; transition: all 0.3s ease; background-color: var(--iris-bloom); box-shadow: 0 4px 10px rgba(91,69,167,0.3); 
         }
-        .auth-btn-group button:hover { background-color: var(--dark-midnight); transform: translateY(-2px); }
+        .auth-btn-group button:hover { background-color: var(--deep-purple); transform: translateY(-2px); }
         .auth-msg { margin-top: 15px; font-size: 13px; font-weight: bold; }
-        .auth-msg.error { color: var(--red); } .auth-msg.success { color: var(--bleu-ciel); }
+        .auth-msg.error { color: var(--red); } .auth-msg.success { color: var(--iris-bloom); }
 
         /* ---------------------------------------------------- */
-        /* GIAO DIỆN APP CHÍNH */
+        /* HEADER TRAVEL ADVENTURE THUẦN TÚY */
         /* ---------------------------------------------------- */
         #main-app { display: none; } 
+        .main-header {
+            padding: 30px 0 15px 0; text-align: left;
+        }
+        .header-subtitle { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.8); font-weight: 700; margin-bottom: 5px;}
+        .header-title { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.5); line-height: 1.2; margin-bottom: 5px;}
+        .header-desc { font-size: 14px; color: rgba(255,255,255,0.95); text-shadow: 0 1px 5px rgba(0,0,0,0.6); font-style: italic; font-weight: 500;}
 
-        h1 { text-align: center; margin-bottom: 5px; color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.7); font-size: 26px;}
-        .greeting { text-align: center; color: rgba(255,255,255,0.95); text-shadow: 0 1px 5px rgba(0,0,0,0.8); font-style: italic; margin-bottom: 20px; font-size: 14px; }
+        /* ---------------------------------------------------- */
+        /* MY GOAL - THANH TIẾN ĐỘ THANH MẢNH & CẢNH BÁO */
+        /* ---------------------------------------------------- */
+        .my-goal-section {
+            background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.6); padding: 18px 22px; border-radius: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 20px;
+        }
+        .goal-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px; }
+        .goal-header span:first-child { font-weight: 800; color: var(--deep-purple); font-size: 15px; }
+        .goal-header span:last-child { font-weight: 900; color: var(--iris-bloom); font-size: 18px; }
+        .goal-bar-bg { width: 100%; height: 8px; background: rgba(0,0,0,0.1); border-radius: 4px; position: relative; overflow: visible; }
+        .goal-bar-fill { 
+            height: 100%; border-radius: 4px; 
+            background: linear-gradient(90deg, var(--iris-bloom), var(--malibu-blue)); 
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s; position: relative;
+        }
+        /* Dấu chấm phát sáng đầu thanh trượt */
+        .goal-bar-fill::after {
+            content: ''; position: absolute; right: -4px; top: -2px; width: 12px; height: 12px; 
+            background: white; border-radius: 50%; box-shadow: 0 0 8px rgba(255,255,255,0.9);
+        }
+        .goal-warning { font-size: 12px; font-weight: bold; color: var(--coral-red); margin-top: 10px; display: none; animation: shake 0.5s; }
+        @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-3px);} 75% {transform: translateX(3px);} }
         
         /* 3 Ô TRẠNG THÁI (Kính mờ 50%) */
-        .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 25px; }
         .card { 
             padding: 15px 10px; text-align: center; 
             background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-        .card h3 { font-size: 12px; text-transform: uppercase; margin-bottom: 5px; color: var(--dark-midnight); text-shadow: 0 1px 3px rgba(255,255,255,0.8); font-weight: 800;}
-        .card p { font-size: 24px; font-weight: 900; color: var(--pacific-depth); text-shadow: 0 1px 3px rgba(255,255,255,0.9); }
+        .card h3 { font-size: 12px; text-transform: uppercase; margin-bottom: 5px; color: var(--deep-purple); text-shadow: 0 1px 3px rgba(255,255,255,0.8); font-weight: 800;}
+        .card p { font-size: 24px; font-weight: 900; color: var(--iris-bloom); text-shadow: 0 1px 3px rgba(255,255,255,0.9); }
         
-        /* HP BAR CẬP NHẬT PANTONE */
+        /* HP BAR ĐỐI KHÁNG THANH THOÁT HƠN */
         .hp-container { margin-bottom: 30px; text-align: center; }
-        .hp-labels { display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; color: white; text-shadow: 0 1px 5px rgba(0,0,0,0.9); margin-bottom: 6px; }
+        .hp-labels { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.9); text-shadow: 0 1px 3px rgba(0,0,0,0.8); margin-bottom: 6px; letter-spacing: 0.5px;}
         .hp-bar-wrapper {
-            width: 100%; height: 28px; background: rgba(0,0,0,0.5); border-radius: 14px;
-            border: 2px solid var(--pacific-depth); position: relative; overflow: hidden; display: flex; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            width: 100%; height: 16px; background: rgba(0,0,0,0.4); border-radius: 8px;
+            border: 1.5px solid rgba(255,255,255,0.5); position: relative; overflow: hidden; display: flex; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
         .hp-in { background: var(--bleu-ciel); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .hp-out { background: var(--malibu-blue); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .hp-vs {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: var(--cobalt-glaze); color: white; font-weight: 900; font-size: 11px;
-            padding: 3px 10px; border-radius: 12px; border: 2px solid white; font-style: italic; box-shadow: 0 2px 8px rgba(0,0,0,0.6); z-index: 10; transition: left 0.6s ease;
+            background: var(--iris-bloom); color: white; font-weight: 900; font-size: 9px;
+            padding: 2px 6px; border-radius: 8px; border: 1.5px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.5); z-index: 10; transition: left 0.6s ease;
         }
 
-        /* GIAO DIỆN CHUNG & SQUIRCLE */
-        .macros-summary, .section { 
-            background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.7); padding: 22px; border-radius: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); margin-bottom: 25px;
+        /* GIAO DIỆN CHUNG & SQUIRCLE ĐỒNG BỘ TRONG SUỐT 50% */
+        .section { 
+            background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.6); padding: 22px; border-radius: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 25px;
         }
-        .macros-summary { display: flex; justify-content: space-around; text-align: center; }
-        .macro-item span { display: block; font-size: 12px; color: var(--prussian); text-transform: uppercase; font-weight: bold;}
-        .macro-item strong { font-size: 18px; color: var(--pacific-depth); }
 
-        .section h2, .section h3 { font-size: 18px; margin-bottom: 15px; color: var(--dark-midnight); font-weight: 800;}
-        .section h2 { padding-bottom: 10px; border-bottom: 1px solid rgba(0,73,135,0.1); }
+        .section h2, .section h3 { font-size: 18px; margin-bottom: 15px; color: var(--deep-purple); font-weight: 800;}
+        .section h2 { padding-bottom: 10px; border-bottom: 1px solid rgba(91,69,167,0.15); }
         
         .form-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; }
         .macro-inputs, .workout-inputs { display: flex; gap: 10px; }
         input, select { 
-            padding: 14px; border: 1px solid rgba(0,73,135,0.2); border-radius: 14px; 
-            font-size: 14px; outline: none; width: 100%; background: rgba(255,255,255,0.9); color: var(--prussian);
+            padding: 14px; border: 1px solid rgba(91,69,167,0.2); border-radius: 14px; 
+            font-size: 14px; outline: none; width: 100%; background: rgba(255,255,255,0.85); color: var(--darkest-purple); font-weight: 500;
         }
-        input:focus, select:focus { border-color: var(--pacific-depth); }
+        input:focus, select:focus { border-color: var(--iris-bloom); background: rgba(255,255,255,1); }
         
         button { 
-            padding: 14px; border: none; border-radius: 14px; font-weight: bold; cursor: pointer; color: white; 
-            transition: all 0.3s ease; background-color: var(--pacific-depth); box-shadow: 0 4px 10px rgba(0,73,135,0.2); 
+            padding: 14px; border: none; border-radius: 16px; font-weight: bold; cursor: pointer; color: white; 
+            transition: all 0.3s ease; background-color: var(--iris-bloom); box-shadow: 0 4px 10px rgba(91,69,167,0.2); 
         }
-        button:hover { background-color: var(--dark-midnight); transform: translateY(-2px); }
+        button:hover { background-color: var(--deep-purple); transform: translateY(-2px); }
         button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         
-        .btn-ai-calc { white-space: nowrap; font-size: 13px; background: var(--cobalt-glaze); }
+        .btn-ai-calc { white-space: nowrap; font-size: 13px; background: var(--malibu-blue); }
 
         .ai-camera-btn { 
-            display: block; width: 100%; text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.6); 
-            border: 2px dashed var(--pacific-depth); color: var(--pacific-depth); border-radius: 14px; 
-            font-weight: bold; cursor: pointer; margin-bottom: 15px; transition: all 0.3s ease; 
+            display: block; width: 100%; text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.4); 
+            border: 2px dashed var(--iris-bloom); color: var(--iris-bloom); border-radius: 16px; 
+            font-weight: 800; cursor: pointer; margin-bottom: 15px; transition: all 0.3s ease; 
         }
-        .ai-camera-btn:hover { background: rgba(255, 255, 255, 0.9); }
+        .ai-camera-btn:hover { background: rgba(255, 255, 255, 0.7); }
         input[type="file"] { display: none; }
-        #ai-status { font-size: 13px; color: var(--pacific-depth); text-align: center; margin-bottom: 15px; display: none; font-weight: bold; }
+        #ai-status { font-size: 13px; color: var(--iris-bloom); text-align: center; margin-bottom: 15px; display: none; font-weight: bold; }
 
-        .list-header { font-weight: bold; font-size: 14px; color: var(--prussian); margin-bottom: 10px; }
+        .list-header { font-weight: bold; font-size: 14px; color: var(--darkest-purple); margin-bottom: 10px; }
         ul { list-style: none; max-height: 250px; overflow-y: auto; }
-        li { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(0,73,135,0.1); font-size: 14px; }
-        .item-details span { display: block; font-weight: 700; color: var(--dark-midnight);}
-        .item-macros { font-size: 11px; color: var(--prussian); margin-top: 4px; }
+        li { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(91,69,167,0.1); font-size: 14px; }
+        .item-details span { display: block; font-weight: 700; color: var(--deep-purple);}
+        .item-macros { font-size: 11px; color: var(--darkest-purple); margin-top: 4px; }
         .del-btn { color: #e74c3c; cursor: pointer; font-weight: bold; margin-left: 10px; font-size: 18px; border: none; background: none; padding: 0; box-shadow: none;}
         .del-btn:hover { background: none; transform: scale(1.2); color: #c0392b;}
 
-        /* TAB LOGIC & BOTTOM NAV */
+        /* TAB LOGIC & BOTTOM NAV VỚI ICON CUSTOM */
         .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
@@ -165,53 +191,62 @@
         }
         .nav-item { 
             background: none; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; 
-            gap: 4px; font-size: 11px; font-weight: 700; padding: 5px 20px; border-radius: 16px; transition: 0.3s; color: #a0b2c0;
+            gap: 4px; font-size: 11px; font-weight: 700; padding: 5px 20px; border-radius: 16px; transition: 0.3s; color: #8e87ad;
         }
-        .nav-item:hover { background: none; transform: none; box-shadow: none; color: var(--pacific-depth); }
-        .nav-item.active { color: var(--pacific-depth); background: rgba(0,73,135,0.08); }
+        .nav-item:hover { background: none; transform: none; box-shadow: none; color: var(--iris-bloom); }
+        .nav-item.active { color: var(--iris-bloom); background: rgba(91,69,167,0.08); }
         .nav-icon-img { width: 24px; height: 24px; object-fit: contain; filter: grayscale(100%); opacity: 0.5; transition: 0.3s; }
         .nav-item.active .nav-icon-img { filter: grayscale(0%); opacity: 1; }
 
-        /* LỊCH & KẾT QUẢ AI */
-        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-weight: 800; color: var(--pacific-depth);}
-        .calendar-header button { padding: 8px 15px; background: rgba(0,73,135,0.1); color: var(--pacific-depth); box-shadow: none; border-radius: 12px;}
+        /* LỊCH & BÁO CÁO CHỐT SỔ & MỤC TIÊU */
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-weight: 800; color: var(--iris-bloom);}
+        .calendar-header button { padding: 8px 15px; background: rgba(91,69,167,0.1); color: var(--iris-bloom); box-shadow: none; border-radius: 12px;}
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
-        .cal-day-name { font-size: 12px; font-weight: bold; color: var(--prussian); padding-bottom: 5px; }
-        .cal-day { padding: 12px 0; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s; border: 1px solid transparent; color: var(--prussian);}
-        .cal-day:hover { background: rgba(0,73,135,0.05); }
+        .cal-day-name { font-size: 12px; font-weight: bold; color: var(--darkest-purple); padding-bottom: 5px; }
+        .cal-day { padding: 12px 0; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.2s; border: 1px solid transparent; color: var(--darkest-purple);}
+        .cal-day:hover { background: rgba(91,69,167,0.05); }
         .cal-day.empty { pointer-events: none; }
-        .cal-day.active { background: var(--pacific-depth); color: white; box-shadow: 0 4px 10px rgba(0,73,135,0.3); }
+        .cal-day.active { background: var(--iris-bloom); color: white; box-shadow: 0 4px 10px rgba(91,69,167,0.3); }
         .cal-day.has-data { position: relative; }
         .cal-day.has-data::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--malibu-blue); border-radius: 50%; }
         .cal-day.active.has-data::after { background: white; }
 
-        .body-metrics-result { background: rgba(255,255,255,0.8); border-radius: 16px; padding: 18px; margin-top: 15px; border: 1.5px dashed var(--pacific-depth); display: none; }
-        .metric-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(0,73,135,0.1); font-size: 14px; }
+        .daily-summary-box { background: rgba(255,255,255,0.6); border-radius: 16px; padding: 15px; margin-top: 15px; margin-bottom: 15px; text-align: center;}
+        .ds-title { font-size: 13px; font-weight: 800; color: var(--deep-purple); text-transform: uppercase; margin-bottom: 8px;}
+        .ds-data { display: flex; justify-content: space-around; font-size: 15px; font-weight: 900;}
+        .ds-in { color: var(--iris-bloom); } .ds-out { color: var(--malibu-blue); }
+        .ds-empty { font-size: 13px; font-style: italic; color: var(--text-muted); font-weight: 500;}
+
+        .body-metrics-result { background: rgba(255,255,255,0.6); border-radius: 16px; padding: 18px; margin-top: 15px; border: 1.5px dashed var(--iris-bloom); display: none; }
+        .metric-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(91,69,167,0.1); font-size: 14px; }
         .metric-row:last-child { border-bottom: none; }
-        .metric-val { font-weight: 800; color: var(--pacific-depth); text-align: right; }
+        .metric-val { font-weight: 800; color: var(--iris-bloom); text-align: right; }
         .ai-highlight { color: var(--malibu-blue); font-size: 16px; }
 
-        /* DASHBOARD HỒ SƠ */
+        /* DASHBOARD HỒ SƠ TÙY CHỈNH */
+        .profile-name-box { display: flex; gap: 10px; margin-bottom: 20px;}
+        .profile-name-box input { flex: 1; margin-bottom: 0;}
+        
         .mood-grid { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px;}
         .mood-btn { 
-            flex: 1; padding: 15px 0; font-size: 24px; background: rgba(0,73,135,0.05); 
+            flex: 1; padding: 15px 0; font-size: 24px; background: rgba(91,69,167,0.05); 
             border: 2px solid transparent; border-radius: 18px; box-shadow: none; transition: 0.3s;
         }
-        .mood-btn:hover { background: rgba(0,73,135,0.1); transform: scale(1.05); box-shadow: none;}
-        .mood-btn.active { background: var(--pacific-depth); border-color: var(--dark-midnight); transform: scale(1.1); box-shadow: 0 4px 12px rgba(0,73,135,0.3);}
+        .mood-btn:hover { background: rgba(91,69,167,0.1); transform: scale(1.05); box-shadow: none;}
+        .mood-btn.active { background: var(--iris-bloom); border-color: var(--deep-purple); transform: scale(1.1); box-shadow: 0 4px 12px rgba(91,69,167,0.3);}
         
         .widget-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
         .widget { 
-            background: linear-gradient(135deg, var(--pacific-depth), var(--prussian)); 
-            border-radius: 20px; padding: 20px; color: white; text-align: center; box-shadow: 0 6px 15px rgba(0,26,95,0.2);
+            background: linear-gradient(135deg, var(--iris-bloom), var(--deep-purple)); 
+            border-radius: 24px; padding: 20px; color: white; text-align: center; box-shadow: 0 6px 15px rgba(36,26,76,0.2);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
         .widget-title { font-size: 12px; opacity: 0.8; text-transform: uppercase; font-weight: bold; margin-bottom: 8px; letter-spacing: 1px;}
         .widget-main { font-size: 24px; font-weight: 900; margin-bottom: 2px;}
         .widget-sub { font-size: 12px; opacity: 0.9; }
         
-        .countdown-box { text-align: center; background: rgba(0,139,205,0.1); padding: 20px; border-radius: 20px; border: 1px solid rgba(0,139,205,0.3);}
-        .countdown-days { font-size: 36px; font-weight: 900; color: var(--malibu-blue); line-height: 1;}
+        .countdown-box { text-align: center; background: rgba(255,255,255,0.6); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.6);}
+        .countdown-days { font-size: 36px; font-weight: 900; color: var(--iris-bloom); line-height: 1;}
     </style>
 </head>
 <body>
@@ -220,7 +255,7 @@
 <div id="auth-screen">
     <div class="auth-box">
         <h2>🔒 Đăng Nhập</h2>
-        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Dữ liệu mã hóa an toàn trên Đám mây</p>
+        <p>Dữ liệu lưu trữ cá nhân an toàn</p>
         <input type="email" id="auth-email" placeholder="Nhập Email của bạn">
         <input type="password" id="auth-password" placeholder="Nhập Mật khẩu">
         <label class="remember-group">
@@ -228,7 +263,7 @@
         </label>
         <div class="auth-btn-group">
             <button onclick="handleAuth('login')">Đăng Nhập</button>
-            <button onclick="handleAuth('register')" style="background: var(--malibu-blue);">Đăng Ký</button>
+            <button onclick="handleAuth('register')" style="background: var(--darkest-purple);">Đăng Ký</button>
         </div>
         <div id="auth-message" class="auth-msg"></div>
     </div>
@@ -237,8 +272,13 @@
 <!-- GIAO DIỆN CHÍNH APP -->
 <div id="main-app">
     <div class="container">
-        <h1>Nhật Ký Dinh Dưỡng</h1>
-        <p class="greeting" id="greeting-text">Đang tải...</p>
+        
+        <!-- HEADER TRAVEL ADVENTURE -->
+        <div class="main-header">
+            <div class="header-subtitle">Nhật Ký Dinh Dưỡng</div>
+            <h1 class="header-title" id="greeting-name">Xin chào, Bạn 👋</h1>
+            <p class="header-desc" id="greeting-time">Đang tải...</p>
+        </div>
 
         <!-- TAB 1: THEO DÕI (LỊCH SỬ) -->
         <div id="tab-history" class="tab-content">
@@ -253,6 +293,12 @@
                     <div class="cal-day-name">T5</div><div class="cal-day-name">T6</div><div class="cal-day-name">T7</div><div class="cal-day-name">CN</div>
                 </div>
                 <div class="calendar-grid" id="calendar-days"></div>
+            </div>
+
+            <!-- Báo cáo chốt sổ -->
+            <div class="daily-summary-box" id="daily-summary-box">
+                <div class="ds-title">Báo Cáo Chốt Sổ Ngày <span id="ds-date">...</span></div>
+                <div id="ds-content"></div>
             </div>
 
             <div class="section" id="day-data-section">
@@ -282,15 +328,15 @@
                         <option value="gain">Tăng Cơ (Khuyến nghị thặng dư)</option>
                     </select>
                     
-                    <button type="submit" id="btn-save-metrics">Lưu & AI Phân Tích</button>
+                    <button type="submit" id="btn-save-metrics">Lưu & Tính tự động</button>
                 </form>
 
                 <div class="body-metrics-result" id="metrics-result-box">
-                    <h3 style="font-size: 14px; text-align: center; margin-bottom: 15px; color: var(--pacific-depth);">🤖 AI KHUYÊN DÙNG</h3>
+                    <h3 style="font-size: 14px; text-align: center; margin-bottom: 15px; color: var(--iris-bloom);">💡 MỤC TIÊU KHUYẾN NGHỊ</h3>
                     <div class="metric-row"><span>BMI Y khoa:</span> <span class="metric-val" id="res-bmi">0</span></div>
                     <div class="metric-row"><span>Tỷ lệ Eo/Mông:</span> <span class="metric-val" id="res-whr">0</span></div>
                     <div class="metric-row"><span>Body Shape:</span> <span class="metric-val" id="res-shape">...</span></div>
-                    <hr style="border: 0; height: 1px; background: rgba(0,73,135,0.1); margin: 10px 0;">
+                    <hr style="border: 0; height: 1px; background: rgba(91,69,167,0.1); margin: 10px 0;">
                     <div class="metric-row"><span>Mục tiêu Nạp (Ăn):</span> <span class="metric-val ai-highlight" id="res-cal-in">0 kcal</span></div>
                     <div class="metric-row"><span>Mục tiêu Đốt (Tập):</span> <span class="metric-val ai-highlight" id="res-cal-out">0 kcal</span></div>
                 </div>
@@ -299,16 +345,25 @@
 
         <!-- TAB 2: GHI CHÉP (TRANG CHỦ) -->
         <div id="tab-home" class="tab-content active">
+            
+            <!-- MY GOAL PROGRESS BAR -->
+            <div class="my-goal-section">
+                <div class="goal-header"><span>MỤC TIÊU CALO</span> <span id="goal-text">0 / 2000 kcal</span></div>
+                <div class="goal-bar-bg"><div class="goal-bar-fill" id="goal-bar-fill"></div></div>
+                <div class="goal-warning" id="goal-warning">⚠️ Úi! Bạn đã nạp lố calo hôm nay rồi. Hãy tập luyện thêm nhé!</div>
+            </div>
+
             <div class="summary">
                 <div class="card"><h3>Đã Nạp</h3><p id="total-in">0</p></div>
                 <div class="card"><h3>Đã Đốt</h3><p id="total-out">0</p></div>
                 <div class="card"><h3>Thực nhận</h3><p id="total-net">0</p></div>
             </div>
 
+            <!-- HP BAR ĐỐI KHÁNG -->
             <div class="hp-container">
                 <div class="hp-labels">
-                    <span>MỤC TIÊU ĂN (<span id="hp-in-text">...</span>)</span>
-                    <span>TỔNG TIÊU HAO (<span id="hp-out-text">...</span>)</span>
+                    <span>NẠP (IN)</span>
+                    <span>TIÊU HAO (OUT)</span>
                 </div>
                 <div class="hp-bar-wrapper">
                     <div class="hp-in" id="hp-in-bar" style="width: 50%;"></div>
@@ -320,9 +375,9 @@
             <div class="main-grid">
                 <div class="section">
                     <h2>🍔 Ăn Uống (In)</h2>
-                    <label class="ai-camera-btn" for="camera-input">📷 CHỤP HOẶC TẢI ẢNH ĐỒ ĂN</label>
+                    <label class="ai-camera-btn" for="camera-input">📷 NHẬN DIỆN MÓN ĂN BẰNG ẢNH</label>
                     <input type="file" id="camera-input" accept="image/*">
-                    <div id="ai-status">⏳ Đang phân tích...</div>
+                    <div id="ai-status">⏳ Đang xử lý ảnh...</div>
 
                     <form class="form-group" id="food-form">
                         <input type="text" id="food-name" placeholder="Tên món ăn" required>
@@ -338,7 +393,7 @@
                     <form class="form-group" id="workout-form">
                         <div class="workout-inputs">
                             <input type="text" id="workout-name" placeholder="VD: Chạy bộ 30p" required style="flex: 1;">
-                            <button type="button" id="btn-ai-workout" class="btn-ai-calc">✨ AI Tính</button>
+                            <button type="button" id="btn-ai-workout" class="btn-ai-calc">✨ Tính tự động</button>
                         </div>
                         <input type="number" id="workout-cal" placeholder="Calo tiêu hao" required>
                         <button type="submit" id="btn-add-workout">Lưu bài tập</button>
@@ -351,6 +406,15 @@
 
         <!-- TAB 3: HỒ SƠ (DASHBOARD CÁ NHÂN) -->
         <div id="tab-profile" class="tab-content">
+            <!-- Đổi tên -->
+            <div class="section">
+                <h3>Tên hiển thị</h3>
+                <form class="profile-name-box" id="name-form">
+                    <input type="text" id="prof-name-input" placeholder="Nhập tên của bạn" required>
+                    <button type="submit" style="white-space: nowrap;">Lưu tên</button>
+                </form>
+            </div>
+
             <!-- Mood Tracker -->
             <div class="section">
                 <h3>Tâm trạng hôm nay</h3>
@@ -361,7 +425,7 @@
                     <button class="mood-btn" onclick="saveMood(4, this)">🙂</button>
                     <button class="mood-btn" onclick="saveMood(5, this)">🤩</button>
                 </div>
-                <p id="mood-status" style="text-align:center; font-size:12px; color:var(--bleu-ciel); display:none; margin-top:5px;">Đã lưu cảm xúc!</p>
+                <p id="mood-status" style="text-align:center; font-size:12px; color:var(--iris-bloom); display:none; margin-top:5px;">Đã lưu cảm xúc!</p>
             </div>
 
             <!-- 2 Widgets -->
@@ -371,7 +435,7 @@
                     <div class="widget-main" id="widget-solar">--/--</div>
                     <div class="widget-sub" id="widget-lunar">Âm lịch: --/--</div>
                 </div>
-                <div class="widget" style="background: linear-gradient(135deg, var(--malibu-blue), var(--cobalt-glaze));">
+                <div class="widget" style="background: linear-gradient(135deg, var(--malibu-blue), var(--bleu-ciel));">
                     <div class="widget-title">Thời Tiết</div>
                     <div class="widget-main" id="widget-temp">--°C</div>
                     <div class="widget-sub" id="widget-weather-desc">Đang cập nhật...</div>
@@ -387,10 +451,10 @@
                     <button type="submit" style="background: var(--malibu-blue);">Lưu Sự Kiện</button>
                 </form>
                 <div class="countdown-box" id="cd-display" style="display: none; margin-top: 15px;">
-                    <div class="widget-title" id="cd-display-title" style="color: var(--prussian);">Đang đếm ngược...</div>
+                    <div class="widget-title" id="cd-display-title" style="color: var(--darkest-purple);">Đang đếm ngược...</div>
                     <div class="countdown-days" id="cd-display-days">0</div>
-                    <div class="widget-sub" style="color: var(--prussian); font-weight: bold; margin-top: 5px;">NGÀY NỮA</div>
-                    <button onclick="clearCountdown()" style="margin-top:15px; padding: 8px; font-size: 12px; background: transparent; color: var(--red); border: 1px solid var(--red);">Xóa sự kiện</button>
+                    <div class="widget-sub" style="color: var(--darkest-purple); font-weight: bold; margin-top: 5px;">NGÀY NỮA</div>
+                    <button onclick="clearCountdown()" style="margin-top:15px; padding: 10px; font-size: 12px; font-weight: bold; background: transparent; color: var(--red); border: 2px solid var(--red); border-radius: 12px; width: 100%;">Xóa sự kiện</button>
                 </div>
             </div>
 
@@ -432,7 +496,7 @@
         document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
-        if(!btnElement) { // Cho tính năng vuốt
+        if(!btnElement) {
             const index = tabsOrder.indexOf(tabId);
             document.querySelectorAll('.nav-item')[index].classList.add('active');
         } else {
@@ -444,18 +508,18 @@
     let touchStartX = 0;
     document.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX, {passive: true});
     document.addEventListener('touchend', e => {
-        if(document.getElementById('main-app').style.display === 'none') return; // Không vuốt lúc đăng nhập
+        if(document.getElementById('main-app').style.display === 'none') return;
         let touchEndX = e.changedTouches[0].screenX;
         let diff = touchStartX - touchEndX;
-        if(Math.abs(diff) > 80) { // Quãng đường vuốt
+        if(Math.abs(diff) > 80) { 
             let currentIndex = tabsOrder.indexOf(document.querySelector('.tab-content.active').id);
-            if(diff > 0 && currentIndex < 2) switchTab(tabsOrder[currentIndex + 1]); // Vuốt trái -> Tiến
-            else if (diff < 0 && currentIndex > 0) switchTab(tabsOrder[currentIndex - 1]); // Vuốt phải -> Lùi
+            if(diff > 0 && currentIndex < 2) switchTab(tabsOrder[currentIndex + 1]); 
+            else if (diff < 0 && currentIndex > 0) switchTab(tabsOrder[currentIndex - 1]); 
         }
     }, {passive: true});
 
     // ---------------------------------------------------------------------
-    // 2. SUPABASE AUTH & REMEMBER ME
+    // 2. SUPABASE AUTH & USER PROFILE
     // ---------------------------------------------------------------------
     const SUPABASE_URL = 'https://qsfwgjzejggvawcxjkxp.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_6uLn0e1rJtFFBr_hhHjkYA_Carb1WqC';
@@ -466,7 +530,6 @@
     let cloudMetrics = {}; 
     let cloudLogs = [];
 
-    // Xử lý Ghi nhớ đăng nhập
     window.addEventListener('beforeunload', () => {
         if (sessionStorage.getItem('no_remember') === 'true') {
             for (let key in localStorage) {
@@ -508,7 +571,7 @@
         document.getElementById('auth-screen').style.display = 'none';
         document.getElementById('main-app').style.display = 'block';
         document.getElementById('bottom-nav').style.display = 'flex';
-        setGreeting(); renderCalendar(); fetchAllDataFromCloud(); initDashboardWidgets();
+        updateHeaderInfo(); renderCalendar(); fetchAllDataFromCloud(); initDashboardWidgets();
     }
     function hideApp() {
         document.getElementById('auth-screen').style.display = 'flex';
@@ -516,16 +579,28 @@
         document.getElementById('bottom-nav').style.display = 'none';
     }
 
-    function setGreeting() {
+    // Xử lý Tên người dùng và Lời chào
+    function updateHeaderInfo() {
+        const name = currentUser?.user_metadata?.display_name || "bạn";
+        document.getElementById('greeting-name').innerText = `Xin chào, ${name} 👋`;
+        document.getElementById('prof-name-input').value = currentUser?.user_metadata?.display_name || "";
+
         const hour = new Date().getHours();
         let time = hour < 12 ? "sáng" : (hour < 18 ? "chiều" : "tối");
-        document.getElementById('greeting-text').innerText = `Chào buổi ${time}! Hôm nay bạn đã thâm hụt calo chưa? 🥊`;
+        document.getElementById('greeting-time').innerText = `Chào buổi ${time}! Hôm nay bạn đã thâm hụt calo chưa? 🥊`;
     }
+
+    document.getElementById('name-form').addEventListener('submit', async function(e){
+        e.preventDefault();
+        const newName = document.getElementById('prof-name-input').value;
+        const { data, error } = await supabaseClient.auth.updateUser({ data: { display_name: newName } });
+        if(!error) { currentUser = data.user; updateHeaderInfo(); alert("Đã lưu tên thành công!");}
+    });
 
     function formatDate(dateObj) { return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`; }
 
     // ---------------------------------------------------------------------
-    // 3. LOGIC LỊCH & CHỈ SỐ AI
+    // 3. LOGIC LỊCH & CHỈ SỐ CƠ THỂ
     // ---------------------------------------------------------------------
     let displayDate = new Date(); 
 
@@ -585,11 +660,14 @@
         const ex = cloudMetrics[selectedDateStr];
         if(ex && ex.id) await supabaseClient.from('body_metrics').update(payload).eq('id', ex.id); else await supabaseClient.from('body_metrics').insert([payload]);
 
-        btn.innerText = "Lưu & AI Phân Tích"; btn.disabled = false; await fetchAllDataFromCloud(); 
+        btn.innerText = "Lưu & Tính tự động"; btn.disabled = false; await fetchAllDataFromCloud(); 
     });
 
     async function loadDataForSelectedDate() {
-        document.getElementById('selected-date-title').innerText = `Chỉ số Cơ thể ngày ${selectedDateStr.split('-').reverse().join('/')}`;
+        const parts = selectedDateStr.split('-');
+        document.getElementById('ds-date').innerText = `${parts[2]}/${parts[1]}/${parts[0]}`;
+        document.getElementById('selected-date-title').innerText = `Chỉ số Cơ thể ngày ${parts[2]}/${parts[1]}/${parts[0]}`;
+        
         const md = cloudMetrics[selectedDateStr];
         if(md) {
             ['weight','height','chest','waist','hip'].forEach(k => document.getElementById(`bm-${k}`).value = md[k] || '');
@@ -603,7 +681,7 @@
     }
 
     // ---------------------------------------------------------------------
-    // 4. CẬP NHẬT GIAO DIỆN CHÍNH & HP BAR
+    // 4. CẬP NHẬT TRANG CHỦ & BÁO CÁO CHỐT SỔ (HISTORY)
     // ---------------------------------------------------------------------
     function updateMainAppUI() {
         let inList = '', outList = '', totalIn = 0, totalOut = 0;
@@ -619,16 +697,40 @@
         document.getElementById('food-list').innerHTML = inList; document.getElementById('workout-list').innerHTML = outList;
         document.getElementById('total-in').innerText = totalIn; document.getElementById('total-out').innerText = totalOut; document.getElementById('total-net').innerText = totalIn - totalOut;
 
+        // Báo cáo chốt sổ (History)
+        const dsContent = document.getElementById('ds-content');
+        if(cloudLogs.length === 0) {
+            dsContent.innerHTML = `<div class="ds-empty">Chưa có dữ liệu ghi chép cho ngày này</div>`;
+        } else {
+            dsContent.innerHTML = `<div class="ds-data"><span class="ds-in">Tổng Nạp: ${totalIn}</span><span class="ds-out">Tổng Đốt: ${totalOut}</span></div>`;
+        }
+
+        // Target AI
         let targetIn = 2000, targetOut = 0;
         const md = cloudMetrics[selectedDateStr]; if(md && md.ai_recommended_in) { targetIn = md.ai_recommended_in; targetOut = md.ai_recommended_out; }
         
-        document.getElementById('hp-in-text').innerText = `${totalIn} / ${targetIn}`;
-        document.getElementById('hp-out-text').innerText = `${totalOut} / ${targetOut || 'N/A'}`;
+        // Cập nhật My Goal Progress Bar
+        document.getElementById('goal-text').innerText = `${totalIn} / ${targetIn} kcal`;
+        let goalPercent = (totalIn / targetIn) * 100;
+        let goalFill = document.getElementById('goal-bar-fill');
+        let goalWarning = document.getElementById('goal-warning');
+        if(goalPercent > 100) {
+            goalFill.style.width = '100%'; 
+            goalFill.style.background = 'var(--coral-red)';
+            goalWarning.innerText = `⚠️ Úi! Bạn đã nạp lố ${totalIn - targetIn} kcal so với mục tiêu. Hãy tập luyện thêm nhé!`;
+            goalWarning.style.display = 'block';
+        } else {
+            goalFill.style.width = `${goalPercent}%`; 
+            goalFill.style.background = 'linear-gradient(90deg, var(--iris-bloom), var(--malibu-blue))';
+            goalWarning.style.display = 'none';
+        }
 
-        let inPercent = (totalIn / (totalIn + totalOut + 1)) * 100;
-        document.getElementById('hp-in-bar').style.width = `${inPercent}%`;
-        document.getElementById('hp-out-bar').style.width = `${100 - inPercent}%`;
-        document.getElementById('hp-vs-badge').style.left = `${inPercent}%`;
+        // HP Bar Đối kháng
+        let hpCombatTotal = totalIn + totalOut + 1;
+        let hpInPercent = (totalIn / hpCombatTotal) * 100;
+        document.getElementById('hp-in-bar').style.width = `${hpInPercent}%`;
+        document.getElementById('hp-out-bar').style.width = `${100 - hpInPercent}%`;
+        document.getElementById('hp-vs-badge').style.left = `${hpInPercent}%`;
     }
 
     document.getElementById('food-form').addEventListener('submit', async function(e) {
@@ -646,9 +748,8 @@
     async function deleteLog(logId) { await supabaseClient.from('daily_logs').delete().eq('id', logId); loadDataForSelectedDate(); }
 
     // ---------------------------------------------------------------------
-    // 5. CHỨC NĂNG DASHBOARD HỒ SƠ TÙY CHỈNH
+    // 5. CHỨC NĂNG DASHBOARD HỒ SƠ 
     // ---------------------------------------------------------------------
-    // Mood Tracker
     function saveMood(index, btnElem) {
         document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
         btnElem.classList.add('active');
@@ -661,20 +762,19 @@
         if(saved) document.querySelectorAll('.mood-btn')[saved - 1].classList.add('active');
     }
 
-    // Widgets & Countdown
     function initDashboardWidgets() {
-        // Lịch Dương & Âm
         const today = new Date();
         document.getElementById('widget-solar').innerText = `${today.getDate()}/${today.getMonth() + 1}`;
-        try { const lunar = Lunar.fromDate(today); document.getElementById('widget-lunar').innerText = `Âm lịch: ${lunar.getDayInChinese()}/${lunar.getMonthInChinese()}`; } 
+        try { 
+            const lunar = Lunar.fromDate(today); 
+            document.getElementById('widget-lunar').innerText = `Âm lịch: ${lunar.getDay()}/${lunar.getMonth()}`; 
+        } 
         catch(e) { document.getElementById('widget-lunar').innerText = "Âm lịch: N/A"; }
 
-        // Thời tiết Open-Meteo
         navigator.geolocation.getCurrentPosition(
             async (pos) => fetchWeather(pos.coords.latitude, pos.coords.longitude),
-            () => fetchWeather(10.7626, 106.6602) // Mặc định TP.HCM
+            () => fetchWeather(10.7626, 106.6602) 
         );
-
         loadCountdown();
     }
 
@@ -711,7 +811,7 @@
     }
     function clearCountdown() { localStorage.removeItem(`cd_${currentUser.id}`); loadCountdown(); }
 
-    // Gọi AI (Vercel)
+    // Gọi API Vercel Nhận diện ảnh
     document.getElementById('camera-input').addEventListener('change', function(e) {
         const file = e.target.files[0]; if (!file) return;
         document.getElementById('ai-status').style.display = 'block';
@@ -720,7 +820,7 @@
             try {
                 const response = await fetch('https://app-tinh-calo.vercel.app/api/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ imageBase64: reader.result.split(',')[1] }) });
                 const data = await response.json();
-                if (data.cal) { document.getElementById('food-name').value = data.name; document.getElementById('food-cal').value = data.cal; document.getElementById('ai-status').innerText = '✅ Đã phân tích!'; }
+                if (data.cal) { document.getElementById('food-name').value = data.name; document.getElementById('food-cal').value = data.cal; document.getElementById('ai-status').innerText = '✅ Xong! Vui lòng lưu món ăn.'; }
             } catch (error) { document.getElementById('ai-status').innerText = '❌ Lỗi mạng'; }
             e.target.value = ""; 
         };
@@ -736,7 +836,7 @@
             const data = await response.json();
             if (data.cal) { document.getElementById('workout-cal').value = data.cal; this.innerText = "✅ Xong"; }
         } catch (error) { this.innerText = "❌ Lỗi"; }
-        setTimeout(() => { this.innerText = "✨ AI Tính"; this.disabled = false; }, 2000);
+        setTimeout(() => { this.innerText = "✨ Tính tự động"; this.disabled = false; }, 2000);
     });
 
 </script>
