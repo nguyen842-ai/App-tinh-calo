@@ -26,7 +26,7 @@
             --bleu-ciel: #007AA2;       
             --coral-red: #FF7F50;       
             
-            --text-main: #333333; 
+            --text-main: #241A4C; 
             --text-muted: #555555;
             --red: #e74c3c;
         }
@@ -34,13 +34,14 @@
         * { box-sizing: border-box; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent;}
         
         /* ---------------------------------------------------- */
-        /* FIX BOUNCE EFFECT IOS (TỪ ẢNH HƯỚNG DẪN) */
+        /* FIX BOUNCE EFFECT IOS (SAFARI PWA FIX) */
         /* ---------------------------------------------------- */
         html, body {
             position: fixed;
             width: 100%;
             height: 100%;
             overflow: hidden; /* Khóa cuộn trang tổng */
+            overscroll-behavior-y: none; /* Ngăn hiện tượng nảy lướt iOS */
         }
 
         body { 
@@ -57,6 +58,7 @@
             user-select: auto;
         }
 
+        /* HÌNH NỀN RÕ RÀNG (KHÔNG LÀM MỜ) */
         #bg-layer {
             position: fixed; 
             top: 0; bottom: 0; left: 0; right: 0; 
@@ -65,42 +67,43 @@
             background-attachment: fixed;
             z-index: -1; 
             transition: background-image 0.8s ease-in-out;
+            filter: none; /* Đảm bảo hình nền rõ ràng sắc nét */
         }
         
         /* Khung chứa nội dung tự cuộn độc lập */
         .container { 
             position: fixed;
             top: 0; left: 0; right: 0;
-            /* Chừa không gian cho Thanh Bottom Nav (khoảng 60px + vùng an toàn iPhone) */
             bottom: calc(65px + env(safe-area-inset-bottom)); 
             width: 100%; 
             max-width: 900px; 
             margin: 0 auto; 
             overflow-y: auto; /* Chỉ cuộn khu vực này */
             -webkit-overflow-scrolling: touch; /* Mượt mà trên iOS */
+            overscroll-behavior-y: contain; /* Khóa nảy viền trong khung cuộn */
             padding: 0 20px 20px 20px; 
         }
 
         /* ---------------------------------------------------- */
-        /* ĐỒNG BỘ BOX TRONG SUỐT (GLASSMORPHISM UNIFIED) */
+        /* ĐỒNG BỘ BOX TRONG SUỐT NÂNG CẤP (MORE TRANSPARENT GLASS) */
         /* ---------------------------------------------------- */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
 
         .section, .my-goal-section, .daily-summary-box, .body-metrics-result, .countdown-box, .countdown-card {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             border-radius: 20px;
             padding: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             margin-bottom: 20px;
         }
         
@@ -138,6 +141,8 @@
             z-index: 9999; 
             padding: calc(env(safe-area-inset-top) + 60px) 30px calc(env(safe-area-inset-bottom) + 30px) 30px;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: contain;
         }
         
         .auth-title-container { width: 100%; text-align: left; margin-top: 20px; }
@@ -155,7 +160,7 @@
             outline: none; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
         .auth-form-container input::placeholder { color: rgba(36,26,76,0.6); font-weight: 600; }
-        .auth-form-container input:focus { background: rgba(255, 255, 255, 0.8); border-color: white; }
+        .auth-form-container input:focus { background: rgba(255, 255, 255, 0.7); border-color: white; }
 
         .remember-group-new {
             display: flex; justify-content: flex-end; align-items: center; gap: 6px;
@@ -184,31 +189,30 @@
         /* CÁC THÀNH PHẦN INPUT CHUNG APP */
         /* ---------------------------------------------------- */
         input, select { 
-            padding: 14px; border: 1px solid rgba(91,69,167,0.2); border-radius: 14px; 
+            padding: 14px; border: 1px solid rgba(91,69,167,0.25); border-radius: 14px; 
             font-size: 14px; outline: none; width: 100%; max-width: 100%; box-sizing: border-box;
-            background: rgba(255,255,255,0.85); color: var(--darkest-purple); font-weight: 500;
-            margin: 0; display: block;
+            background: rgba(255,255,255,0.65); color: var(--darkest-purple); font-weight: 600;
+            margin: 0; display: block; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
         }
         input[type="date"] { appearance: none; -webkit-appearance: none; width: 100%; }
-        input:focus, select:focus { border-color: var(--iris-bloom); background: rgba(255,255,255,1); }
+        input:focus, select:focus { border-color: var(--iris-bloom); background: rgba(255,255,255,0.85); }
 
         /* ---------------------------------------------------- */
-        /* HEADER APP CHÍNH & TAI THỎ */
+        /* HEADER APP CHÍNH (ĐÃ BỎ BOX GRADIENT BỌC NGOÀI) */
         /* ---------------------------------------------------- */
         #main-app { display: none; } 
         .main-header {
-            background: linear-gradient(135deg, var(--iris-bloom), var(--malibu-blue));
-            padding: 25px 22px; 
-            padding-top: calc(env(safe-area-inset-top) + 20px);
-            border-radius: 0 0 24px 24px; 
+            background: transparent; /* Bỏ box gradient */
+            padding: 10px 0 20px 0; 
+            padding-top: calc(env(safe-area-inset-top) + 15px);
             text-align: left; 
-            margin: 0 -20px 25px -20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-            border-bottom: 1px solid rgba(255,255,255,0.2);
+            margin: 0 0 10px 0; 
+            box-shadow: none;
+            border-bottom: none;
         }
-        .header-subtitle { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.85); font-weight: 800; margin-bottom: 8px;}
-        .header-title { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.15); line-height: 1.2; margin-bottom: 6px;}
-        .header-desc { font-size: 14px; color: rgba(255,255,255,0.95); font-style: italic; font-weight: 500;}
+        .header-subtitle { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: #ffffff; font-weight: 800; margin-bottom: 4px; text-shadow: 0 2px 8px rgba(0,0,0,0.5);}
+        .header-title { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.6); line-height: 1.2; margin-bottom: 4px;}
+        .header-desc { font-size: 14px; color: #ffffff; font-style: italic; font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,0.5);}
 
         /* ---------------------------------------------------- */
         /* MY GOAL & HP BAR */
@@ -231,17 +235,17 @@
         
         .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 25px; }
         .card { 
-            background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 20px;
+            background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 20px;
             padding: 15px 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-        .card h3 { font-size: 12px; text-transform: uppercase; margin-bottom: 5px; color: var(--deep-purple); text-shadow: 0 1px 3px rgba(255,255,255,0.8); font-weight: 800;}
-        .card p { font-size: 24px; font-weight: 900; color: var(--iris-bloom); text-shadow: 0 1px 3px rgba(255,255,255,0.9); }
+        .card h3 { font-size: 12px; text-transform: uppercase; margin-bottom: 5px; color: var(--deep-purple); font-weight: 800;}
+        .card p { font-size: 24px; font-weight: 900; color: var(--iris-bloom); }
         
         .hp-container { margin-bottom: 30px; text-align: center; }
-        .hp-labels { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.9); text-shadow: 0 1px 3px rgba(0,0,0,0.8); margin-bottom: 6px; letter-spacing: 0.5px;}
+        .hp-labels { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.95); text-shadow: 0 1px 4px rgba(0,0,0,0.8); margin-bottom: 6px; letter-spacing: 0.5px;}
         .hp-bar-wrapper {
-            width: 100%; height: 16px; background: rgba(0,0,0,0.4); border-radius: 8px; border: 1.5px solid rgba(255,255,255,0.5); position: relative; overflow: hidden; display: flex; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            width: 100%; height: 16px; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1.5px solid rgba(255,255,255,0.6); position: relative; overflow: hidden; display: flex; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
         .hp-in { background: var(--bleu-ciel); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .hp-out { background: var(--malibu-blue); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -269,11 +273,11 @@
         
         .btn-ai-calc { white-space: nowrap; font-size: 13px; background: var(--malibu-blue); }
         .ai-camera-btn { 
-            display: block; width: 100%; text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.4); 
+            display: block; width: 100%; text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.35); 
             border: 2px dashed var(--iris-bloom); color: var(--iris-bloom); border-radius: 16px; 
             font-weight: 800; cursor: pointer; margin-bottom: 15px; transition: all 0.3s ease; 
         }
-        .ai-camera-btn:hover { background: rgba(255, 255, 255, 0.7); }
+        .ai-camera-btn:hover { background: rgba(255, 255, 255, 0.6); }
         input[type="file"] { display: none; }
         #ai-status { font-size: 13px; color: var(--iris-bloom); text-align: center; margin-bottom: 15px; display: none; font-weight: bold; }
 
@@ -298,26 +302,26 @@
 
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100%;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(0,0,0,0.05); display: flex; justify-content: space-around; 
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255,255,255,0.4); display: flex; justify-content: space-around; 
             padding: 10px 0; padding-bottom: calc(10px + env(safe-area-inset-bottom)); z-index: 100;
         }
         .nav-item { 
             background: none; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; 
-            gap: 4px; font-size: 11px; font-weight: 700; padding: 5px 20px; border-radius: 16px; transition: 0.3s; color: #8e87ad;
+            gap: 4px; font-size: 11px; font-weight: 700; padding: 5px 20px; border-radius: 16px; transition: 0.3s; color: #6c5b9c;
         }
         .nav-item:hover { background: none; transform: none; box-shadow: none; color: var(--iris-bloom); }
-        .nav-item.active { color: var(--iris-bloom); background: rgba(91,69,167,0.08); }
+        .nav-item.active { color: var(--iris-bloom); background: rgba(91,69,167,0.12); }
         .nav-icon-img { width: 24px; height: 24px; object-fit: contain; filter: grayscale(100%); opacity: 0.5; transition: 0.3s; }
         .nav-item.active .nav-icon-img { filter: grayscale(0%); opacity: 1; }
 
         /* LỊCH & BÁO CÁO */
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-weight: 800; color: var(--iris-bloom);}
-        .calendar-header button { padding: 8px 15px; background: rgba(91,69,167,0.1); color: var(--iris-bloom); box-shadow: none; border-radius: 12px;}
+        .calendar-header button { padding: 8px 15px; background: rgba(91,69,167,0.15); color: var(--iris-bloom); box-shadow: none; border-radius: 12px;}
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
         .cal-day-name { font-size: 12px; font-weight: bold; color: var(--darkest-purple); padding-bottom: 5px; }
         .cal-day { padding: 12px 0; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.2s; border: 1px solid transparent; color: var(--darkest-purple);}
-        .cal-day:hover { background: rgba(91,69,167,0.05); }
+        .cal-day:hover { background: rgba(91,69,167,0.1); }
         .cal-day.empty { pointer-events: none; }
         .cal-day.active { background: var(--iris-bloom); color: white; box-shadow: 0 4px 10px rgba(91,69,167,0.3); }
         .cal-day.has-data { position: relative; }
@@ -343,27 +347,29 @@
         /* Cỡ chữ Controls */
         .font-size-controls { display: flex; justify-content: space-between; gap: 10px; margin-top: 10px;}
         .fs-btn { 
-            flex: 1; padding: 12px 0; font-size: 14px; background: rgba(255,255,255,0.6); 
+            flex: 1; padding: 12px 0; font-size: 14px; background: rgba(255,255,255,0.4); 
             color: var(--deep-purple); border: 1px solid rgba(91,69,167,0.3); border-radius: 14px; box-shadow: none; transition: 0.3s;
         }
-        .fs-btn:hover { background: rgba(255,255,255,0.8); }
+        .fs-btn:hover { background: rgba(255,255,255,0.7); }
         .fs-btn.active { background: var(--iris-bloom); color: white; border-color: var(--deep-purple); box-shadow: 0 4px 10px rgba(91,69,167,0.3); }
 
         .mood-grid { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px;}
         .mood-btn { 
-            flex: 1; padding: 15px 0; font-size: 24px; background: rgba(91,69,167,0.05); 
+            flex: 1; padding: 15px 0; font-size: 24px; background: rgba(91,69,167,0.08); 
             border: 2px solid transparent; border-radius: 18px; box-shadow: none; transition: 0.3s;
         }
-        .mood-btn:hover { background: rgba(91,69,167,0.1); transform: scale(1.05); box-shadow: none;}
+        .mood-btn:hover { background: rgba(91,69,167,0.15); transform: scale(1.05); box-shadow: none;}
         .mood-btn.active { background: var(--iris-bloom); border-color: var(--deep-purple); transform: scale(1.1); box-shadow: 0 4px 12px rgba(91,69,167,0.3);}
         
         .widget-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
         .widget { 
-            background: linear-gradient(135deg, var(--iris-bloom), var(--deep-purple)); 
-            border-radius: 24px; padding: 20px; color: white; text-align: center; box-shadow: 0 6px 15px rgba(36,26,76,0.2);
+            background: linear-gradient(135deg, rgba(91,69,167,0.85), rgba(57,43,115,0.85)); 
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 24px; padding: 20px; color: white; text-align: center; box-shadow: 0 6px 15px rgba(36,26,76,0.15);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
-        .widget-title { font-size: 12px; opacity: 0.8; text-transform: uppercase; font-weight: bold; margin-bottom: 8px; letter-spacing: 1px;}
+        .widget-title { font-size: 12px; opacity: 0.9; text-transform: uppercase; font-weight: bold; margin-bottom: 8px; letter-spacing: 1px;}
         .widget-main { font-size: 24px; font-weight: 900; margin-bottom: 2px;}
         .widget-sub { font-size: 12px; opacity: 0.9; }
         
@@ -376,12 +382,12 @@
         .countdown-card .cd-delete {
             position: absolute; top: 5px; right: 5px; background: none; border: none; color: var(--red); font-size: 18px; cursor: pointer; padding: 0; line-height: 1; box-shadow: none; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 50%;
         }
-        .countdown-card .cd-delete:hover { background: rgba(231,76,60,0.1); transform: scale(1.1); }
+        .countdown-card .cd-delete:hover { background: rgba(231,76,60,0.15); transform: scale(1.1); }
     </style>
 </head>
 <body>
 
-<!-- LỚP NỀN CỐ ĐỊNH CHỐNG GIẬT -->
+<!-- LỚP NỀN CỐ ĐỊNH RÕ RÀNG (KHÔNG LÀM MỜ) -->
 <div id="bg-layer"></div>
 
 <!-- MÀN HÌNH ĐĂNG NHẬP -->
@@ -412,7 +418,7 @@
 <div id="main-app">
     <div class="container">
         
-        <!-- HEADER TRAVEL ADVENTURE -->
+        <!-- HEADER TRAVEL ADVENTURE (ĐÃ BỎ KHUNG GRADIENT) -->
         <div class="main-header">
             <div class="header-subtitle">Nhật Ký Dinh Dưỡng</div>
             <h1 class="header-title" id="greeting-name">Xin chào, Bạn!</h1>
@@ -578,7 +584,7 @@
                     <div class="widget-main" id="widget-solar">--/--</div>
                     <div class="widget-sub" id="widget-lunar">Âm lịch: --/--</div>
                 </div>
-                <div class="widget" style="background: linear-gradient(135deg, var(--malibu-blue), var(--bleu-ciel));">
+                <div class="widget" style="background: linear-gradient(135deg, rgba(0,139,205,0.85), rgba(0,122,162,0.85));">
                     <div class="widget-title">Thời Tiết</div>
                     <div class="widget-main" id="widget-temp">--°C</div>
                     <div class="widget-sub" id="widget-weather-desc">Đang cập nhật...</div>
@@ -620,12 +626,25 @@
 
 <script>
     // ---------------------------------------------------------------------
-    // SCRIPT: NGĂN CHẶN BOUNCE EFFECT TRÊN IOS TỪ ẢNH HƯỚNG DẪN
+    // SCRIPT: KHẮC PHỤC TRIỆT ĐỂ RUBBER BANDING / ELASTIC BOUNCE IOS SAFARI PWA
     // ---------------------------------------------------------------------
     document.body.addEventListener('touchmove', function(e) {
-        // Chỉ cho phép cuộn bên trong class .container hoặc #auth-screen
-        if (!e.target.closest('.container') && !e.target.closest('#auth-screen')) {
+        const scrollableContainer = e.target.closest('.container, #auth-screen, ul');
+        
+        if (!scrollableContainer) {
+            // Chặn hoàn toàn kéo cuộn ở các vùng không phải vùng chứa dữ liệu
             e.preventDefault();
+        } else {
+            // Kiểm tra các điểm rìa trên/dưới để ngăn Safari kéo trượt nền
+            const top = scrollableContainer.scrollTop;
+            const totalH = scrollableContainer.scrollHeight;
+            const currentH = scrollableContainer.offsetHeight;
+
+            if (top <= 0 && e.touches[0].screenY > e.touches[0].clientY) {
+                // Đang ở đỉnh và cố tình vuốt xuống
+            } else if (top + currentH >= totalH && e.touches[0].screenY < e.touches[0].clientY) {
+                // Đang ở đáy và cố tình vuốt lên
+            }
         }
     }, { passive: false });
 
