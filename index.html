@@ -225,7 +225,7 @@
 
             try {
                 // Gọi tới Vercel Serverless Function của bạn
-                const response = await fetch('/api/analyze', {
+                const response = await fetch('https://app-tinh-calo.vercel.app/api/analyze', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ imageBase64: base64String })
