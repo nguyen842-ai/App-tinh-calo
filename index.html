@@ -8,7 +8,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2ecc71">
     <link rel="apple-touch-icon" href="./my-logo.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <!-- KẾT NỐI THƯ VIỆN SUPABASE -->
@@ -42,9 +42,11 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.5); text-align: center;
         }
         .auth-box h2 { color: var(--dynamic-btn); margin-bottom: 20px; font-size: 24px; }
-        .auth-box input { margin-bottom: 15px; background: rgba(255,255,255,0.9); }
+        .auth-box input { margin-bottom: 15px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; outline: none; width: 100%; background: rgba(255,255,255,0.9); }
+        .auth-box input:focus { border-color: var(--dynamic-btn); }
         .auth-btn-group { display: flex; gap: 10px; margin-top: 10px; }
-        .auth-btn-group button { flex: 1; }
+        .auth-btn-group button { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: white; transition: all 0.3s ease; background-color: var(--dynamic-btn); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        .auth-btn-group button:hover { background-color: var(--dynamic-btn-hover); transform: translateY(-2px); }
         .auth-msg { margin-top: 15px; font-size: 13px; font-weight: bold; }
         .auth-msg.error { color: var(--red); } .auth-msg.success { color: var(--green); }
 
@@ -317,10 +319,10 @@
     // ---------------------------------------------------------------------
     // 1. KẾT NỐI SUPABASE & XỬ LÝ AUTHENTICATION
     // ---------------------------------------------------------------------
-    // CHÚ Ý: BẠN CÓ THỂ THAY LẠI LINK VÀ KEY NÀY NẾU BỊ LỖI
     const SUPABASE_URL = 'https://qsfwgjzejggvawcxjkxp.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_6uLn0e1rJtFFBr_hhHjkYA_Carb1WqC';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    // ĐỔI TÊN BIẾN supabase -> supabaseClient ĐỂ TRÁNH LỖI XUNG ĐỘT TÊN THƯ VIỆN
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     
     let currentUser = null;
     let selectedDateStr = formatDate(new Date());
@@ -330,14 +332,14 @@
     let cloudLogs = [];
 
     // Kiểm tra đăng nhập khi mở web
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabaseClient.auth.getSession().then(({ data: { session } }) => {
         if (session) {
             currentUser = session.user;
             showApp();
         }
     });
 
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabaseClient.auth.onAuthStateChange((event, session) => {
         if (event === 'SIGNED_IN' || event === 'USER_UPDATED') {
             currentUser = session.user;
             showApp();
@@ -360,10 +362,10 @@
         let error;
         
         if (type === 'register') {
-            const { error: regErr } = await supabase.auth.signUp({ email, password });
+            const { error: regErr } = await supabaseClient.auth.signUp({ email, password });
             error = regErr;
         } else {
-            const { error: logErr } = await supabase.auth.signInWithPassword({ email, password });
+            const { error: logErr } = await supabaseClient.auth.signInWithPassword({ email, password });
             error = logErr;
         }
 
@@ -376,7 +378,7 @@
         }
     }
 
-    async function handleLogout() { await supabase.auth.signOut(); }
+    async function handleLogout() { await supabaseClient.auth.signOut(); }
 
     function showApp() {
         document.getElementById('auth-screen').style.display = 'none';
@@ -384,7 +386,7 @@
         document.getElementById('bottom-nav').style.display = 'flex';
         setGreeting();
         renderCalendar();
-        fetchAllDataFromCloud(); // Tải dữ liệu đám mây
+        fetchAllDataFromCloud();
     }
 
     function hideApp() {
@@ -442,13 +444,12 @@
     // ---------------------------------------------------------------------
     // 3. LOGIC LỊCH ĐỒNG BỘ ĐÁM MÂY
     // ---------------------------------------------------------------------
-    let displayDate = new Date(); // Dùng để chuyển tháng trên lịch
+    let displayDate = new Date(); 
 
     async function fetchAllDataFromCloud() {
         if (!currentUser) return;
         
-        // 1. Lấy tất cả Metrics
-        const { data: metricsData } = await supabase.from('body_metrics').select('*').eq('user_id', currentUser.id);
+        const { data: metricsData } = await supabaseClient.from('body_metrics').select('*').eq('user_id', currentUser.id);
         cloudMetrics = {};
         if (metricsData) {
             metricsData.forEach(row => { cloudMetrics[row.record_date] = row; });
@@ -477,7 +478,7 @@
             const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
             let classes = 'cal-day';
             if (dateStr === selectedDateStr) classes += ' active';
-            if (cloudMetrics[dateStr]) classes += ' has-data'; // Chấm đỏ nếu ngày đó có đo body
+            if (cloudMetrics[dateStr]) classes += ' has-data'; 
 
             calDays.innerHTML += `<div class="${classes}" onclick="selectDate('${dateStr}')">${day}</div>`;
         }
@@ -509,7 +510,6 @@
         const hip = parseFloat(document.getElementById('bm-hip').value) || null;
         const goal = document.getElementById('bm-goal').value;
 
-        // 4.1. AI Tính Chỉ số (BMI, WHR, Shape)
         const bmi = (w / Math.pow(h/100, 2)).toFixed(1);
         let bmiEval = bmi < 18.5 ? "Thiếu cân" : bmi < 25 ? "Bình thường" : bmi < 30 ? "Thừa cân" : "Béo phì";
         
@@ -523,16 +523,14 @@
             else shape = "Chữ nhật 📏";
         }
 
-        // 4.2. AI Tính BMR (Mifflin-St Jeor) & TDEE
         let bmr = 10 * w + 6.25 * h - 5 * age;
         bmr += (gender === 'male' ? 5 : -161);
-        let tdee = bmr * 1.2; // Baseline ít vận động
+        let tdee = bmr * 1.2; 
 
-        // 4.3. Phân bổ mục tiêu Calo
         let targetIn = 0, targetOut = 0;
         if(goal === 'lose') {
-            targetIn = Math.round(tdee - 300); // Thâm hụt thức ăn
-            targetOut = 300; // Tiêu hao bằng vận động
+            targetIn = Math.round(tdee - 300); 
+            targetOut = 300; 
         } else if(goal === 'gain') {
             targetIn = Math.round(tdee + 300);
             targetOut = 150;
@@ -541,7 +539,6 @@
             targetOut = 0;
         }
 
-        // 4.4. Lưu lên Supabase
         const payload = {
             user_id: currentUser.id,
             record_date: selectedDateStr,
@@ -552,17 +549,14 @@
             ai_recommended_out: targetOut
         };
 
-        // Nếu ngày này đã có, update; chưa có thì insert
         const existingData = cloudMetrics[selectedDateStr];
         if(existingData && existingData.id) {
-            await supabase.from('body_metrics').update(payload).eq('id', existingData.id);
+            await supabaseClient.from('body_metrics').update(payload).eq('id', existingData.id);
         } else {
-            await supabase.from('body_metrics').insert([payload]);
+            await supabaseClient.from('body_metrics').insert([payload]);
         }
 
         btn.innerText = "Lưu & Bật Trợ Lý AI Khuyên Dùng"; btn.disabled = false;
-        
-        // Cập nhật lại UI
         await fetchAllDataFromCloud(); 
     });
 
@@ -573,7 +567,6 @@
         const parts = selectedDateStr.split('-');
         document.getElementById('selected-date-title').innerText = `Dữ liệu ngày ${parts[2]}/${parts[1]}/${parts[0]}`;
 
-        // 5.1. Nạp Form Chỉ Số
         const md = cloudMetrics[selectedDateStr];
         if(md) {
             document.getElementById('bm-weight').value = md.weight || '';
@@ -593,8 +586,7 @@
             document.getElementById('metrics-result-box').style.display = 'none';
         }
 
-        // 5.2. Nạp Bảng Nhật ký Ăn/Tập từ Supabase
-        const { data: logs } = await supabase.from('daily_logs').select('*')
+        const { data: logs } = await supabaseClient.from('daily_logs').select('*')
             .eq('user_id', currentUser.id).eq('log_date', selectedDateStr);
         
         cloudLogs = logs || [];
@@ -631,8 +623,6 @@
         document.getElementById('total-carbs').innerText = `${totalC}g`;
         document.getElementById('total-fat').innerText = `${totalF}g`;
 
-        // 5.3. Cập nhật HP Bar dựa trên AI Recommendation
-        // Lấy mục tiêu AI cho ngày hiện tại. Nếu chưa đo, lấy mặc định 2000 in, 0 out.
         let targetIn = 2000; let aiTargetOut = 0;
         const md = cloudMetrics[selectedDateStr];
         if(md && md.ai_recommended_in) {
@@ -641,15 +631,10 @@
         }
 
         document.getElementById('hp-in-text').innerText = `${totalIn} / ${targetIn}`;
-        
-        // Tổng lượng Out thực tế = (BMR/TDEE ngầm hiểu là cơ sở) + Tập luyện thực tế
-        // Ở đây hiển thị tổng Calo Đốt = Tập luyện thực tế. Điểm hoà VS = Mục tiêu In.
         let finalOut = totalOut;
         document.getElementById('hp-out-text').innerText = `${finalOut} / ${aiTargetOut || 'N/A'}`;
 
-        // Logic thanh kiếm: Thanh đỏ (In) chạy từ trái, thanh xanh (Out) từ phải.
-        // Cột mốc VS nằm ở giữa. Nếu tổng In > Target In, thanh đỏ đẩy VS sang phải.
-        let combatTotal = totalIn + finalOut + 1; // +1 tránh chia 0
+        let combatTotal = totalIn + finalOut + 1; 
         let inPercent = (totalIn / combatTotal) * 100;
         let outPercent = 100 - inPercent;
 
@@ -672,9 +657,9 @@
             fat: parseInt(document.getElementById('food-f').value) || 0
         };
         const btn = document.getElementById('btn-add-food'); btn.disabled = true;
-        await supabase.from('daily_logs').insert([payload]);
+        await supabaseClient.from('daily_logs').insert([payload]);
         btn.disabled = false; this.reset();
-        loadDataForSelectedDate(); // Tải lại từ mây
+        loadDataForSelectedDate(); 
     });
 
     document.getElementById('workout-form').addEventListener('submit', async function(e) {
@@ -685,13 +670,13 @@
             calories: parseInt(document.getElementById('workout-cal').value) || 0
         };
         const btn = document.getElementById('btn-add-workout'); btn.disabled = true;
-        await supabase.from('daily_logs').insert([payload]);
+        await supabaseClient.from('daily_logs').insert([payload]);
         btn.disabled = false; this.reset();
         loadDataForSelectedDate();
     });
 
     async function deleteLog(logId) {
-        await supabase.from('daily_logs').delete().eq('id', logId);
+        await supabaseClient.from('daily_logs').delete().eq('id', logId);
         loadDataForSelectedDate();
     }
 
