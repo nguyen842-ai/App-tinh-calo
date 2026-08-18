@@ -7,16 +7,7 @@ export default async function handler(req, res) {
     try {
         const { imageBase64 } = req.body;
         
-        // 2. Lấy API Key từ Environment Variables của Vercel
-        const API_KEY = process.env.GEMINI_API_KEY;
-
-        if (!API_KEY) {
-            return res.status(500).json({ error: 'Chưa cấu hình GEMINI_API_KEY trên máy chủ' });
-        }
-
-        if (!imageBase64) {
-            return res.status(400).json({ error: 'Không tìm thấy dữ liệu hình ảnh' });
-        }
+        V
 
         // 3. Cấu hình yêu cầu gửi lên Google Gemini 1.5 Flash
         const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
