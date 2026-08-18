@@ -34,6 +34,7 @@
         
         html, body {
             height: 100%;
+            overscroll-behavior-y: none; 
         }
 
         body { 
@@ -43,11 +44,10 @@
             background-color: var(--darkest-purple);
         }
 
-        /* LỚP NỀN CỐ ĐỊNH (FIX LỖI 100DVH CHO IOS) */
+        /* LỚP NỀN CỐ ĐỊNH */
         #bg-layer {
-            position: fixed; top: 0; left: 0; width: 100vw; 
-            height: 100vh; /* Fallback cho máy cũ */
-            height: 100dvh; /* Fix tràn viền chuẩn cho iPhone mới */
+            position: fixed; 
+            top: -10px; bottom: -10px; left: -10px; right: -10px; 
             background-size: cover; background-position: center;
             z-index: -1; transition: background-image 0.8s ease-in-out;
         }
@@ -57,29 +57,71 @@
             padding: 0 20px 90px 20px; 
             min-height: 100vh;
         }
+
+        /* ---------------------------------------------------- */
+        /* ĐỒNG BỘ BOX TRONG SUỐT (GLASSMORPHISM UNIFIED) */
+        /* ---------------------------------------------------- */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .section, .my-goal-section, .daily-summary-box, .body-metrics-result, .countdown-box, .countdown-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            margin-bottom: 20px;
+        }
+        
+        /* ---------------------------------------------------- */
+        /* CỠ CHỮ (FONT SCALING CLASSES) */
+        /* ---------------------------------------------------- */
+        body.font-large { font-size: 18px; }
+        body.font-large input, body.font-large select { font-size: 16px; padding: 16px; }
+        body.font-large button { font-size: 16px; }
+        body.font-large .header-title { font-size: 36px; }
+        body.font-large .section h2, body.font-large .section h3 { font-size: 20px; }
+        body.font-large .card p { font-size: 28px; }
+        body.font-large .list-header, body.font-large li { font-size: 16px; }
+        body.font-large .cal-day { font-size: 16px; }
+        body.font-large .nav-item { font-size: 12px; }
+
+        body.font-small { font-size: 14px; }
+        body.font-small input, body.font-small select { font-size: 13px; padding: 12px; }
+        body.font-small button { font-size: 13px; }
+        body.font-small .header-title { font-size: 28px; }
+        body.font-small .section h2, body.font-small .section h3 { font-size: 16px; }
+        body.font-small .card p { font-size: 20px; }
+        body.font-small .list-header, body.font-small li { font-size: 13px; }
+        body.font-small .cal-day { font-size: 13px; }
+        body.font-small .nav-item { font-size: 10px; }
         
         /* ---------------------------------------------------- */
         /* GIAO DIỆN ĐĂNG NHẬP */
         /* ---------------------------------------------------- */
         #auth-screen {
-            position: fixed; top: 0; left: 0; width: 100vw; 
-            height: 100vh; /* Fallback */
-            height: 100dvh; /* Ép giãn toàn màn hình động */
+            position: fixed; 
+            top: 0; left: 0; right: 0; bottom: 0; 
             background: rgba(0,0,0,0.15); 
             display: flex; flex-direction: column; justify-content: space-between; align-items: center; 
             z-index: 9999; 
-            /* Fix padding né tai thỏ và thanh gạt home */
             padding: calc(env(safe-area-inset-top) + 60px) 30px calc(env(safe-area-inset-bottom) + 30px) 30px;
         }
         
-        /* Tiêu đề thẳng đứng */
         .auth-title-container { width: 100%; text-align: left; margin-top: 20px; }
         .auth-main-title { 
             font-size: 42px; font-weight: 900; color: #ffffff; 
             text-shadow: 2px 4px 15px rgba(0,0,0,0.4); line-height: 1.1; letter-spacing: -1px;
         }
 
-        /* Khung nhập liệu ở giữa */
         .auth-form-container { width: 100%; max-width: 350px; display: flex; flex-direction: column; margin-bottom: auto; margin-top: 80px; }
         .auth-form-container input[type="email"], .auth-form-container input[type="password"] {
             width: 100%; padding: 18px 24px; margin-bottom: 15px;
@@ -102,7 +144,6 @@
         .auth-msg.error { color: #ff9ff3; background: rgba(0,0,0,0.4); } 
         .auth-msg.success { color: #a29bfe; background: rgba(0,0,0,0.4); }
 
-        /* Nút bấm dưới cùng */
         .auth-bottom-container { width: 100%; max-width: 350px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .btn-signin {
             width: 100%; padding: 18px; background: var(--iris-bloom); border: none; border-radius: 30px; 
@@ -148,10 +189,7 @@
         /* ---------------------------------------------------- */
         /* MY GOAL & HP BAR */
         /* ---------------------------------------------------- */
-        .my-goal-section {
-            background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.6); padding: 18px 22px; border-radius: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 20px;
-        }
+        .my-goal-section { padding: 18px 22px; }
         .goal-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px; }
         .goal-header span:first-child { font-weight: 800; color: var(--deep-purple); font-size: 15px; }
         .goal-header span:last-child { font-weight: 900; color: var(--iris-bloom); font-size: 18px; }
@@ -169,8 +207,9 @@
         
         .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 25px; }
         .card { 
-            padding: 15px 10px; text-align: center; background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 20px;
+            padding: 15px 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
         .card h3 { font-size: 12px; text-transform: uppercase; margin-bottom: 5px; color: var(--deep-purple); text-shadow: 0 1px 3px rgba(255,255,255,0.8); font-weight: 800;}
         .card p { font-size: 24px; font-weight: 900; color: var(--iris-bloom); text-shadow: 0 1px 3px rgba(255,255,255,0.9); }
@@ -189,12 +228,8 @@
         }
 
         /* ---------------------------------------------------- */
-        /* CÁC BOX GIAO DIỆN & NÚT XÓA CHUẨN MỰC */
+        /* CÁC BOX GIAO DIỆN CHUẨN MỰC */
         /* ---------------------------------------------------- */
-        .section { 
-            background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.6); padding: 22px; border-radius: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 25px;
-        }
         .section h2, .section h3 { font-size: 18px; margin-bottom: 15px; color: var(--deep-purple); font-weight: 800;}
         .section h2 { padding-bottom: 10px; border-bottom: 1px solid rgba(91,69,167,0.15); }
         
@@ -203,9 +238,9 @@
         
         button { 
             padding: 14px; border: none; border-radius: 16px; font-weight: bold; cursor: pointer; color: white; 
-            transition: all 0.3s ease; background-color: var(--iris-bloom); box-shadow: 0 4px 10px rgba(91,69,167,0.2); 
+            transition: all 0.3s ease; background: var(--iris-bloom); box-shadow: 0 4px 10px rgba(91,69,167,0.2); 
         }
-        button:hover { background-color: var(--deep-purple); transform: translateY(-2px); }
+        button:hover { background: var(--deep-purple); transform: translateY(-2px); }
         button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         
         .btn-ai-calc { white-space: nowrap; font-size: 13px; background: var(--malibu-blue); }
@@ -265,13 +300,13 @@
         .cal-day.has-data::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--malibu-blue); border-radius: 50%; }
         .cal-day.active.has-data::after { background: white; }
 
-        .daily-summary-box { background: rgba(255,255,255,0.6); border-radius: 16px; padding: 15px; margin-top: 15px; margin-bottom: 15px; text-align: center;}
+        .daily-summary-box { text-align: center; }
         .ds-title { font-size: 13px; font-weight: 800; color: var(--deep-purple); text-transform: uppercase; margin-bottom: 8px;}
         .ds-data { display: flex; justify-content: space-around; font-size: 15px; font-weight: 900;}
         .ds-in { color: var(--iris-bloom); } .ds-out { color: var(--malibu-blue); }
         .ds-empty { font-size: 13px; font-style: italic; color: var(--text-muted); font-weight: 500;}
 
-        .body-metrics-result { background: rgba(255,255,255,0.6); border-radius: 16px; padding: 18px; margin-top: 15px; border: 1.5px dashed var(--iris-bloom); display: none; }
+        .body-metrics-result { display: none; }
         .metric-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(91,69,167,0.1); font-size: 14px; }
         .metric-row:last-child { border-bottom: none; }
         .metric-val { font-weight: 800; color: var(--iris-bloom); text-align: right; }
@@ -281,6 +316,15 @@
         .profile-name-box { display: flex; gap: 10px; margin-bottom: 20px;}
         .profile-name-box input { flex: 1; margin-bottom: 0;}
         
+        /* Cỡ chữ Controls */
+        .font-size-controls { display: flex; justify-content: space-between; gap: 10px; margin-top: 10px;}
+        .fs-btn { 
+            flex: 1; padding: 12px 0; font-size: 14px; background: rgba(255,255,255,0.6); 
+            color: var(--deep-purple); border: 1px solid rgba(91,69,167,0.3); border-radius: 14px; box-shadow: none; transition: 0.3s;
+        }
+        .fs-btn:hover { background: rgba(255,255,255,0.8); }
+        .fs-btn.active { background: var(--iris-bloom); color: white; border-color: var(--deep-purple); box-shadow: 0 4px 10px rgba(91,69,167,0.3); }
+
         .mood-grid { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px;}
         .mood-btn { 
             flex: 1; padding: 15px 0; font-size: 24px; background: rgba(91,69,167,0.05); 
@@ -301,10 +345,7 @@
         
         /* DANH SÁCH SỰ KIỆN ĐẾM NGƯỢC */
         .countdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
-        .countdown-card { 
-            background: rgba(255,255,255,0.6); padding: 15px; border-radius: 20px; 
-            border: 1px solid rgba(255,255,255,0.6); text-align: center; position: relative;
-        }
+        .countdown-card { text-align: center; position: relative; padding: 15px; margin-bottom: 0;}
         .countdown-card .cd-title { font-size: 11px; font-weight: 800; color: var(--darkest-purple); text-transform: uppercase; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
         .countdown-card .cd-days { font-size: 28px; font-weight: 900; color: var(--iris-bloom); line-height: 1; margin: 5px 0;}
         .countdown-card .cd-label { font-size: 10px; font-weight: 800; color: var(--darkest-purple); margin-top: 2px; }
@@ -316,7 +357,7 @@
 </head>
 <body>
 
-<!-- LỚP NỀN CỐ ĐỊNH -->
+<!-- LỚP NỀN CỐ ĐỊNH CHỐNG GIẬT -->
 <div id="bg-layer"></div>
 
 <!-- MÀN HÌNH ĐĂNG NHẬP -->
@@ -369,7 +410,7 @@
                 <div class="calendar-grid" id="calendar-days"></div>
             </div>
 
-            <div class="daily-summary-box" id="daily-summary-box">
+            <div class="daily-summary-box">
                 <div class="ds-title">Báo Cáo Chốt Sổ Ngày <span id="ds-date">...</span></div>
                 <div id="ds-content"></div>
             </div>
@@ -477,6 +518,16 @@
 
         <!-- TAB 3: HỒ SƠ -->
         <div id="tab-profile" class="tab-content">
+            
+            <div class="section">
+                <h3>Cỡ chữ hiển thị</h3>
+                <div class="font-size-controls">
+                    <button type="button" class="fs-btn" id="fs-small" onclick="changeFontSize('small')">A- Nhỏ</button>
+                    <button type="button" class="fs-btn active" id="fs-medium" onclick="changeFontSize('medium')">A Vừa</button>
+                    <button type="button" class="fs-btn" id="fs-large" onclick="changeFontSize('large')">A+ Lớn</button>
+                </div>
+            </div>
+
             <div class="section">
                 <h3>Tên hiển thị</h3>
                 <form class="profile-name-box" id="name-form">
@@ -637,7 +688,7 @@
         document.getElementById('auth-screen').style.display = 'none';
         document.getElementById('main-app').style.display = 'block';
         document.getElementById('bottom-nav').style.display = 'flex';
-        updateHeaderInfo(); renderCalendar(); fetchAllDataFromCloud(); initDashboardWidgets();
+        updateHeaderInfo(); renderCalendar(); fetchAllDataFromCloud(); initDashboardWidgets(); loadFontSize();
     }
     function hideApp() {
         document.getElementById('auth-screen').style.display = 'flex';
@@ -661,6 +712,26 @@
         const { data, error } = await supabaseClient.auth.updateUser({ data: { display_name: newName } });
         if(!error) { currentUser = data.user; updateHeaderInfo(); alert("Đã lưu tên thành công!");}
     });
+
+    // Tính năng cỡ chữ
+    function changeFontSize(size) {
+        document.body.classList.remove('font-small', 'font-large');
+        if (size === 'small') document.body.classList.add('font-small');
+        if (size === 'large') document.body.classList.add('font-large');
+        
+        document.querySelectorAll('.fs-btn').forEach(btn => btn.classList.remove('active'));
+        if(document.getElementById(`fs-${size}`)) {
+            document.getElementById(`fs-${size}`).classList.add('active');
+        }
+        
+        if (currentUser) {
+            localStorage.setItem(`fontsize_${currentUser.id}`, size);
+        }
+    }
+    function loadFontSize() {
+        const size = localStorage.getItem(`fontsize_${currentUser?.id}`) || 'medium';
+        changeFontSize(size);
+    }
 
     function formatDate(dateObj) { return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`; }
 
