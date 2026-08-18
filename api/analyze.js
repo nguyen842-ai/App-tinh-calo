@@ -1,19 +1,16 @@
 export default async function handler(req, res) {
     // --- BẮT ĐẦU PHẦN CẤU HÌNH LỖI CORS ---
-    // Cho phép mọi tên miền (kể cả Github) được phép gọi API này
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*'); 
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
     res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
 
-    // Khi trình duyệt "gõ cửa" hỏi trước (OPTIONS), trả lời là OK (200)
     if (req.method === 'OPTIONS') {
         res.status(200).end();
         return;
     }
     // --- KẾT THÚC PHẦN CẤU HÌNH CORS ---
 
-    // 1. Chỉ chấp nhận phương thức POST từ Frontend gửi lên
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Chỉ chấp nhận phương thức POST' });
     }
@@ -21,13 +18,11 @@ export default async function handler(req, res) {
     try {
         const { imageBase64 } = req.body;
         
-        // 2. Lấy API Key từ Vercel
         const RAW_KEYS = process.env.GEMINI_API_KEY;
         if (!RAW_KEYS) {
             return res.status(500).json({ error: 'Chưa cấu hình GEMINI_API_KEY trên máy chủ' });
         }
 
-        // Tách chuỗi và lấy 1 key ngẫu nhiên (nếu bạn đang dùng dấu phẩy cho 2 key)
         const keyList = RAW_KEYS.split(',').map(key => key.trim());
         const API_KEY = keyList[Math.floor(Math.random() * keyList.length)];
 
@@ -35,8 +30,8 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: 'Không tìm thấy dữ liệu hình ảnh' });
         }
 
-        // 3. Cấu hình yêu cầu gửi lên Google Gemini 1.5 Flash
-        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+        // --- ĐÃ CẬP NHẬT LÊN GEMINI 3.5 ---
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${API_KEY}`;
         
         const payload = {
             contents: [{
@@ -51,7 +46,6 @@ export default async function handler(req, res) {
             }]
         };
 
-        // 4. Gọi API
         const response = await fetch(geminiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -65,12 +59,10 @@ export default async function handler(req, res) {
             return res.status(500).json({ error: 'API AI đang gặp sự cố' });
         }
 
-        // 5. Trích xuất kết quả từ AI
         const rawText = data.candidates[0].content.parts[0].text;
         const cleanText = rawText.replace(/```json|```/gi, '').trim();
         const result = JSON.parse(cleanText);
 
-        // 6. Trả kết quả về cho Frontend
         return res.status(200).json(result);
 
     } catch (error) {
