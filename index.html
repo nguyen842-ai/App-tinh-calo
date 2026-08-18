@@ -5,68 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Theo Dõi Calo AI</title>
     
-    <!-- CẤU HÌNH PWA ĐỂ CÀI ĐẶT THÀNH APP ĐIỆN THOẠI -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2ecc71">
-    <!-- Bạn nhớ thay đổi link my-logo.png bằng tên file logo của bạn nhé -->
     <link rel="apple-touch-icon" href="./my-logo.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <style>
         :root {
+            /* Các màu mặc định sẽ bị ghi đè bởi Javascript khi nhặt được màu nền */
+            --dynamic-btn: #34495e; 
+            --dynamic-btn-hover: #2c3e50;
+            --dynamic-border: rgba(52, 73, 94, 0.5);
+            
             --text-main: #333333; --text-muted: #555555;
-            --green: #2ecc71; --orange: #e67e22; --blue: #3498db; --red: #e74c3c; --border: #e0e0e0;
+            --green: #2ecc71; --orange: #e67e22; --blue: #3498db; --red: #e74c3c;
         }
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
         
-        /* 1. THIẾT LẬP ẢNH NỀN CHO TOÀN TRANG */
         body { 
-            background-image: url('./IMG_3173.jpeg'); /* Link tới ảnh nền của bạn */
+            background-color: #2c3e50;
             background-size: cover; 
             background-position: center; 
-            background-attachment: fixed; /* Giữ ảnh đứng yên khi cuộn trang */
+            background-attachment: fixed; 
             color: var(--text-main); 
             padding: 20px; 
             line-height: 1.6; 
+            transition: background-image 0.8s ease-in-out; 
         }
         
         .container { max-width: 900px; margin: 0 auto; }
         
-        /* Tiêu đề và Câu chào */
         h1 { text-align: center; margin-bottom: 5px; color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.7); font-size: 28px;}
         .greeting { text-align: center; color: rgba(255,255,255,0.9); text-shadow: 0 1px 5px rgba(0,0,0,0.5); font-style: italic; margin-bottom: 20px; font-size: 14px; }
         
         .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px; }
         
-        /* 2. HIỆU ỨNG KÍNH MỜ (GLASSMORPHISM) CHO CÁC THẺ KPI */
         .card { 
-            padding: 20px; 
-            border-radius: 12px; 
-            text-align: center; 
-            color: white; 
+            padding: 20px; border-radius: 12px; text-align: center; color: white; 
             box-shadow: 0 8px 32px rgba(0,0,0,0.2); 
-            backdrop-filter: blur(8px); /* Làm mờ ảnh nền phía sau */
-            -webkit-backdrop-filter: blur(8px); /* Hỗ trợ iPhone/Safari */
-            border: 1px solid rgba(255, 255, 255, 0.3); /* Đường viền kính mỏng */
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); 
+            border: 1px solid rgba(255, 255, 255, 0.3); 
         }
         .card h3 { font-size: 14px; text-transform: uppercase; margin-bottom: 10px; opacity: 0.9; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
         .card p { font-size: 28px; font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,0.3); }
         
-        /* Chuyển màu nền đặc sang màu trong suốt (RGBA) */
+        /* Giữ nguyên màu chức năng cho 3 ô trạng thái để dễ nhìn */
         .card.in { background: rgba(46, 204, 113, 0.65); } 
         .card.out { background: rgba(230, 126, 34, 0.65); } 
         .card.net { background: rgba(52, 152, 219, 0.65); } 
         
-        /* 3. LÀM TRONG SUỐT BẢNG MACROS VÀ KHU VỰC NHẬP LIỆU */
         .macros-summary, .section { 
-            background: rgba(255, 255, 255, 0.85); /* Nền trắng trong suốt 85% */
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.82); 
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 20px; 
-            border-radius: 12px; 
-            box-shadow: 0 8px 32px rgba(0,0,0,0.15); 
+            padding: 20px; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); 
         }
         .macros-summary { display: flex; justify-content: space-around; text-align: center; margin-bottom: 30px; }
         .macro-item span { display: block; font-size: 12px; color: var(--text-muted); text-transform: uppercase; font-weight: bold;}
@@ -79,27 +72,52 @@
         
         .form-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
         .macro-inputs, .workout-inputs { display: flex; gap: 10px; }
-        input { padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; outline: none; width: 100%; background: rgba(255,255,255,0.9); }
-        input:focus { border-color: var(--blue); background: #fff; }
         
-        button { padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: white; transition: 0.2s; }
-        button:hover { opacity: 0.9; transform: translateY(-1px); }
-        button:disabled { opacity: 0.5; cursor: not-allowed; }
-        .btn-add-food { background: var(--green); } 
-        .btn-add-workout { background: var(--orange); }
-        .btn-ai-calc { background: var(--blue); color: white; white-space: nowrap; font-size: 13px; }
+        input { 
+            padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; outline: none; width: 100%; 
+            background: rgba(255,255,255,0.9); transition: border-color 0.3s;
+        }
+        /* Viền input sẽ lấy theo màu nền */
+        input:focus { border-color: var(--dynamic-btn); background: #fff; }
+        
+        /* ---------------------------------------------------- */
+        /* CÁC NÚT BẤM SẼ TỰ ĐỘNG THAY ĐỔI THEO MÀU BIẾN ĐỘNG  */
+        /* ---------------------------------------------------- */
+        button { 
+            padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: white; 
+            transition: all 0.3s ease; 
+            background-color: var(--dynamic-btn); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        button:hover { 
+            background-color: var(--dynamic-btn-hover); 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+        button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        
+        .btn-ai-calc { white-space: nowrap; font-size: 13px; }
 
-        .ai-camera-btn { display: block; width: 100%; text-align: center; padding: 15px; background: rgba(248, 249, 250, 0.7); border: 2px dashed var(--blue); color: var(--blue); border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 15px; transition: all 0.2s; backdrop-filter: blur(5px); }
-        .ai-camera-btn:hover { background: rgba(255, 255, 255, 0.9); }
+        .ai-camera-btn { 
+            display: block; width: 100%; text-align: center; padding: 15px; 
+            background: rgba(255, 255, 255, 0.5); 
+            border: 2px dashed var(--dynamic-border); 
+            color: var(--dynamic-btn); 
+            border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 15px; 
+            transition: all 0.3s ease; backdrop-filter: blur(5px); 
+        }
+        .ai-camera-btn:hover { background: rgba(255, 255, 255, 0.9); border-color: var(--dynamic-btn); }
+        
         input[type="file"] { display: none; }
-        #ai-status { font-size: 13px; color: var(--text-main); text-align: center; margin-bottom: 15px; display: none; font-weight: bold; }
+        #ai-status { font-size: 13px; color: var(--dynamic-btn); text-align: center; margin-bottom: 15px; display: none; font-weight: bold; }
 
         .list-header { font-weight: bold; font-size: 14px; color: var(--text-muted); margin-bottom: 10px; }
         ul { list-style: none; max-height: 250px; overflow-y: auto; }
         li { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.05); font-size: 14px; }
         .item-details span { display: block; font-weight: 500; }
         .item-macros { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
-        .del-btn { color: #e74c3c; cursor: pointer; font-weight: bold; margin-left: 10px; font-size: 16px; border: none; background: none; padding: 0;}
+        .del-btn { color: #e74c3c; cursor: pointer; font-weight: bold; margin-left: 10px; font-size: 16px; border: none; background: none; padding: 0; box-shadow: none;}
+        .del-btn:hover { background: none; transform: scale(1.2); color: #c0392b; box-shadow: none;}
     </style>
 </head>
 <body>
@@ -136,7 +154,7 @@
                     <input type="number" id="food-c" placeholder="Tinh bột (g)">
                     <input type="number" id="food-f" placeholder="Béo (g)">
                 </div>
-                <button type="submit" class="btn-add-food">Thêm món ăn</button>
+                <button type="submit">Thêm món ăn</button>
             </form>
 
             <div class="list-header">Danh sách đã nạp</div>
@@ -152,7 +170,7 @@
                     <button type="button" id="btn-ai-workout" class="btn-ai-calc">🤖 AI Tính</button>
                 </div>
                 <input type="number" id="workout-cal" placeholder="Calo tiêu hao (kcal)" required>
-                <button type="submit" class="btn-add-workout">Thêm bài tập</button>
+                <button type="submit">Thêm bài tập</button>
             </form>
             <div class="list-header">Danh sách đã tập</div>
             <ul id="workout-list"></ul>
@@ -161,7 +179,79 @@
 </div>
 
 <script>
-    // 1. CHÀO HỎI TỰ ĐỘNG THEO GIỜ
+    // ---------------------------------------------------------------------
+    // 1. TÍNH NĂNG TỰ ĐỘNG CHỌN ẢNH VÀ TRÍCH XUẤT MÀU SẮC (CHAMELEON THEME)
+    // ---------------------------------------------------------------------
+    function setRandomBackgroundAndColor() {
+        // Cập nhật chuẩn xác danh sách ảnh từ GitHub của bạn
+        const bgImages = [
+            'pic/IMG_3173.jpeg',
+            'pic/IMG_3174.jpeg',
+            'pic/IMG_3175.jpeg',
+            'pic/IMG_3177.jpeg',
+            'pic/IMG_3178.jpeg',
+            'pic/IMG_3179.jpeg'
+        ];
+        
+        const randomIndex = Math.floor(Math.random() * bgImages.length);
+        const selectedImage = bgImages[randomIndex];
+        document.body.style.backgroundImage = `url('${selectedImage}')`;
+
+        // Dùng Canvas để quét pixel trên ảnh và tìm ra màu chủ đạo
+        const img = new Image();
+        img.crossOrigin = "Anonymous"; // Giúp vượt lỗi bảo mật CORS khi đọc ảnh
+        img.src = selectedImage;
+        
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+
+            try {
+                // Đọc dữ liệu màu của bức ảnh
+                const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+                let r = 0, g = 0, b = 0, count = 0;
+                
+                // Lấy mẫu (sample) từng điểm ảnh để tính trung bình
+                for (let i = 0; i < data.length; i += 200) {
+                    r += data[i];
+                    g += data[i+1];
+                    b += data[i+2];
+                    count++;
+                }
+                r = Math.floor(r / count);
+                g = Math.floor(g / count);
+                b = Math.floor(b / count);
+
+                // LÀM ĐẬM MÀU: Nhân với 0.6 tức là làm màu tối đi 40% cho nút bấm
+                const btnR = Math.floor(r * 0.6);
+                const btnG = Math.floor(g * 0.6);
+                const btnB = Math.floor(b * 0.6);
+
+                // Màu khi rê chuột (Hover) sẽ sáng hơn màu gốc một chút (Tối đi 20%)
+                const hoverR = Math.floor(r * 0.8);
+                const hoverG = Math.floor(g * 0.8);
+                const hoverB = Math.floor(b * 0.8);
+
+                // Tiêm màu vừa tính toán thẳng vào bộ khung CSS
+                document.documentElement.style.setProperty('--dynamic-btn', `rgb(${btnR}, ${btnG}, ${btnB})`);
+                document.documentElement.style.setProperty('--dynamic-btn-hover', `rgb(${hoverR}, ${hoverG}, ${hoverB})`);
+                document.documentElement.style.setProperty('--dynamic-border', `rgba(${btnR}, ${btnG}, ${btnB}, 0.5)`);
+                
+            } catch (e) {
+                console.log("Không thể trích xuất màu, giữ lại màu mặc định.");
+            }
+        }
+    }
+    
+    // Gọi hàm ngay khi vừa mở trang web
+    setRandomBackgroundAndColor();
+
+    // ---------------------------------------------------------------------
+    // CÁC CHỨC NĂNG CÒN LẠI GIỮ NGUYÊN HOẠT ĐỘNG
+    // ---------------------------------------------------------------------
     function setGreeting() {
         const hour = new Date().getHours();
         let greeting = "Chào buổi sáng! Sẵn sàng cho một ngày khỏe mạnh chưa? 🌅";
@@ -174,11 +264,9 @@
     }
     setGreeting();
 
-    // 2. KHỞI TẠO DỮ LIỆU
     let foods = JSON.parse(localStorage.getItem('foods')) || [];
     let workouts = JSON.parse(localStorage.getItem('workouts')) || [];
 
-    // 3. XỬ LÝ FORM THÊM THỦ CÔNG
     document.getElementById('food-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const name = document.getElementById('food-name').value;
@@ -200,7 +288,6 @@
         saveData(); updateUI(); this.reset();
     });
 
-    // 4. XOÁ DỮ LIỆU VÀ CẬP NHẬT GIAO DIỆN
     function deleteItem(type, id) {
         if (type === 'food') foods = foods.filter(item => item.id !== id);
         else workouts = workouts.filter(item => item.id !== id);
@@ -252,7 +339,6 @@
         document.getElementById('total-fat').innerText = `${totalF}g`;
     }
 
-    // 5. GỌI AI PHÂN TÍCH HÌNH ẢNH MÓN ĂN
     document.getElementById('camera-input').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -290,7 +376,6 @@
         reader.readAsDataURL(file);
     });
 
-    // 6. GỌI AI TÍNH CALO BÀI TẬP
     document.getElementById('btn-ai-workout').addEventListener('click', async function() {
         const workoutName = document.getElementById('workout-name').value;
         if (!workoutName) {
@@ -327,7 +412,6 @@
         }, 2000);
     });
 
-    // Chạy UI lần đầu
     updateUI();
 </script>
 
