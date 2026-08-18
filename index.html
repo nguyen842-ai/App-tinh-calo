@@ -58,11 +58,24 @@
         }
         .auth-box h2 { color: var(--deep-purple); margin-bottom: 5px; font-size: 24px; font-weight: 800;}
         .auth-box p { color: var(--darkest-purple); font-weight: 600; margin-bottom: 20px;}
-        .auth-box input[type="email"], .auth-box input[type="password"] { 
-            margin-bottom: 12px; padding: 14px; border: 1px solid rgba(91,69,167,0.3); 
-            border-radius: 14px; font-size: 14px; outline: none; width: 100%; background: rgba(255,255,255,0.9); 
+        
+        /* ---------------------------------------------------- */
+        /* SỬA LỖI TRÀN Ô NHẬP LIỆU (OVERFLOW FIX CHO MOBILE) */
+        /* ---------------------------------------------------- */
+        input, select { 
+            padding: 14px; border: 1px solid rgba(91,69,167,0.2); border-radius: 14px; 
+            font-size: 14px; outline: none; width: 100%; max-width: 100%; box-sizing: border-box;
+            background: rgba(255,255,255,0.85); color: var(--darkest-purple); font-weight: 500;
+            margin: 0; display: block;
         }
-        .auth-box input:focus { border-color: var(--iris-bloom); }
+        /* Ép chuẩn riêng cho ô nhập ngày tháng trên iOS/Safari */
+        input[type="date"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 100%;
+        }
+        input:focus, select:focus { border-color: var(--iris-bloom); background: rgba(255,255,255,1); }
+        
         .remember-group { display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 15px; font-size: 13px; color: var(--darkest-purple); font-weight: 700;}
         .remember-group input { width: 16px; height: 16px; accent-color: var(--iris-bloom); cursor: pointer;}
         
@@ -76,13 +89,22 @@
         .auth-msg.error { color: var(--red); } .auth-msg.success { color: var(--iris-bloom); }
 
         /* ---------------------------------------------------- */
-        /* HEADER TRAVEL ADVENTURE THUẦN TÚY */
+        /* HEADER BOX GRADIENT (ĐÃ NÂNG CẤP) */
         /* ---------------------------------------------------- */
         #main-app { display: none; } 
-        .main-header { padding: 30px 0 15px 0; text-align: left; }
-        .header-subtitle { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.8); font-weight: 700; margin-bottom: 5px;}
-        .header-title { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.5); line-height: 1.2; margin-bottom: 5px;}
-        .header-desc { font-size: 14px; color: rgba(255,255,255,0.95); text-shadow: 0 1px 5px rgba(0,0,0,0.6); font-style: italic; font-weight: 500;}
+        .main-header {
+            background: linear-gradient(135deg, var(--iris-bloom), var(--malibu-blue));
+            padding: 25px 22px; 
+            border-radius: 24px;
+            text-align: left; 
+            margin-top: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .header-subtitle { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.85); font-weight: 800; margin-bottom: 8px;}
+        .header-title { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.15); line-height: 1.2; margin-bottom: 6px;}
+        .header-desc { font-size: 14px; color: rgba(255,255,255,0.95); font-style: italic; font-weight: 500;}
 
         /* ---------------------------------------------------- */
         /* MY GOAL - THANH TIẾN ĐỘ THANH MẢNH & CẢNH BÁO */
@@ -139,11 +161,6 @@
         
         .form-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; }
         .macro-inputs, .workout-inputs { display: flex; gap: 10px; }
-        input, select { 
-            padding: 14px; border: 1px solid rgba(91,69,167,0.2); border-radius: 14px; 
-            font-size: 14px; outline: none; width: 100%; background: rgba(255,255,255,0.85); color: var(--darkest-purple); font-weight: 500;
-        }
-        input:focus, select:focus { border-color: var(--iris-bloom); background: rgba(255,255,255,1); }
         
         button { 
             padding: 14px; border: none; border-radius: 16px; font-weight: bold; cursor: pointer; color: white; 
@@ -276,7 +293,7 @@
 <div id="main-app">
     <div class="container">
         
-        <!-- HEADER TRAVEL ADVENTURE -->
+        <!-- HEADER TRAVEL ADVENTURE ĐÃ ĐƯỢC CHUYỂN VÀO GRADIENT BOX -->
         <div class="main-header">
             <div class="header-subtitle">Nhật Ký Dinh Dưỡng</div>
             <h1 class="header-title" id="greeting-name">Xin chào, Bạn 👋</h1>
