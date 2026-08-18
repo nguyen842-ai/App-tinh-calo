@@ -18,7 +18,7 @@
 
     <style>
         :root {
-            /* HỆ MÀU PANTONE NGẢ TÍM & XANH ĐẠI DƯƠNG */
+            /* HỆ MÀU PANTONE */
             --iris-bloom: #5B45A7;      
             --deep-purple: #392B73;     
             --darkest-purple: #241A4C;  
@@ -34,38 +34,25 @@
         * { box-sizing: border-box; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent;}
 
         /* =========================================================
-           VIEWPORT + BACKGROUND — iOS / ANDROID / PWA SAFE
+           VIEWPORT + BACKGROUND — iOS PWA SAFE (CHỐNG HỞ CHÂN)
            ========================================================= */
 
-        /* ---------- ROOT VIEWPORT ---------- */
-        html {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            background: var(--darkest-purple);
-            overflow: hidden; /* Giữ viewport ổn định trên iOS */
-            overscroll-behavior: none; /* Tránh hiệu ứng overscroll của trình duyệt */
-            -webkit-text-size-adjust: 100%;
-            text-size-adjust: 100%;
-        }
-
-        body {
-            width: 100%;
-            height: 100%;
-            min-height: 100%;
-            margin: 0;
-            padding: 0;
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            /* MA THUẬT FIX CHIỀU CAO CHO IOS SAFARI */
+            min-height: -webkit-fill-available; 
+            margin: 0; padding: 0;
+            background-color: var(--darkest-purple);
+            
+            /* Khóa chết trình duyệt, diệt Rubber Band tổng */
+            overflow: hidden; 
+            overscroll-behavior: none; 
+            
             color: var(--text-main); 
             line-height: 1.6;
-            background-color: var(--darkest-purple);
-            overflow: hidden;
-            overscroll-behavior: none;
-            -webkit-text-size-adjust: 100%;
-            text-size-adjust: 100%;
-            isolation: isolate; /* Tạo stacking context ổn định */
-            -webkit-user-select: none;    /* Chống bôi đen text */
-            -webkit-touch-callout: none;  /* Chống menu popup khi đè lâu */
+            -webkit-user-select: none;    
+            -webkit-touch-callout: none;  
         }
 
         input, select, textarea {
@@ -73,48 +60,53 @@
             user-select: auto;
         }
 
-        /* ---------- BACKGROUND LAYER ---------- */
+        /* LỚP NỀN (ÉP TRÀN VIỀN ĐỂ CHỐNG LỘ MÉP) */
         #bg-layer {
             position: fixed;
-            top: 0; right: 0; bottom: 0; left: 0;
-            width: 100%; height: 100%;
-            min-height: 100vh; min-height: 100dvh;
+            /* Cố tình cho to hơn màn hình 50px ở mọi hướng */
+            top: -50px; bottom: -50px; left: -50px; right: -50px;
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            pointer-events: none; /* Không cho background nhận touch */
+            pointer-events: none; 
             z-index: 0;
-            transform: translateZ(0); -webkit-transform: translateZ(0);
-            backface-visibility: hidden; -webkit-backface-visibility: hidden;
             transition: background-image 0.8s ease-in-out;
         }
 
-        /* ---------- MAIN APP ---------- */
+        /* CONTAINER CHỨA APP */
         #main-app {
             display: none;
-            position: relative;
-            width: 100%;
-            height: 100vh; height: 100dvh;
-            min-height: 0;
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
             z-index: 1;
         }
 
-        /* ---------- SCROLL CONTAINER ---------- */
+        /* VÙNG CUỘN ĐỘC LẬP (NỘI DUNG APP) */
         .container {
             position: absolute;
             top: 0; right: 0; bottom: 0; left: 0;
-            width: 100%; max-width: 900px;
-            height: 100vh; height: 100dvh;
-            min-height: 0; margin: 0 auto;
-            overflow-x: hidden; overflow-y: auto; /* CHỈ container được phép scroll */
+            max-width: 900px; 
+            margin: 0 auto;
+            overflow-x: hidden; 
+            overflow-y: auto; /* Chỉ cho phép cuộn khu vực này */
             -webkit-overflow-scrolling: touch;
-            overscroll-behavior-y: none; overscroll-behavior-x: none;
-            padding-left: 20px; padding-right: 20px;
-            /* Chừa chỗ cho Bottom Navigation + Home Indicator của iPhone */
-            padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px));
-            box-sizing: border-box;
-            z-index: 1;
-            transform: translateZ(0); -webkit-transform: translateZ(0);
+            overscroll-behavior-y: none; /* Khóa rubber bên trong app */
+            
+            /* Chừa khoảng trống cho thanh công cụ */
+            padding: 0 20px calc(70px + env(safe-area-inset-bottom, 0px)) 20px;
+        }
+
+        /* GIAO DIỆN ĐĂNG NHẬP */
+        #auth-screen {
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: 9999;
+            background: rgba(0,0,0,0.15);
+            display: flex; flex-direction: column; justify-content: space-between; align-items: center;
+            padding-top: calc(60px + env(safe-area-inset-top, 0px));
+            padding-right: 30px; padding-left: 30px;
+            padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px));
+            overflow: hidden; /* Cấm cuộn hoàn toàn màn hình này */
         }
 
         /* =========================================================
@@ -152,7 +144,7 @@
         body.font-small .cal-day { font-size: 13px; }
         body.font-small .nav-item { font-size: 10px; }
 
-        /* ---------- HEADER SAFE AREA ---------- */
+        /* HEADER SAFE AREA */
         .main-header {
             background: transparent;
             padding-left: 0; padding-right: 0; padding-bottom: 20px;
@@ -164,21 +156,7 @@
         .header-title { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.7); line-height: 1.2; margin-bottom: 4px;}
         .header-desc { font-size: 14px; color: #ffffff; font-style: italic; font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,0.6);}
 
-        /* ---------- AUTH SCREEN ---------- */
-        #auth-screen {
-            position: fixed;
-            top: 0; right: 0; bottom: 0; left: 0;
-            width: 100%; height: 100vh; height: 100dvh;
-            z-index: 9999;
-            background: rgba(0,0,0,0.15);
-            display: flex; flex-direction: column; justify-content: space-between; align-items: center;
-            padding-top: calc(60px + env(safe-area-inset-top, 0px));
-            padding-right: 30px; padding-left: 30px;
-            padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px));
-            box-sizing: border-box; overflow: hidden;
-            transform: translateZ(0); -webkit-transform: translateZ(0);
-        }
-        
+        /* CHI TIẾT MÀN HÌNH ĐĂNG NHẬP */
         .auth-title-container { width: 100%; text-align: left; margin-top: 20px; }
         .auth-main-title { 
             font-size: 42px; font-weight: 900; color: #ffffff; 
@@ -310,7 +288,7 @@
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* ---------- BOTTOM NAVIGATION ---------- */
+        /* BOTTOM NAVIGATION */
         .bottom-nav {
             position: fixed;
             left: 0; right: 0; bottom: 0;
@@ -321,8 +299,6 @@
             display: flex; justify-content: space-around; align-items: center;
             padding-top: 4px; padding-left: 0; padding-right: 0;
             padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
-            box-sizing: border-box; min-height: 48px;
-            transform: translateZ(0); -webkit-transform: translateZ(0);
         }
         .nav-item { 
             background: none; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; 
@@ -637,6 +613,15 @@
 </nav>
 
 <script>
+    // JS CHỐNG RUBBER BAND CHO IOS SAFARI TRÊN CÁC KHU VỰC KHÔNG PHẢI CUỘN
+    document.body.addEventListener('touchmove', function(e) {
+        // Chỉ cho phép thao tác vuốt cuộn đối với vùng có class .container
+        const scrollableContainer = e.target.closest('.container');
+        if (!scrollableContainer) {
+            e.preventDefault(); 
+        }
+    }, { passive: false });
+
     // 1. NỀN & VUỐT CHUYỂN TAB
     function setRandomBackground() {
         const bgImages = [
