@@ -78,9 +78,9 @@
         /* ĐỒNG BỘ BOX TĂNG ĐỘ TRONG SUỐT & GIẢM BLUR */
         /* ---------------------------------------------------- */
         .glass-panel, .section, .my-goal-section, .daily-summary-box, .body-metrics-result, .countdown-card {
-            background: rgba(255, 255, 255, 0.15); /* Trong suốt hơn */
-            backdrop-filter: blur(2px);             /* Giảm độ mờ xuống 3px */
-            -webkit-backdrop-filter: blur(2px);
+            background: rgba(255, 255, 255, 0.25); /* Trong suốt hơn */
+            backdrop-filter: blur(3px);             /* Giảm độ mờ xuống 3px */
+            -webkit-backdrop-filter: blur(3px);
             border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 20px;
             padding: 20px;
@@ -134,7 +134,7 @@
         .auth-form-container input[type="email"], .auth-form-container input[type="password"] {
             width: 100%; padding: 18px 24px; margin-bottom: 15px;
             border: 1.5px solid rgba(255,255,255,0.5); border-radius: 30px; 
-            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
             font-size: 15px; color: var(--darkest-purple); font-weight: 700;
             outline: none; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
@@ -214,7 +214,7 @@
         
         .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 25px; }
         .card { 
-            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
             border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 20px;
             padding: 15px 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
@@ -281,7 +281,7 @@
 
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100%;
-            background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+            background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
             border-top: 1px solid rgba(255,255,255,0.4); display: flex; justify-content: space-around; 
             padding: 10px 0; padding-bottom: calc(10px + env(safe-area-inset-bottom)); z-index: 100;
         }
@@ -343,7 +343,7 @@
         .widget-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
         .widget { 
             background: linear-gradient(135deg, rgba(91,69,167,0.7), rgba(57,43,115,0.7)); 
-            backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+            backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 24px; padding: 20px; color: white; text-align: center; box-shadow: 0 6px 15px rgba(36,26,76,0.15);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
