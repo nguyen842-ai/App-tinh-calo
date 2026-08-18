@@ -33,10 +33,15 @@
         
         * { box-sizing: border-box; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent;}
         
-        /* CẤU TRÚC NỀN & BODY */
+        /* ---------------------------------------------------- */
+        /* ĐÓNG BĂNG VIEWPORT - DIỆT TẬN GỐC RUBBER BAND TỔNG */
+        /* ---------------------------------------------------- */
         html, body {
-            width: 100%;
-            height: 100%;
+            position: fixed; /* Khóa khung trình duyệt */
+            top: 0; left: 0; right: 0; bottom: 0;
+            width: 100%; height: 100%;
+            overflow: hidden; /* Ngăn cuộn toàn trang */
+            overscroll-behavior: none; /* Khóa bounce/rubber */
         }
 
         body { 
@@ -53,23 +58,29 @@
             user-select: auto;
         }
 
-        /* HÌNH NỀN RÕ RÀNG */
+        /* HÌNH NỀN KHÓA CỨNG (KHÔNG DÙNG FIXED ATTACHMENT ĐỂ TRÁNH ZOOM IOS) */
         #bg-layer {
             position: fixed; 
-            top: 0; bottom: 0; left: 0; right: 0; 
+            top: 0; left: 0; right: 0; bottom: 0; 
+            width: 100%; height: 100%;
             background-size: cover; 
             background-position: center;
-            background-attachment: fixed;
+            background-repeat: no-repeat;
             z-index: -1; 
             transition: background-image 0.8s ease-in-out;
         }
         
-        /* Khung chứa nội dung */
+        /* Khung chứa nội dung (Cuộn độc lập) */
         .container { 
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            bottom: calc(54px + env(safe-area-inset-bottom)); /* Chiều cao thanh công cụ mỏng hơn */
             width: 100%; 
             max-width: 900px; 
             margin: 0 auto; 
-            padding: 0 20px calc(80px + env(safe-area-inset-bottom)) 20px; 
+            overflow-y: auto; 
+            -webkit-overflow-scrolling: touch; /* Cuộn mượt trên iOS */
+            padding: 0 20px 20px 20px; 
         }
 
         /* ĐỒNG BỘ BOX TRONG SUỐT */
@@ -105,15 +116,15 @@
         body.font-small .cal-day { font-size: 13px; }
         body.font-small .nav-item { font-size: 10px; }
         
-        /* GIAO DIỆN ĐĂNG NHẬP (KHÓA OVERFLOW ĐỂ NGĂN RUBBER) */
+        /* GIAO DIỆN ĐĂNG NHẬP */
         #auth-screen {
-            position: fixed; 
+            position: absolute; 
             top: 0; left: 0; right: 0; bottom: 0; 
             background: rgba(0,0,0,0.15); 
             display: flex; flex-direction: column; justify-content: space-between; align-items: center; 
             z-index: 9999; 
             padding: calc(env(safe-area-inset-top) + 60px) 30px calc(env(safe-area-inset-bottom) + 30px) 30px;
-            overflow: hidden; /* Đổi từ auto sang hidden để loại bỏ hành vi cuộn nền */
+            overflow: hidden; /* Cấm cuộn */
         }
         
         .auth-title-container { width: 100%; text-align: left; margin-top: 20px; }
@@ -266,19 +277,22 @@
             to { opacity: 1; } 
         }
 
+        /* LÀM MỎNG THANH CÔNG CỤ (BOTTOM NAV) */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100%;
             background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             border-top: 1px solid rgba(255,255,255,0.4); display: flex; justify-content: space-around; 
-            padding: 10px 0; padding-bottom: calc(10px + env(safe-area-inset-bottom)); z-index: 100;
+            padding: 6px 0; padding-bottom: calc(6px + env(safe-area-inset-bottom)); /* Giảm padding */
+            z-index: 100;
         }
         .nav-item { 
             background: none; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; 
-            gap: 4px; font-size: 11px; font-weight: 700; padding: 5px 20px; border-radius: 16px; transition: 0.3s; color: #4e3e7e;
+            gap: 2px; /* Giảm gap */
+            font-size: 11px; font-weight: 700; padding: 4px 15px; border-radius: 12px; transition: 0.3s; color: #4e3e7e;
         }
         .nav-item:hover { background: none; transform: none; box-shadow: none; color: var(--iris-bloom); }
         .nav-item.active { color: var(--iris-bloom); background: rgba(91,69,167,0.15); }
-        .nav-icon-img { width: 24px; height: 24px; object-fit: contain; filter: grayscale(100%); opacity: 0.6; transition: 0.3s; }
+        .nav-icon-img { width: 20px; height: 20px; object-fit: contain; filter: grayscale(100%); opacity: 0.6; transition: 0.3s; } /* Thu nhỏ icon */
         .nav-item.active .nav-icon-img { filter: grayscale(0%); opacity: 1; }
 
         /* LỊCH & BÁO CÁO */
@@ -591,17 +605,12 @@
 </nav>
 
 <script>
-    // ---------------------------------------------------------------------
-    // CHẶN RUBBER BANDING TẬN GỐC CHỈ CHO MÀN HÌNH ĐĂNG NHẬP
-    // ---------------------------------------------------------------------
+    // BỔ SUNG CHẶN VUỐT TRÊN MÀN HÌNH ĐĂNG NHẬP ĐỂ NGĂN SAFARI KÉO TRƯỢT
     document.getElementById('auth-screen').addEventListener('touchmove', function(e) {
-        // Ngăn chặn hoàn toàn việc vuốt/kéo trên màn hình đăng nhập
         e.preventDefault();
     }, { passive: false });
 
-    // ---------------------------------------------------------------------
     // 1. NỀN & VUỐT CHUYỂN TAB
-    // ---------------------------------------------------------------------
     function setRandomBackground() {
         const bgImages = [
             'pic/IMG_3174.jpeg', 'pic/IMG_3177.jpeg', 'pic/IMG_3178.jpeg', 'pic/IMG_3179.jpeg',
@@ -639,9 +648,7 @@
         }
     }, {passive: true});
 
-    // ---------------------------------------------------------------------
     // 2. SUPABASE AUTH & USER PROFILE
-    // ---------------------------------------------------------------------
     const SUPABASE_URL = 'https://qsfwgjzejggvawcxjkxp.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_6uLn0e1rJtFFBr_hhHjkYA_Carb1WqC';
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -738,9 +745,7 @@
 
     function formatDate(dateObj) { return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`; }
 
-    // ---------------------------------------------------------------------
     // 3. LOGIC LỊCH & CHỈ SỐ CƠ THỂ
-    // ---------------------------------------------------------------------
     let displayDate = new Date(); 
 
     async function fetchAllDataFromCloud() {
@@ -819,9 +824,7 @@
         cloudLogs = logs || []; updateMainAppUI();
     }
 
-    // ---------------------------------------------------------------------
     // 4. CẬP NHẬT TRANG CHỦ & BÁO CÁO CHỐT SỔ
-    // ---------------------------------------------------------------------
     function updateMainAppUI() {
         let inList = '', outList = '', totalIn = 0, totalOut = 0;
         cloudLogs.forEach(log => {
@@ -882,9 +885,7 @@
 
     async function deleteLog(logId) { await supabaseClient.from('daily_logs').delete().eq('id', logId); loadDataForSelectedDate(); }
 
-    // ---------------------------------------------------------------------
     // 5. CHỨC NĂNG DASHBOARD HỒ SƠ
-    // ---------------------------------------------------------------------
     function saveMood(index, btnElem) {
         document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
         btnElem.classList.add('active');
