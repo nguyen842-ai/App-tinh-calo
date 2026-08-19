@@ -29,8 +29,9 @@
             --text-main: #1a103c; 
             --text-muted: #555555;
             --heading-color: #392B73;
-            --box-bg: rgba(255, 255, 255, 0.35);
-            --box-border: rgba(255, 255, 255, 0.5);
+            /* Tăng độ trong suốt cho box */
+            --box-bg: rgba(255, 255, 255, 0.25);
+            --box-border: rgba(255, 255, 255, 0.4);
             --input-bg: rgba(255, 255, 255, 0.5);
             --input-text: #1a103c;
             --nav-bg: rgba(255, 255, 255, 0.75);
@@ -43,7 +44,8 @@
             --text-main: #f5f6fa; 
             --text-muted: #a4b0be;
             --heading-color: #a29bfe;
-            --box-bg: rgba(0, 0, 0, 0.55);
+            /* Tăng độ trong suốt cho box */
+            --box-bg: rgba(0, 0, 0, 0.35);
             --box-border: rgba(255, 255, 255, 0.15);
             --input-bg: rgba(0, 0, 0, 0.4);
             --input-text: #ffffff;
@@ -53,9 +55,6 @@
 
         * { box-sizing: border-box; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent;}
 
-        /* =========================================================
-           VIEWPORT + BACKGROUND — iOS PWA SAFE
-           ========================================================= */
         html, body {
             width: 100vw; height: 100vh;
             min-height: -webkit-fill-available; 
@@ -68,7 +67,6 @@
 
         input, select, textarea { -webkit-user-select: auto; user-select: auto; }
 
-        /* LỚP NỀN TRÀN VIỀN */
         #bg-layer {
             position: fixed;
             top: -50px; bottom: -50px; left: -50px; right: -50px;
@@ -77,7 +75,6 @@
             transition: background-image 0.8s ease-in-out;
         }
 
-        /* CONTAINER APP */
         #main-app { display: none; position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 1; }
 
         .container {
@@ -88,7 +85,6 @@
             padding: 0 20px calc(70px + env(safe-area-inset-bottom, 0px)) 20px;
         }
 
-        /* GIAO DIỆN ĐĂNG NHẬP */
         #auth-screen {
             position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 9999;
             background: transparent; 
@@ -99,14 +95,10 @@
             overflow: hidden; 
         }
 
-        /* =========================================================
-           THÀNH PHẦN GIAO DIỆN (UI COMPONENTS)
-           ========================================================= */
-
-        /* ĐỒNG BỘ BOX TRONG SUỐT THEO THEME */
-        .glass-panel, .section, .my-goal-section, .daily-summary-box, .body-metrics-result, .countdown-card {
+        /* Thêm .card vào danh sách dùng chung Box trong suốt */
+        .glass-panel, .section, .my-goal-section, .daily-summary-box, .body-metrics-result, .countdown-card, .card {
             background: var(--box-bg);
-            backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
             border: 1px solid var(--box-border);
             border-radius: 20px; padding: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -114,7 +106,6 @@
             transition: background 0.3s, border 0.3s, color 0.3s;
         }
 
-        /* CỠ CHỮ */
         body.font-large { font-size: 18px; }
         body.font-large input, body.font-large select { font-size: 16px; padding: 16px; }
         body.font-large button { font-size: 16px; }
@@ -135,7 +126,6 @@
         body.font-small .cal-day { font-size: 13px; }
         body.font-small .nav-item { font-size: 10px; }
 
-        /* HEADER SAFE AREA */
         .main-header {
             background: transparent;
             padding-left: 0; padding-right: 0; padding-bottom: 20px;
@@ -146,7 +136,6 @@
         .header-title { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.9); line-height: 1.2; margin-bottom: 4px;}
         .header-desc { font-size: 14px; color: #ffffff; font-style: italic; font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,0.8);}
 
-        /* CHI TIẾT MÀN HÌNH ĐĂNG NHẬP */
         .auth-title-container { width: 100%; text-align: left; margin-top: 20px; }
         .auth-main-title { font-size: 42px; font-weight: 900; color: #ffffff; text-shadow: 0 4px 20px rgba(0,0,0,0.6); line-height: 1.1; letter-spacing: -1px;}
         .auth-form-container { width: 100%; max-width: 350px; display: flex; flex-direction: column; margin-bottom: auto; margin-top: 80px; }
@@ -171,7 +160,6 @@
         .btn-signin:hover { transform: translateY(-3px); background: #4a3888; }
         .btn-signup { background: transparent; border: none; color: white; font-size: 15px; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; text-shadow: 0 1px 5px rgba(0,0,0,0.8); transition: 0.2s;}
 
-        /* CÁC THÀNH PHẦN INPUT CHUNG APP */
         input, select { 
             padding: 14px; border: 1px solid var(--box-border); border-radius: 14px; 
             font-size: 16px; outline: none; width: 100%; max-width: 100%; box-sizing: border-box;
@@ -183,7 +171,6 @@
         input:focus, select:focus { border-color: var(--iris-bloom); }
         input::placeholder { color: var(--text-muted); }
 
-        /* MÀU SẮC CHỮ VÀ TIÊU ĐỀ BÊN TRONG APP */
         .section h2, .section h3 { font-size: 18px; margin-bottom: 15px; color: var(--heading-color); font-weight: 800;}
         .section h2 { padding-bottom: 10px; border-bottom: 1px solid var(--box-border); }
         .list-header { font-weight: bold; font-size: 14px; color: var(--text-main); margin-bottom: 10px; }
@@ -193,7 +180,10 @@
         .ds-title { font-size: 13px; font-weight: 800; color: var(--heading-color); text-transform: uppercase; margin-bottom: 8px;}
         .ds-empty { font-size: 13px; font-style: italic; color: var(--text-muted); font-weight: 500;}
 
-        /* MY GOAL & HP BAR */
+        /* Style Title cho Form Chỉ Số Cơ Thể */
+        .input-wrap { flex: 1; display: flex; flex-direction: column; }
+        .input-label { font-size: 12px; font-weight: 800; color: var(--heading-color); margin-bottom: 5px; padding-left: 5px; text-transform: uppercase; }
+
         .my-goal-section { padding: 18px 22px; }
         .goal-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px; }
         .goal-header span:first-child { font-weight: 800; color: var(--heading-color); font-size: 15px; }
@@ -205,6 +195,7 @@
         @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-3px);} 75% {transform: translateX(3px);} }
         
         .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 25px; }
+        .card { padding: 15px; margin-bottom: 0; text-align: center; border-radius: 18px; display: flex; flex-direction: column; justify-content: center; }
         .card h3 { font-size: 12px; text-transform: uppercase; margin-bottom: 5px; color: var(--heading-color); font-weight: 800;}
         .card p { font-size: 24px; font-weight: 900; color: var(--iris-bloom); }
         
@@ -227,15 +218,13 @@
         input[type="file"] { display: none; }
         #ai-status { font-size: 13px; color: var(--iris-bloom); text-align: center; margin-bottom: 15px; display: none; font-weight: bold; }
         
-        .del-btn { background: var(--iris-bloom); color: white; cursor: pointer; font-weight: bold; margin-left: 10px; font-size: 14px; border: none; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(91,69,167,0.3); transition: all 0.2s ease; flex-shrink: 0; padding: 0;}
+        .del-btn { background: var(--iris-bloom); color: white; cursor: pointer; font-weight: bold; font-size: 14px; border: none; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(91,69,167,0.3); transition: all 0.2s ease; flex-shrink: 0; padding: 0;}
         .del-btn:hover { background: #4a3888; transform: scale(1.1); }
 
-        /* TAB LOGIC */
         .tab-content { display: none; animation: fadeIn 0.25s ease-in-out; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* BOTTOM NAVIGATION */
         .bottom-nav {
             position: fixed; left: 0; right: 0; bottom: 0; width: 100%; z-index: 100;
             background: var(--nav-bg);
@@ -251,7 +240,6 @@
         .nav-icon-img { width: 30px; height: 30px; object-fit: contain; filter: grayscale(100%); opacity: 0.6; transition: 0.3s; }
         .nav-item.active .nav-icon-img { filter: grayscale(0%); opacity: 1; }
 
-        /* LỊCH & BÁO CÁO */
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-weight: 800; color: var(--iris-bloom);}
         .calendar-header button { padding: 8px 15px; background: rgba(91,69,167,0.2); color: var(--iris-bloom); box-shadow: none; border-radius: 12px;}
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
@@ -272,7 +260,6 @@
         .metric-val { font-weight: 800; color: var(--iris-bloom); text-align: right; }
         .ai-highlight { color: var(--malibu-blue); font-size: 16px; }
 
-        /* CÀI ĐẶT & HỒ SƠ */
         .profile-name-box { display: flex; gap: 10px;}
         .profile-name-box input { flex: 1; margin-bottom: 0;}
         .font-size-controls { display: flex; justify-content: space-between; gap: 10px; margin-top: 10px;}
@@ -301,10 +288,8 @@
 </head>
 <body>
 
-<!-- LỚP NỀN CỐ ĐỊNH -->
 <div id="bg-layer"></div>
 
-<!-- MÀN HÌNH ĐĂNG NHẬP -->
 <div id="auth-screen">
     <div class="auth-title-container">
         <h1 class="auth-main-title">Nhật Ký<br>Dinh Dưỡng</h1>
@@ -325,18 +310,15 @@
     </div>
 </div>
 
-<!-- GIAO DIỆN CHÍNH APP -->
 <div id="main-app">
     <div class="container">
         
-        <!-- HEADER -->
         <div class="main-header">
             <div class="header-subtitle">Nhật Ký Dinh Dưỡng</div>
             <h1 class="header-title" id="greeting-name">Xin chào, Bạn!</h1>
             <p class="header-desc" id="greeting-time">Đang tải...</p>
         </div>
 
-        <!-- TAB 1: THEO DÕI (LỊCH SỬ) -->
         <div id="tab-history" class="tab-content">
             <div class="section">
                 <div class="calendar-header">
@@ -359,22 +341,44 @@
             <div class="section" id="day-data-section">
                 <h3 id="selected-date-title">Chỉ số Cơ thể ngày...</h3>
                 <form class="form-group" id="body-metrics-form">
+                    <!-- Thêm Title (Label) cho các form nhập liệu -->
                     <div class="macro-inputs">
-                        <select id="bm-gender" required>
-                            <option value="">-- Giới tính --</option>
-                            <option value="male">Nam</option>
-                            <option value="female">Nữ</option>
-                        </select>
-                        <input type="number" id="bm-age" placeholder="Tuổi" required>
+                        <div class="input-wrap">
+                            <label class="input-label">Giới tính</label>
+                            <select id="bm-gender" required>
+                                <option value="">-- Chọn --</option>
+                                <option value="male">Nam</option>
+                                <option value="female">Nữ</option>
+                            </select>
+                        </div>
+                        <div class="input-wrap">
+                            <label class="input-label">Độ tuổi</label>
+                            <input type="number" id="bm-age" placeholder="Tuổi" required>
+                        </div>
                     </div>
                     <div class="macro-inputs">
-                        <input type="number" id="bm-weight" placeholder="Cân nặng (kg)" step="0.1" required>
-                        <input type="number" id="bm-height" placeholder="Chiều cao (cm)" required>
+                        <div class="input-wrap">
+                            <label class="input-label">Cân nặng (kg)</label>
+                            <input type="number" id="bm-weight" placeholder="Kg" step="0.1" required>
+                        </div>
+                        <div class="input-wrap">
+                            <label class="input-label">Chiều cao (cm)</label>
+                            <input type="number" id="bm-height" placeholder="Cm" required>
+                        </div>
                     </div>
                     <div class="macro-inputs">
-                        <input type="number" id="bm-chest" placeholder="Ngực (cm)">
-                        <input type="number" id="bm-waist" placeholder="Eo (cm)">
-                        <input type="number" id="bm-hip" placeholder="Mông (cm)">
+                        <div class="input-wrap">
+                            <label class="input-label">Ngực (cm)</label>
+                            <input type="number" id="bm-chest" placeholder="Cm">
+                        </div>
+                        <div class="input-wrap">
+                            <label class="input-label">Eo (cm)</label>
+                            <input type="number" id="bm-waist" placeholder="Cm">
+                        </div>
+                        <div class="input-wrap">
+                            <label class="input-label">Mông (cm)</label>
+                            <input type="number" id="bm-hip" placeholder="Cm">
+                        </div>
                     </div>
                     
                     <h3 style="font-size: 14px; margin-bottom: 5px; margin-top: 5px;">Mục tiêu của bạn:</h3>
@@ -384,8 +388,14 @@
                         <option value="gain">Tăng Cơ</option>
                     </select>
                     <div class="macro-inputs">
-                        <input type="number" id="bm-goal-week" placeholder="Mục tiêu tuần (kg)" step="0.1" value="0.5" oninput="updateGoalMath()">
-                        <input type="number" id="bm-goal-month" placeholder="Mục tiêu tháng (kg)" readonly style="background: rgba(0,0,0,0.05);">
+                        <div class="input-wrap">
+                            <label class="input-label">Theo tuần (kg)</label>
+                            <input type="number" id="bm-goal-week" placeholder="Mục tiêu tuần" step="0.1" value="0.5" oninput="updateGoalMath()">
+                        </div>
+                        <div class="input-wrap">
+                            <label class="input-label">Theo tháng (kg)</label>
+                            <input type="number" id="bm-goal-month" placeholder="Mục tiêu tháng" readonly style="background: rgba(0,0,0,0.05);">
+                        </div>
                     </div>
                     <p id="goal-math-desc" style="font-size: 13px; color: var(--iris-bloom); font-weight: bold; margin-top: 2px; text-align: center;"></p>
                     
@@ -404,11 +414,11 @@
             </div>
         </div>
 
-        <!-- TAB 2: GHI CHÉP (TRANG CHỦ) -->
         <div id="tab-home" class="tab-content active">
             
             <div class="my-goal-section">
-                <div class="goal-header"><span>MỤC TIÊU CALO (ĐÃ TRỪ THÂM HỤT)</span> <span id="goal-text">0 / 2000 kcal</span></div>
+                <!-- Đổi tên mục tiêu calo -->
+                <div class="goal-header"><span>MỤC TIÊU NGÀY</span> <span id="goal-text">0 / 2000 kcal</span></div>
                 <div class="goal-bar-bg"><div class="goal-bar-fill" id="goal-bar-fill"></div></div>
                 <div class="goal-warning" id="goal-warning">⚠️ Úi! Bạn đã nạp lố calo hôm nay rồi. Hãy tập luyện thêm nhé!</div>
             </div>
@@ -463,35 +473,39 @@
             </div>
         </div>
 
-        <!-- TAB 3: HỒ SƠ -->
         <div id="tab-profile" class="tab-content">
 
-            <!-- NHÓM CÀI ĐẶT CHUNG -->
-            <div class="section">
-                <h2>⚙️ Cài Đặt Chung</h2>
+            <!-- Tính năng toggle Ẩn/Hiện Cài Đặt Chung -->
+            <div class="section" style="padding-bottom: 10px;">
+                <h2 onclick="toggleSettings()" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-bottom: none; margin-bottom: 0;">
+                    <span>⚙️ Cài Đặt Chung</span>
+                    <span id="settings-toggle-icon" style="transition: transform 0.3s; font-size: 16px;">▼</span>
+                </h2>
                 
-                <div class="form-group" style="margin-bottom: 20px;">
-                    <h3 style="font-size: 14px; margin-bottom: 5px;">Tên hiển thị</h3>
-                    <form class="profile-name-box" id="name-form">
-                        <input type="text" id="prof-name-input" placeholder="Nhập tên của bạn" required>
-                        <button type="submit" style="white-space: nowrap;">Lưu</button>
-                    </form>
-                </div>
-
-                <div class="form-group" style="margin-bottom: 20px;">
-                    <h3 style="font-size: 14px; margin-bottom: 5px;">Cỡ chữ hiển thị</h3>
-                    <div class="font-size-controls" style="margin-top: 0;">
-                        <button type="button" class="fs-btn" id="fs-small" onclick="changeFontSize('small')">A- Nhỏ</button>
-                        <button type="button" class="fs-btn active" id="fs-medium" onclick="changeFontSize('medium')">A Vừa</button>
-                        <button type="button" class="fs-btn" id="fs-large" onclick="changeFontSize('large')">A+ Lớn</button>
+                <div id="settings-content" style="display: none; margin-top: 15px; border-top: 1px solid var(--box-border); padding-top: 20px;">
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <h3 style="font-size: 14px; margin-bottom: 5px;">Tên hiển thị</h3>
+                        <form class="profile-name-box" id="name-form">
+                            <input type="text" id="prof-name-input" placeholder="Nhập tên của bạn" required>
+                            <button type="submit" style="white-space: nowrap;">Lưu</button>
+                        </form>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <h3 style="font-size: 14px; margin-bottom: 5px;">Giao diện (Theme)</h3>
-                    <div class="font-size-controls" style="margin-top: 0;">
-                        <button type="button" class="fs-btn active" id="theme-light" onclick="changeTheme('light')">☀️ Sáng</button>
-                        <button type="button" class="fs-btn" id="theme-dark" onclick="changeTheme('dark')">🌙 Tối</button>
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <h3 style="font-size: 14px; margin-bottom: 5px;">Cỡ chữ hiển thị</h3>
+                        <div class="font-size-controls" style="margin-top: 0;">
+                            <button type="button" class="fs-btn" id="fs-small" onclick="changeFontSize('small')">A- Nhỏ</button>
+                            <button type="button" class="fs-btn active" id="fs-medium" onclick="changeFontSize('medium')">A Vừa</button>
+                            <button type="button" class="fs-btn" id="fs-large" onclick="changeFontSize('large')">A+ Lớn</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h3 style="font-size: 14px; margin-bottom: 5px;">Giao diện (Theme)</h3>
+                        <div class="font-size-controls" style="margin-top: 0;">
+                            <button type="button" class="fs-btn active" id="theme-light" onclick="changeTheme('light')">☀️ Sáng</button>
+                            <button type="button" class="fs-btn" id="theme-dark" onclick="changeTheme('dark')">🌙 Tối</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -538,7 +552,6 @@
     </div>
 </div>
 
-<!-- BOTTOM NAV -->
 <nav class="bottom-nav" id="bottom-nav" style="display: none;">
     <button class="nav-item" onclick="switchTab('tab-history', this)">
         <img src="icon/calendar.webp" class="nav-icon-img" alt="Theo Dõi">
@@ -555,13 +568,11 @@
 </nav>
 
 <script>
-    // CHỐNG RUBBER BAND CHO IOS SAFARI TRÊN CÁC KHU VỰC KHÔNG PHẢI CUỘN
     document.body.addEventListener('touchmove', function(e) {
         const scrollableContainer = e.target.closest('.container');
         if (!scrollableContainer) e.preventDefault(); 
     }, { passive: false });
 
-    // 1. NỀN & VUỐT CHUYỂN TAB
     function setRandomBackground() {
         const bgImages = [
             'pic/IMG_3174.jpeg', 'pic/IMG_3177.jpeg', 'pic/IMG_3178.jpeg', 'pic/IMG_3179.jpeg',
@@ -599,7 +610,6 @@
         }
     }, {passive: true});
 
-    // 2. SUPABASE AUTH & USER PROFILE
     const SUPABASE_URL = 'https://qsfwgjzejggvawcxjkxp.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_6uLn0e1rJtFFBr_hhHjkYA_Carb1WqC';
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -668,13 +678,23 @@
         document.getElementById('greeting-time').innerText = `Chào buổi ${time}! Hôm nay bạn đã thâm hụt calo chưa?`;
     }
 
-    /* QUẢN LÝ CÀI ĐẶT CHUNG (SETTINGS) */
+    // Toggle Hiện Ẩn cài đặt
+    function toggleSettings() {
+        const content = document.getElementById('settings-content');
+        const icon = document.getElementById('settings-toggle-icon');
+        if (content.style.display === 'none' || !content.style.display) {
+            content.style.display = 'block';
+            icon.style.transform = 'rotate(180deg)';
+        } else {
+            content.style.display = 'none';
+            icon.style.transform = 'rotate(0deg)';
+        }
+    }
+
     function loadSettings() {
-        // Tải Font Size
         const size = localStorage.getItem(`fontsize_${currentUser?.id}`) || 'medium';
         changeFontSize(size);
         
-        // Tải Theme
         const theme = localStorage.getItem(`theme_${currentUser?.id}`) || 'light';
         changeTheme(theme);
     }
@@ -699,7 +719,6 @@
 
     function formatDate(dateObj) { return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`; }
 
-    // 3. LOGIC LỊCH & CHỈ SỐ CƠ THỂ
     let displayDate = new Date(); 
 
     async function fetchAllDataFromCloud() {
@@ -731,7 +750,6 @@
     document.getElementById('prev-month').addEventListener('click', () => { displayDate.setMonth(displayDate.getMonth() - 1); renderCalendar(); });
     document.getElementById('next-month').addEventListener('click', () => { displayDate.setMonth(displayDate.getMonth() + 1); renderCalendar(); });
 
-    /* TÍNH TOÁN KẾ HOẠCH CÂN NẶNG & THÂM HỤT (Goal Math) */
     function updateGoalMath() {
         const goal = document.getElementById('bm-goal').value;
         const weekInput = document.getElementById('bm-goal-week');
@@ -744,8 +762,8 @@
         } else {
             weekInput.disabled = false;
             let w = parseFloat(weekInput.value) || 0;
-            monthInput.value = (w * 4).toFixed(1); // 1 tháng = 4 tuần
-            let calDiff = Math.round(w * 1100); // 1kg mỡ ~ 7700 kcal -> 1 tuần 1kg = 1100 kcal/ngày
+            monthInput.value = (w * 4).toFixed(1); 
+            let calDiff = Math.round(w * 1100); 
             
             if (goal === 'lose') mathDesc.innerText = `🔥 Mục tiêu cần thâm hụt: -${calDiff} kcal/ngày`;
             else mathDesc.innerText = `💪 Mục tiêu cần dư thừa: +${calDiff} kcal/ngày`;
@@ -762,7 +780,6 @@
         const goal = document.getElementById('bm-goal').value;
         const week_goal = parseFloat(document.getElementById('bm-goal-week').value) || 0;
 
-        // Tính BMI & Body shape
         const bmi = (w / Math.pow(h/100, 2)).toFixed(1);
         let bmiEval = bmi < 18.5 ? "Thiếu cân" : bmi < 25 ? "Bình thường" : bmi < 30 ? "Thừa cân" : "Béo phì";
         let shape = "Chưa đủ dữ liệu", whr = "N/A";
@@ -772,18 +789,15 @@
             else if(chest > hip*1.05) shape = "Tam giác ngược 🔻"; else if(waist >= hip || waist >= chest) shape = "Quả táo 🍎"; else shape = "Chữ nhật 📏";
         }
 
-        // Tính BMR & TDEE
         let bmr = 10 * w + 6.25 * h - 5 * age + (gender === 'male' ? 5 : -161);
         let tdee = bmr * 1.2; 
         
-        // Tính toán Mục tiêu Nạp dựa trên cân nặng mục tiêu
         let diff = Math.round(week_goal * 1100);
         let targetIn = tdee;
         if(goal === 'lose') targetIn = Math.round(tdee - diff);
         if(goal === 'gain') targetIn = Math.round(tdee + diff);
         let targetOut = goal === 'lose' ? 300 : (goal === 'gain' ? 150 : 0);
 
-        // Lưu setting LocalStorage để giữ state
         localStorage.setItem(`bm_plan_${currentUser.id}`, JSON.stringify({ goal, week_goal }));
 
         const payload = { user_id: currentUser.id, record_date: selectedDateStr, weight: w, height: h, chest, waist, hip, bmi: `${bmi} (${bmiEval})`, body_shape: shape, ai_recommended_in: targetIn, ai_recommended_out: targetOut };
@@ -806,7 +820,6 @@
             document.getElementById('metrics-result-box').style.display = 'block';
         } else { document.getElementById('body-metrics-form').reset(); document.getElementById('metrics-result-box').style.display = 'none'; }
 
-        // Khôi phục Setting Kế hoạch cân nặng
         const planStr = localStorage.getItem(`bm_plan_${currentUser?.id}`);
         if(planStr) {
             const plan = JSON.parse(planStr);
@@ -822,16 +835,28 @@
         cloudLogs = logs || []; updateMainAppUI();
     }
 
-    // 4. CẬP NHẬT TRANG CHỦ & BÁO CÁO CHỐT SỔ
     function updateMainAppUI() {
         let inList = '', outList = '', totalIn = 0, totalOut = 0;
         cloudLogs.forEach(log => {
+            // Canh lề đẩy số calo ra giữa 1 chút và ngang hàng nút X
             if(log.log_type === 'food') {
                 totalIn += log.calories;
-                inList += `<li><div class="item-details"><span>${log.item_name}</span></div><div><strong>+${log.calories}</strong> <button class="del-btn" onclick="deleteLog('${log.id}')">×</button></div></li>`;
+                inList += `<li>
+                    <div class="item-details"><span>${log.item_name}</span></div>
+                    <div style="display: flex; align-items: center; justify-content: flex-end; gap: 12px; min-width: 90px;">
+                        <strong>+${log.calories}</strong> 
+                        <button class="del-btn" onclick="deleteLog('${log.id}')">×</button>
+                    </div>
+                </li>`;
             } else {
                 totalOut += log.calories;
-                outList += `<li><span>${log.item_name}</span><div><strong>-${log.calories}</strong> <button class="del-btn" onclick="deleteLog('${log.id}')">×</button></div></li>`;
+                outList += `<li>
+                    <span>${log.item_name}</span>
+                    <div style="display: flex; align-items: center; justify-content: flex-end; gap: 12px; min-width: 90px;">
+                        <strong>-${log.calories}</strong> 
+                        <button class="del-btn" onclick="deleteLog('${log.id}')">×</button>
+                    </div>
+                </li>`;
             }
         });
         document.getElementById('food-list').innerHTML = inList; document.getElementById('workout-list').innerHTML = outList;
@@ -844,7 +869,6 @@
             dsContent.innerHTML = `<div class="ds-data"><span class="ds-in">Tổng Nạp: ${totalIn}</span><span class="ds-out">Tổng Đốt: ${totalOut}</span></div>`;
         }
 
-        // Thay vì 2000, lấy chính xác mục tiêu đã xử lý toán học (Target đã trừ/cộng thâm hụt) từ Database
         let targetIn = 2000, targetOut = 0;
         const md = cloudMetrics[selectedDateStr]; if(md && md.ai_recommended_in) { targetIn = md.ai_recommended_in; targetOut = md.ai_recommended_out; }
         
@@ -884,7 +908,6 @@
 
     async function deleteLog(logId) { await supabaseClient.from('daily_logs').delete().eq('id', logId); loadDataForSelectedDate(); }
 
-    // 5. CHỨC NĂNG DASHBOARD HỒ SƠ
     function saveMood(index, btnElem) {
         document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
         btnElem.classList.add('active');
