@@ -18,109 +18,100 @@
 
     <style>
         :root {
-            /* HỆ MÀU PANTONE */
+            /* HỆ MÀU CỐ ĐỊNH */
             --iris-bloom: #5B45A7;      
-            --deep-purple: #392B73;     
-            --darkest-purple: #241A4C;  
             --malibu-blue: #008BCD;     
             --bleu-ciel: #007AA2;       
             --coral-red: #FF7F50;       
             
+            /* HỆ MÀU SÁNG (LIGHT MODE - MẶC ĐỊNH) */
+            --bg-color: #241A4C;
             --text-main: #1a103c; 
-            --text-muted: #444444;
-            --red: #e74c3c;
+            --text-muted: #555555;
+            --heading-color: #392B73;
+            --box-bg: rgba(255, 255, 255, 0.35);
+            --box-border: rgba(255, 255, 255, 0.5);
+            --input-bg: rgba(255, 255, 255, 0.5);
+            --input-text: #1a103c;
+            --nav-bg: rgba(255, 255, 255, 0.75);
+            --nav-text: #4e3e7e;
+        }
+
+        /* HỆ MÀU TỐI (DARK MODE) */
+        [data-theme="dark"] {
+            --bg-color: #0b071a;
+            --text-main: #f5f6fa; 
+            --text-muted: #a4b0be;
+            --heading-color: #a29bfe;
+            --box-bg: rgba(0, 0, 0, 0.55);
+            --box-border: rgba(255, 255, 255, 0.15);
+            --input-bg: rgba(0, 0, 0, 0.4);
+            --input-text: #ffffff;
+            --nav-bg: rgba(15, 15, 25, 0.85);
+            --nav-text: #a29bfe;
         }
 
         * { box-sizing: border-box; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent;}
 
         /* =========================================================
-           VIEWPORT + BACKGROUND — iOS PWA SAFE (CHỐNG HỞ CHÂN)
+           VIEWPORT + BACKGROUND — iOS PWA SAFE
            ========================================================= */
-
         html, body {
-            width: 100vw;
-            height: 100vh;
-            /* MA THUẬT FIX CHIỀU CAO CHO IOS SAFARI */
+            width: 100vw; height: 100vh;
             min-height: -webkit-fill-available; 
             margin: 0; padding: 0;
-            background-color: var(--darkest-purple);
-            
-            /* Khóa chết trình duyệt, diệt Rubber Band tổng */
-            overflow: hidden; 
-            overscroll-behavior: none; 
-            
-            color: var(--text-main); 
-            line-height: 1.6;
-            -webkit-user-select: none;    
-            -webkit-touch-callout: none;  
+            background-color: var(--bg-color);
+            overflow: hidden; overscroll-behavior: none; 
+            color: var(--text-main); line-height: 1.6;
+            -webkit-user-select: none; -webkit-touch-callout: none;  
         }
 
-        input, select, textarea {
-            -webkit-user-select: auto;
-            user-select: auto;
-        }
+        input, select, textarea { -webkit-user-select: auto; user-select: auto; }
 
-        /* LỚP NỀN (ÉP TRÀN VIỀN ĐỂ CHỐNG LỘ MÉP) */
+        /* LỚP NỀN TRÀN VIỀN */
         #bg-layer {
             position: fixed;
-            /* Cố tình cho to hơn màn hình 50px ở mọi hướng để chèn kín màn hình */
             top: -50px; bottom: -50px; left: -50px; right: -50px;
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            pointer-events: none; 
-            z-index: 0;
+            background-size: cover; background-position: center center; background-repeat: no-repeat;
+            pointer-events: none; z-index: 0;
             transition: background-image 0.8s ease-in-out;
         }
 
-        /* CONTAINER CHỨA APP */
-        #main-app {
-            display: none;
-            position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
-            z-index: 1;
-        }
+        /* CONTAINER APP */
+        #main-app { display: none; position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 1; }
 
-        /* VÙNG CUỘN ĐỘC LẬP (NỘI DUNG APP) */
         .container {
-            position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
-            max-width: 900px; 
-            margin: 0 auto;
-            overflow-x: hidden; 
-            overflow-y: auto; /* Chỉ cho phép cuộn khu vực này */
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior-y: none; /* Khóa rubber bên trong app */
-            
-            /* Chừa khoảng trống cho thanh công cụ */
+            position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+            max-width: 900px; margin: 0 auto;
+            overflow-x: hidden; overflow-y: auto; 
+            -webkit-overflow-scrolling: touch; overscroll-behavior-y: none; 
             padding: 0 20px calc(70px + env(safe-area-inset-bottom, 0px)) 20px;
         }
 
         /* GIAO DIỆN ĐĂNG NHẬP */
         #auth-screen {
-            position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
-            z-index: 9999;
-            background: transparent; /* Xóa lớp mờ màu đen, trả lại 100% độ sáng hình nền */
+            position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 9999;
+            background: transparent; 
             display: flex; flex-direction: column; justify-content: space-between; align-items: center;
             padding-top: calc(60px + env(safe-area-inset-top, 0px));
             padding-right: 30px; padding-left: 30px;
             padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px));
-            overflow: hidden; /* Cấm cuộn hoàn toàn màn hình này */
+            overflow: hidden; 
         }
 
         /* =========================================================
            THÀNH PHẦN GIAO DIỆN (UI COMPONENTS)
            ========================================================= */
 
-        /* ĐỒNG BỘ BOX TRONG SUỐT */
+        /* ĐỒNG BỘ BOX TRONG SUỐT THEO THEME */
         .glass-panel, .section, .my-goal-section, .daily-summary-box, .body-metrics-result, .countdown-card {
-            background: rgba(255, 255, 255, 0.25);
+            background: var(--box-bg);
             backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid var(--box-border);
             border-radius: 20px; padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             margin-bottom: 20px;
+            transition: background 0.3s, border 0.3s, color 0.3s;
         }
 
         /* CỠ CHỮ */
@@ -150,241 +141,170 @@
             padding-left: 0; padding-right: 0; padding-bottom: 20px;
             padding-top: calc(15px + env(safe-area-inset-top, 0px));
             text-align: left; margin: 0 0 10px 0;
-            box-shadow: none; border-bottom: none;
         }
-        .header-subtitle { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: #ffffff; font-weight: 800; margin-bottom: 4px; text-shadow: 0 2px 8px rgba(0,0,0,0.6);}
-        .header-title { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.7); line-height: 1.2; margin-bottom: 4px;}
-        .header-desc { font-size: 14px; color: #ffffff; font-style: italic; font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,0.6);}
+        .header-subtitle { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: #ffffff; font-weight: 800; margin-bottom: 4px; text-shadow: 0 2px 8px rgba(0,0,0,0.8);}
+        .header-title { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.9); line-height: 1.2; margin-bottom: 4px;}
+        .header-desc { font-size: 14px; color: #ffffff; font-style: italic; font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,0.8);}
 
         /* CHI TIẾT MÀN HÌNH ĐĂNG NHẬP */
         .auth-title-container { width: 100%; text-align: left; margin-top: 20px; }
-        .auth-main-title { 
-            font-size: 42px; font-weight: 900; color: #ffffff; 
-            text-shadow: 2px 4px 15px rgba(0,0,0,0.4); line-height: 1.1; letter-spacing: -1px;
-        }
-
+        .auth-main-title { font-size: 42px; font-weight: 900; color: #ffffff; text-shadow: 0 4px 20px rgba(0,0,0,0.6); line-height: 1.1; letter-spacing: -1px;}
         .auth-form-container { width: 100%; max-width: 350px; display: flex; flex-direction: column; margin-bottom: auto; margin-top: 80px; }
+        
         .auth-form-container input[type="email"], .auth-form-container input[type="password"] {
             width: 100%; padding: 18px 24px; margin-bottom: 15px;
-            border: 1.5px solid rgba(255,255,255,0.5); border-radius: 30px; 
-            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
-            font-size: 16px; color: var(--darkest-purple); font-weight: 700; outline: none; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border: 1.5px solid var(--box-border); border-radius: 30px; 
+            background: var(--box-bg); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            font-size: 16px; color: var(--text-main); font-weight: 700; outline: none; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
-        .auth-form-container input::placeholder { color: rgba(36,26,76,0.7); font-weight: 600; }
-        .auth-form-container input:focus { background: rgba(255, 255, 255, 0.5); border-color: white; }
-
-        .remember-group-new {
-            display: flex; justify-content: flex-end; align-items: center; gap: 6px;
-            font-size: 13px; color: white; font-weight: 700; text-shadow: 0 1px 5px rgba(0,0,0,0.6);
-            cursor: pointer; margin-top: -5px; padding-right: 10px;
-        }
+        .auth-form-container input::placeholder { color: var(--text-muted); font-weight: 600; }
+        
+        .remember-group-new { display: flex; justify-content: flex-end; align-items: center; gap: 6px; font-size: 13px; color: white; font-weight: 700; text-shadow: 0 1px 5px rgba(0,0,0,0.8); cursor: pointer; margin-top: -5px; padding-right: 10px;}
         .remember-group-new input { width: 16px; height: 16px; accent-color: var(--iris-bloom); cursor: pointer;}
         
         .auth-msg { margin-top: 15px; font-size: 13px; font-weight: bold; text-align: center; text-shadow: 0 1px 3px rgba(0,0,0,0.8); padding: 5px; border-radius: 8px;}
-        .auth-msg.error { color: #ff9ff3; background: rgba(0,0,0,0.4); } 
-        .auth-msg.success { color: #a29bfe; background: rgba(0,0,0,0.4); }
+        .auth-msg.error { color: #ff9ff3; background: rgba(0,0,0,0.6); } 
+        .auth-msg.success { color: #a29bfe; background: rgba(0,0,0,0.6); }
 
         .auth-bottom-container { width: 100%; max-width: 350px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
-        .btn-signin {
-            width: 100%; padding: 18px; background: var(--iris-bloom); border: none; border-radius: 30px; 
-            color: white; font-size: 18px; font-weight: 800; box-shadow: 0 8px 25px rgba(91,69,167,0.5); cursor: pointer; transition: 0.3s;
-        }
-        .btn-signin:hover { transform: translateY(-3px); background: var(--deep-purple); }
-        .btn-signup {
-            background: transparent; border: none; color: white; font-size: 15px; font-weight: 700;
-            text-decoration: underline; text-underline-offset: 4px; cursor: pointer; text-shadow: 0 1px 5px rgba(0,0,0,0.6); transition: 0.2s;
-        }
-        .btn-signup:hover { color: #a29bfe; }
+        .btn-signin { width: 100%; padding: 18px; background: var(--iris-bloom); border: none; border-radius: 30px; color: white; font-size: 18px; font-weight: 800; box-shadow: 0 8px 25px rgba(91,69,167,0.5); cursor: pointer; transition: 0.3s;}
+        .btn-signin:hover { transform: translateY(-3px); background: #4a3888; }
+        .btn-signup { background: transparent; border: none; color: white; font-size: 15px; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; text-shadow: 0 1px 5px rgba(0,0,0,0.8); transition: 0.2s;}
 
         /* CÁC THÀNH PHẦN INPUT CHUNG APP */
         input, select { 
-            padding: 14px; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 14px; 
+            padding: 14px; border: 1px solid var(--box-border); border-radius: 14px; 
             font-size: 16px; outline: none; width: 100%; max-width: 100%; box-sizing: border-box;
-            background: rgba(255, 255, 255, 0.35); color: var(--darkest-purple); font-weight: 700;
+            background: var(--input-bg); color: var(--input-text); font-weight: 700;
             margin: 0; display: block; backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+            transition: background 0.3s, color 0.3s;
         }
         input[type="date"] { appearance: none; -webkit-appearance: none; width: 100%; }
-        input:focus, select:focus { border-color: var(--iris-bloom); background: rgba(255,255,255,0.6); }
+        input:focus, select:focus { border-color: var(--iris-bloom); }
+        input::placeholder { color: var(--text-muted); }
+
+        /* MÀU SẮC CHỮ VÀ TIÊU ĐỀ BÊN TRONG APP */
+        .section h2, .section h3 { font-size: 18px; margin-bottom: 15px; color: var(--heading-color); font-weight: 800;}
+        .section h2 { padding-bottom: 10px; border-bottom: 1px solid var(--box-border); }
+        .list-header { font-weight: bold; font-size: 14px; color: var(--text-main); margin-bottom: 10px; }
+        .item-details span { display: block; font-weight: 700; color: var(--heading-color);}
+        .item-macros { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+        li { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--box-border); font-size: 14px; color: var(--text-main);}
+        .ds-title { font-size: 13px; font-weight: 800; color: var(--heading-color); text-transform: uppercase; margin-bottom: 8px;}
+        .ds-empty { font-size: 13px; font-style: italic; color: var(--text-muted); font-weight: 500;}
 
         /* MY GOAL & HP BAR */
         .my-goal-section { padding: 18px 22px; }
         .goal-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px; }
-        .goal-header span:first-child { font-weight: 800; color: var(--deep-purple); font-size: 15px; }
+        .goal-header span:first-child { font-weight: 800; color: var(--heading-color); font-size: 15px; }
         .goal-header span:last-child { font-weight: 900; color: var(--iris-bloom); font-size: 18px; }
-        .goal-bar-bg { width: 100%; height: 8px; background: rgba(0,0,0,0.15); border-radius: 4px; position: relative; overflow: visible; }
-        .goal-bar-fill { 
-            height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--iris-bloom), var(--malibu-blue)); 
-            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s; position: relative;
-        }
-        .goal-bar-fill::after {
-            content: ''; position: absolute; right: -4px; top: -2px; width: 12px; height: 12px; 
-            background: white; border-radius: 50%; box-shadow: 0 0 8px rgba(255,255,255,0.9);
-        }
+        .goal-bar-bg { width: 100%; height: 8px; background: rgba(0,0,0,0.2); border-radius: 4px; position: relative; overflow: visible; }
+        .goal-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--iris-bloom), var(--malibu-blue)); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s; position: relative;}
+        .goal-bar-fill::after { content: ''; position: absolute; right: -4px; top: -2px; width: 12px; height: 12px; background: white; border-radius: 50%; box-shadow: 0 0 8px rgba(255,255,255,0.9);}
         .goal-warning { font-size: 12px; font-weight: bold; color: var(--coral-red); margin-top: 10px; display: none; animation: shake 0.5s; }
         @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-3px);} 75% {transform: translateX(3px);} }
         
         .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 25px; }
-        .card { 
-            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
-            border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 20px;
-            padding: 15px 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        .card h3 { font-size: 12px; text-transform: uppercase; margin-bottom: 5px; color: var(--deep-purple); font-weight: 800;}
+        .card h3 { font-size: 12px; text-transform: uppercase; margin-bottom: 5px; color: var(--heading-color); font-weight: 800;}
         .card p { font-size: 24px; font-weight: 900; color: var(--iris-bloom); }
         
         .hp-container { margin-bottom: 30px; text-align: center; }
-        .hp-labels { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.95); text-shadow: 0 1px 4px rgba(0,0,0,0.8); margin-bottom: 6px; letter-spacing: 0.5px;}
-        .hp-bar-wrapper {
-            width: 100%; height: 16px; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1.5px solid rgba(255,255,255,0.5); position: relative; overflow: hidden; display: flex; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
+        .hp-labels { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #ffffff; text-shadow: 0 1px 4px rgba(0,0,0,0.8); margin-bottom: 6px; letter-spacing: 0.5px;}
+        .hp-bar-wrapper { width: 100%; height: 16px; background: rgba(0,0,0,0.4); border-radius: 8px; border: 1.5px solid rgba(255,255,255,0.5); position: relative; overflow: hidden; display: flex; box-shadow: 0 4px 10px rgba(0,0,0,0.3);}
         .hp-in { background: var(--bleu-ciel); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .hp-out { background: var(--malibu-blue); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-        .hp-vs {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: var(--iris-bloom); color: white; font-weight: 900; font-size: 9px;
-            padding: 2px 6px; border-radius: 8px; border: 1.5px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.5); z-index: 10; transition: left 0.6s ease;
-        }
+        .hp-vs { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--iris-bloom); color: white; font-weight: 900; font-size: 9px; padding: 2px 6px; border-radius: 8px; border: 1.5px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.5); z-index: 10; transition: left 0.6s ease;}
 
-        /* CÁC BOX GIAO DIỆN CHUẨN MỰC */
-        .section h2, .section h3 { font-size: 18px; margin-bottom: 15px; color: var(--deep-purple); font-weight: 800;}
-        .section h2 { padding-bottom: 10px; border-bottom: 1px solid rgba(91,69,167,0.15); }
-        
         .form-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; }
         .macro-inputs, .workout-inputs { display: flex; gap: 10px; }
         
-        button { 
-            padding: 14px; border: none; border-radius: 16px; font-weight: bold; cursor: pointer; color: white; 
-            transition: all 0.3s ease; background: var(--iris-bloom); box-shadow: 0 4px 10px rgba(91,69,167,0.2); 
-        }
-        button:hover { background: var(--deep-purple); transform: translateY(-2px); }
+        button { padding: 14px; border: none; border-radius: 16px; font-weight: bold; cursor: pointer; color: white; transition: all 0.3s ease; background: var(--iris-bloom); box-shadow: 0 4px 10px rgba(91,69,167,0.3); }
+        button:hover { background: #4a3888; transform: translateY(-2px); }
         button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         
         .btn-ai-calc { white-space: nowrap; font-size: 13px; background: var(--malibu-blue); }
-        .ai-camera-btn { 
-            display: block; width: 100%; text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.25); 
-            border: 2px dashed var(--iris-bloom); color: var(--iris-bloom); border-radius: 16px; 
-            font-weight: 800; cursor: pointer; margin-bottom: 15px; transition: all 0.3s ease; 
-        }
-        .ai-camera-btn:hover { background: rgba(255, 255, 255, 0.45); }
+        .ai-camera-btn { display: block; width: 100%; text-align: center; padding: 15px; background: var(--box-bg); border: 2px dashed var(--iris-bloom); color: var(--iris-bloom); border-radius: 16px; font-weight: 800; cursor: pointer; margin-bottom: 15px; transition: all 0.3s ease; }
         input[type="file"] { display: none; }
         #ai-status { font-size: 13px; color: var(--iris-bloom); text-align: center; margin-bottom: 15px; display: none; font-weight: bold; }
-
-        .list-header { font-weight: bold; font-size: 14px; color: var(--darkest-purple); margin-bottom: 10px; }
-        ul { list-style: none; max-height: 250px; overflow-y: auto; }
-        li { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(91,69,167,0.1); font-size: 14px; }
-        .item-details span { display: block; font-weight: 700; color: var(--deep-purple);}
-        .item-macros { font-size: 11px; color: var(--darkest-purple); margin-top: 4px; }
         
-        .del-btn { 
-            background: var(--iris-bloom); color: white; cursor: pointer; font-weight: bold; 
-            margin-left: 10px; font-size: 14px; border: none; width: 26px; height: 26px; 
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 2px 5px rgba(91,69,167,0.3); transition: all 0.2s ease; flex-shrink: 0; padding: 0;
-        }
-        .del-btn:hover { background: var(--deep-purple); transform: scale(1.1); }
+        .del-btn { background: var(--iris-bloom); color: white; cursor: pointer; font-weight: bold; margin-left: 10px; font-size: 14px; border: none; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(91,69,167,0.3); transition: all 0.2s ease; flex-shrink: 0; padding: 0;}
+        .del-btn:hover { background: #4a3888; transform: scale(1.1); }
 
-        /* TAB LOGIC - Animation mượt mà, không bị giật mờ kính */
+        /* TAB LOGIC */
         .tab-content { display: none; animation: fadeIn 0.25s ease-in-out; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* BOTTOM NAVIGATION - Làm mỏng & Tăng kích thước Icon */
+        /* BOTTOM NAVIGATION */
         .bottom-nav {
-            position: fixed;
-            left: 0; right: 0; bottom: 0;
-            width: 100%; z-index: 100;
-            background: rgba(255, 255, 255, 0.65);
+            position: fixed; left: 0; right: 0; bottom: 0; width: 100%; z-index: 100;
+            background: var(--nav-bg);
             backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            border-top: 1px solid rgba(255,255,255,0.4);
+            border-top: 1px solid var(--box-border);
             display: flex; justify-content: space-around; align-items: center;
-            padding-top: 4px; padding-left: 0; padding-right: 0;
-            padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
+            padding-top: 4px; padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
+            transition: background 0.3s;
         }
-        .nav-item { 
-            background: none; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; 
-            gap: 2px; font-size: 11px; font-weight: 700; padding: 4px 15px; border-radius: 12px; transition: 0.3s; color: #4e3e7e;
-        }
+        .nav-item { background: none; border: none; box-shadow: none; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 11px; font-weight: 700; padding: 4px 15px; border-radius: 12px; transition: 0.3s; color: var(--nav-text);}
         .nav-item:hover { background: none; transform: none; box-shadow: none; color: var(--iris-bloom); }
-        .nav-item.active { color: var(--iris-bloom); background: rgba(91,69,167,0.15); }
-        
-        /* TĂNG KÍCH THƯỚC ICON LÊN GẤP RƯỠI (từ 20px -> 30px) */
+        .nav-item.active { color: var(--iris-bloom); background: rgba(91,69,167,0.2); }
         .nav-icon-img { width: 30px; height: 30px; object-fit: contain; filter: grayscale(100%); opacity: 0.6; transition: 0.3s; }
         .nav-item.active .nav-icon-img { filter: grayscale(0%); opacity: 1; }
 
         /* LỊCH & BÁO CÁO */
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-weight: 800; color: var(--iris-bloom);}
-        .calendar-header button { padding: 8px 15px; background: rgba(91,69,167,0.15); color: var(--iris-bloom); box-shadow: none; border-radius: 12px;}
+        .calendar-header button { padding: 8px 15px; background: rgba(91,69,167,0.2); color: var(--iris-bloom); box-shadow: none; border-radius: 12px;}
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
-        .cal-day-name { font-size: 12px; font-weight: bold; color: var(--darkest-purple); padding-bottom: 5px; }
-        .cal-day { padding: 12px 0; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.2s; border: 1px solid transparent; color: var(--darkest-purple);}
-        .cal-day:hover { background: rgba(91,69,167,0.1); }
+        .cal-day-name { font-size: 12px; font-weight: bold; color: var(--text-main); padding-bottom: 5px; }
+        .cal-day { padding: 12px 0; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.2s; border: 1px solid transparent; color: var(--text-main);}
+        .cal-day:hover { background: rgba(91,69,167,0.2); }
         .cal-day.empty { pointer-events: none; }
-        .cal-day.active { background: var(--iris-bloom); color: white; box-shadow: 0 4px 10px rgba(91,69,167,0.3); }
+        .cal-day.active { background: var(--iris-bloom); color: white; box-shadow: 0 4px 10px rgba(91,69,167,0.4); }
         .cal-day.has-data { position: relative; }
         .cal-day.has-data::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--malibu-blue); border-radius: 50%; }
         .cal-day.active.has-data::after { background: white; }
-
-        .daily-summary-box { text-align: center; }
-        .ds-title { font-size: 13px; font-weight: 800; color: var(--deep-purple); text-transform: uppercase; margin-bottom: 8px;}
         .ds-data { display: flex; justify-content: space-around; font-size: 15px; font-weight: 900;}
         .ds-in { color: var(--iris-bloom); } .ds-out { color: var(--malibu-blue); }
-        .ds-empty { font-size: 13px; font-style: italic; color: var(--text-muted); font-weight: 500;}
 
         .body-metrics-result { display: none; }
-        .metric-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(91,69,167,0.1); font-size: 14px; }
+        .metric-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--box-border); font-size: 14px; color: var(--text-main);}
         .metric-row:last-child { border-bottom: none; }
         .metric-val { font-weight: 800; color: var(--iris-bloom); text-align: right; }
         .ai-highlight { color: var(--malibu-blue); font-size: 16px; }
 
-        /* DASHBOARD HỒ SƠ */
-        .profile-name-box { display: flex; gap: 10px; margin-bottom: 20px;}
+        /* CÀI ĐẶT & HỒ SƠ */
+        .profile-name-box { display: flex; gap: 10px;}
         .profile-name-box input { flex: 1; margin-bottom: 0;}
-        
         .font-size-controls { display: flex; justify-content: space-between; gap: 10px; margin-top: 10px;}
-        .fs-btn { 
-            flex: 1; padding: 12px 0; font-size: 14px; background: rgba(255,255,255,0.3); 
-            color: var(--deep-purple); border: 1px solid rgba(91,69,167,0.3); border-radius: 14px; box-shadow: none; transition: 0.3s;
-        }
-        .fs-btn:hover { background: rgba(255,255,255,0.5); }
-        .fs-btn.active { background: var(--iris-bloom); color: white; border-color: var(--deep-purple); box-shadow: 0 4px 10px rgba(91,69,167,0.3); }
+        .fs-btn { flex: 1; padding: 12px 0; font-size: 14px; background: var(--box-bg); color: var(--text-main); border: 1px solid var(--box-border); border-radius: 14px; box-shadow: none; transition: 0.3s;}
+        .fs-btn:hover { background: rgba(91,69,167,0.2); }
+        .fs-btn.active { background: var(--iris-bloom); color: white; border-color: transparent; box-shadow: 0 4px 10px rgba(91,69,167,0.4); }
 
         .mood-grid { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px;}
-        .mood-btn { 
-            flex: 1; padding: 15px 0; font-size: 24px; background: rgba(91,69,167,0.08); 
-            border: 2px solid transparent; border-radius: 18px; box-shadow: none; transition: 0.3s;
-        }
-        .mood-btn:hover { background: rgba(91,69,167,0.15); transform: scale(1.05); box-shadow: none;}
-        .mood-btn.active { background: var(--iris-bloom); border-color: var(--deep-purple); transform: scale(1.1); box-shadow: 0 4px 12px rgba(91,69,167,0.3);}
+        .mood-btn { flex: 1; padding: 15px 0; font-size: 24px; background: var(--box-bg); border: 2px solid transparent; border-radius: 18px; box-shadow: none; transition: 0.3s;}
+        .mood-btn:hover { background: rgba(91,69,167,0.2); transform: scale(1.05); }
+        .mood-btn.active { background: var(--iris-bloom); border-color: transparent; transform: scale(1.1); box-shadow: 0 4px 12px rgba(91,69,167,0.4);}
         
         .widget-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
-        .widget { 
-            background: linear-gradient(135deg, rgba(91,69,167,0.7), rgba(57,43,115,0.7)); 
-            backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 24px; padding: 20px; color: white; text-align: center; box-shadow: 0 6px 15px rgba(36,26,76,0.15);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-        }
+        .widget { background: linear-gradient(135deg, rgba(91,69,167,0.8), rgba(57,43,115,0.8)); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); border: 1px solid var(--box-border); border-radius: 24px; padding: 20px; color: white; text-align: center; box-shadow: 0 6px 15px rgba(0,0,0,0.2); display: flex; flex-direction: column; justify-content: center; align-items: center;}
         .widget-title { font-size: 12px; opacity: 0.9; text-transform: uppercase; font-weight: bold; margin-bottom: 8px; letter-spacing: 1px;}
         .widget-main { font-size: 24px; font-weight: 900; margin-bottom: 2px;}
         .widget-sub { font-size: 12px; opacity: 0.9; }
         
         .countdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
         .countdown-card { text-align: center; position: relative; padding: 15px; margin-bottom: 0;}
-        .countdown-card .cd-title { font-size: 11px; font-weight: 800; color: var(--darkest-purple); text-transform: uppercase; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .countdown-card .cd-title { font-size: 11px; font-weight: 800; color: var(--heading-color); text-transform: uppercase; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
         .countdown-card .cd-days { font-size: 28px; font-weight: 900; color: var(--iris-bloom); line-height: 1; margin: 5px 0;}
-        .countdown-card .cd-label { font-size: 10px; font-weight: 800; color: var(--darkest-purple); margin-top: 2px; }
-        .countdown-card .cd-delete {
-            position: absolute; top: 5px; right: 5px; background: none; border: none; color: var(--red); font-size: 18px; cursor: pointer; padding: 0; line-height: 1; box-shadow: none; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 50%;
-        }
-        .countdown-card .cd-delete:hover { background: rgba(231,76,60,0.15); transform: scale(1.1); }
+        .countdown-card .cd-label { font-size: 10px; font-weight: 800; color: var(--text-main); margin-top: 2px; }
+        .countdown-card .cd-delete { position: absolute; top: 5px; right: 5px; background: none; border: none; color: var(--red); font-size: 18px; cursor: pointer; padding: 0; line-height: 1; box-shadow: none; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 50%;}
     </style>
 </head>
 <body>
 
-<!-- LỚP NỀN CỐ ĐỊNH TẠI CHỖ CHỐNG HỞ CHÂN -->
+<!-- LỚP NỀN CỐ ĐỊNH -->
 <div id="bg-layer"></div>
 
-<!-- MÀN HÌNH ĐĂNG NHẬP (Làm nền trong suốt hoàn toàn, gỡ lớp phủ đen) -->
+<!-- MÀN HÌNH ĐĂNG NHẬP -->
 <div id="auth-screen">
     <div class="auth-title-container">
         <h1 class="auth-main-title">Nhật Ký<br>Dinh Dưỡng</h1>
@@ -409,7 +329,7 @@
 <div id="main-app">
     <div class="container">
         
-        <!-- HEADER (Đã gỡ Box Gradient) -->
+        <!-- HEADER -->
         <div class="main-header">
             <div class="header-subtitle">Nhật Ký Dinh Dưỡng</div>
             <h1 class="header-title" id="greeting-name">Xin chào, Bạn!</h1>
@@ -456,13 +376,20 @@
                         <input type="number" id="bm-waist" placeholder="Eo (cm)">
                         <input type="number" id="bm-hip" placeholder="Mông (cm)">
                     </div>
+                    
                     <h3 style="font-size: 14px; margin-bottom: 5px; margin-top: 5px;">Mục tiêu của bạn:</h3>
-                    <select id="bm-goal" required>
-                        <option value="lose">Giảm Mỡ (Khuyến nghị thâm hụt)</option>
-                        <option value="maintain">Giữ Cân (Ăn bằng tiêu thụ)</option>
-                        <option value="gain">Tăng Cơ (Khuyến nghị thặng dư)</option>
+                    <select id="bm-goal" required onchange="updateGoalMath()">
+                        <option value="lose">Giảm Mỡ</option>
+                        <option value="maintain">Giữ Cân</option>
+                        <option value="gain">Tăng Cơ</option>
                     </select>
-                    <button type="submit" id="btn-save-metrics">Lưu & Tính tự động</button>
+                    <div class="macro-inputs">
+                        <input type="number" id="bm-goal-week" placeholder="Mục tiêu tuần (kg)" step="0.1" value="0.5" oninput="updateGoalMath()">
+                        <input type="number" id="bm-goal-month" placeholder="Mục tiêu tháng (kg)" readonly style="background: rgba(0,0,0,0.05);">
+                    </div>
+                    <p id="goal-math-desc" style="font-size: 13px; color: var(--iris-bloom); font-weight: bold; margin-top: 2px; text-align: center;"></p>
+                    
+                    <button type="submit" id="btn-save-metrics" style="margin-top: 8px;">Lưu & Tính tự động</button>
                 </form>
 
                 <div class="body-metrics-result" id="metrics-result-box">
@@ -470,8 +397,8 @@
                     <div class="metric-row"><span>BMI Y khoa:</span> <span class="metric-val" id="res-bmi">0</span></div>
                     <div class="metric-row"><span>Tỷ lệ Eo/Mông:</span> <span class="metric-val" id="res-whr">0</span></div>
                     <div class="metric-row"><span>Body Shape:</span> <span class="metric-val" id="res-shape">...</span></div>
-                    <hr style="border: 0; height: 1px; background: rgba(91,69,167,0.1); margin: 10px 0;">
-                    <div class="metric-row"><span>Mục tiêu Nạp (Ăn):</span> <span class="metric-val ai-highlight" id="res-cal-in">0 kcal</span></div>
+                    <hr style="border: 0; height: 1px; background: var(--box-border); margin: 10px 0;">
+                    <div class="metric-row"><span style="font-size: 13px;">Mục tiêu (Đã tính thâm hụt):</span> <span class="metric-val ai-highlight" id="res-cal-in">0 kcal</span></div>
                     <div class="metric-row"><span>Mục tiêu Đốt (Tập):</span> <span class="metric-val ai-highlight" id="res-cal-out">0 kcal</span></div>
                 </div>
             </div>
@@ -481,7 +408,7 @@
         <div id="tab-home" class="tab-content active">
             
             <div class="my-goal-section">
-                <div class="goal-header"><span>MỤC TIÊU CALO</span> <span id="goal-text">0 / 2000 kcal</span></div>
+                <div class="goal-header"><span>MỤC TIÊU CALO (ĐÃ TRỪ THÂM HỤT)</span> <span id="goal-text">0 / 2000 kcal</span></div>
                 <div class="goal-bar-bg"><div class="goal-bar-fill" id="goal-bar-fill"></div></div>
                 <div class="goal-warning" id="goal-warning">⚠️ Úi! Bạn đã nạp lố calo hôm nay rồi. Hãy tập luyện thêm nhé!</div>
             </div>
@@ -538,22 +465,35 @@
 
         <!-- TAB 3: HỒ SƠ -->
         <div id="tab-profile" class="tab-content">
-            
-            <div class="section">
-                <h3>Cỡ chữ hiển thị</h3>
-                <div class="font-size-controls">
-                    <button type="button" class="fs-btn" id="fs-small" onclick="changeFontSize('small')">A- Nhỏ</button>
-                    <button type="button" class="fs-btn active" id="fs-medium" onclick="changeFontSize('medium')">A Vừa</button>
-                    <button type="button" class="fs-btn" id="fs-large" onclick="changeFontSize('large')">A+ Lớn</button>
-                </div>
-            </div>
 
+            <!-- NHÓM CÀI ĐẶT CHUNG -->
             <div class="section">
-                <h3>Tên hiển thị</h3>
-                <form class="profile-name-box" id="name-form">
-                    <input type="text" id="prof-name-input" placeholder="Nhập tên của bạn" required>
-                    <button type="submit" style="white-space: nowrap;">Lưu tên</button>
-                </form>
+                <h2>⚙️ Cài Đặt Chung</h2>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <h3 style="font-size: 14px; margin-bottom: 5px;">Tên hiển thị</h3>
+                    <form class="profile-name-box" id="name-form">
+                        <input type="text" id="prof-name-input" placeholder="Nhập tên của bạn" required>
+                        <button type="submit" style="white-space: nowrap;">Lưu</button>
+                    </form>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <h3 style="font-size: 14px; margin-bottom: 5px;">Cỡ chữ hiển thị</h3>
+                    <div class="font-size-controls" style="margin-top: 0;">
+                        <button type="button" class="fs-btn" id="fs-small" onclick="changeFontSize('small')">A- Nhỏ</button>
+                        <button type="button" class="fs-btn active" id="fs-medium" onclick="changeFontSize('medium')">A Vừa</button>
+                        <button type="button" class="fs-btn" id="fs-large" onclick="changeFontSize('large')">A+ Lớn</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h3 style="font-size: 14px; margin-bottom: 5px;">Giao diện (Theme)</h3>
+                    <div class="font-size-controls" style="margin-top: 0;">
+                        <button type="button" class="fs-btn active" id="theme-light" onclick="changeTheme('light')">☀️ Sáng</button>
+                        <button type="button" class="fs-btn" id="theme-dark" onclick="changeTheme('dark')">🌙 Tối</button>
+                    </div>
+                </div>
             </div>
 
             <div class="section">
@@ -574,7 +514,7 @@
                     <div class="widget-main" id="widget-solar">--/--</div>
                     <div class="widget-sub" id="widget-lunar">Âm lịch: --/--</div>
                 </div>
-                <div class="widget" style="background: linear-gradient(135deg, rgba(0,139,205,0.7), rgba(0,122,162,0.7));">
+                <div class="widget" style="background: linear-gradient(135deg, rgba(0,139,205,0.8), rgba(0,122,162,0.8));">
                     <div class="widget-title">Thời Tiết</div>
                     <div class="widget-main" id="widget-temp">--°C</div>
                     <div class="widget-sub" id="widget-weather-desc">Đang cập nhật...</div>
@@ -615,13 +555,10 @@
 </nav>
 
 <script>
-    // JS CHỐNG RUBBER BAND CHO IOS SAFARI TRÊN CÁC KHU VỰC KHÔNG PHẢI CUỘN
+    // CHỐNG RUBBER BAND CHO IOS SAFARI TRÊN CÁC KHU VỰC KHÔNG PHẢI CUỘN
     document.body.addEventListener('touchmove', function(e) {
-        // Chỉ cho phép thao tác vuốt cuộn đối với vùng có class .container
         const scrollableContainer = e.target.closest('.container');
-        if (!scrollableContainer) {
-            e.preventDefault(); 
-        }
+        if (!scrollableContainer) e.preventDefault(); 
     }, { passive: false });
 
     // 1. NỀN & VUỐT CHUYỂN TAB
@@ -713,7 +650,7 @@
         document.getElementById('auth-screen').style.display = 'none';
         document.getElementById('main-app').style.display = 'block';
         document.getElementById('bottom-nav').style.display = 'flex';
-        updateHeaderInfo(); renderCalendar(); fetchAllDataFromCloud(); initDashboardWidgets(); loadFontSize();
+        updateHeaderInfo(); renderCalendar(); fetchAllDataFromCloud(); initDashboardWidgets(); loadSettings();
     }
     function hideApp() {
         document.getElementById('auth-screen').style.display = 'flex';
@@ -731,30 +668,33 @@
         document.getElementById('greeting-time').innerText = `Chào buổi ${time}! Hôm nay bạn đã thâm hụt calo chưa?`;
     }
 
-    document.getElementById('name-form').addEventListener('submit', async function(e){
-        e.preventDefault();
-        const newName = document.getElementById('prof-name-input').value;
-        const { data, error } = await supabaseClient.auth.updateUser({ data: { display_name: newName } });
-        if(!error) { currentUser = data.user; updateHeaderInfo(); alert("Đã lưu tên thành công!");}
-    });
+    /* QUẢN LÝ CÀI ĐẶT CHUNG (SETTINGS) */
+    function loadSettings() {
+        // Tải Font Size
+        const size = localStorage.getItem(`fontsize_${currentUser?.id}`) || 'medium';
+        changeFontSize(size);
+        
+        // Tải Theme
+        const theme = localStorage.getItem(`theme_${currentUser?.id}`) || 'light';
+        changeTheme(theme);
+    }
 
     function changeFontSize(size) {
         document.body.classList.remove('font-small', 'font-large');
         if (size === 'small') document.body.classList.add('font-small');
         if (size === 'large') document.body.classList.add('font-large');
         
-        document.querySelectorAll('.fs-btn').forEach(btn => btn.classList.remove('active'));
-        if(document.getElementById(`fs-${size}`)) {
-            document.getElementById(`fs-${size}`).classList.add('active');
-        }
-        
-        if (currentUser) {
-            localStorage.setItem(`fontsize_${currentUser.id}`, size);
-        }
+        document.querySelectorAll('#fs-small, #fs-medium, #fs-large').forEach(btn => btn.classList.remove('active'));
+        if(document.getElementById(`fs-${size}`)) { document.getElementById(`fs-${size}`).classList.add('active'); }
+        if (currentUser) localStorage.setItem(`fontsize_${currentUser.id}`, size);
     }
-    function loadFontSize() {
-        const size = localStorage.getItem(`fontsize_${currentUser?.id}`) || 'medium';
-        changeFontSize(size);
+
+    function changeTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        document.querySelectorAll('#theme-light, #theme-dark').forEach(btn => btn.classList.remove('active'));
+        if(document.getElementById(`theme-${theme}`)) { document.getElementById(`theme-${theme}`).classList.add('active'); }
+        if (currentUser) localStorage.setItem(`theme_${currentUser.id}`, theme);
     }
 
     function formatDate(dateObj) { return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`; }
@@ -791,6 +731,27 @@
     document.getElementById('prev-month').addEventListener('click', () => { displayDate.setMonth(displayDate.getMonth() - 1); renderCalendar(); });
     document.getElementById('next-month').addEventListener('click', () => { displayDate.setMonth(displayDate.getMonth() + 1); renderCalendar(); });
 
+    /* TÍNH TOÁN KẾ HOẠCH CÂN NẶNG & THÂM HỤT (Goal Math) */
+    function updateGoalMath() {
+        const goal = document.getElementById('bm-goal').value;
+        const weekInput = document.getElementById('bm-goal-week');
+        const monthInput = document.getElementById('bm-goal-month');
+        const mathDesc = document.getElementById('goal-math-desc');
+
+        if (goal === 'maintain') {
+            weekInput.value = 0; weekInput.disabled = true; monthInput.value = 0;
+            mathDesc.innerText = "Mục tiêu duy trì cân nặng (Không thâm hụt)";
+        } else {
+            weekInput.disabled = false;
+            let w = parseFloat(weekInput.value) || 0;
+            monthInput.value = (w * 4).toFixed(1); // 1 tháng = 4 tuần
+            let calDiff = Math.round(w * 1100); // 1kg mỡ ~ 7700 kcal -> 1 tuần 1kg = 1100 kcal/ngày
+            
+            if (goal === 'lose') mathDesc.innerText = `🔥 Mục tiêu cần thâm hụt: -${calDiff} kcal/ngày`;
+            else mathDesc.innerText = `💪 Mục tiêu cần dư thừa: +${calDiff} kcal/ngày`;
+        }
+    }
+
     document.getElementById('body-metrics-form').addEventListener('submit', async function(e) {
         e.preventDefault();
         const btn = document.getElementById('btn-save-metrics'); btn.innerText = "Đang xử lý..."; btn.disabled = true;
@@ -799,7 +760,9 @@
         const w = parseFloat(document.getElementById('bm-weight').value), h = parseFloat(document.getElementById('bm-height').value);
         const chest = parseFloat(document.getElementById('bm-chest').value) || null, waist = parseFloat(document.getElementById('bm-waist').value) || null, hip = parseFloat(document.getElementById('bm-hip').value) || null;
         const goal = document.getElementById('bm-goal').value;
+        const week_goal = parseFloat(document.getElementById('bm-goal-week').value) || 0;
 
+        // Tính BMI & Body shape
         const bmi = (w / Math.pow(h/100, 2)).toFixed(1);
         let bmiEval = bmi < 18.5 ? "Thiếu cân" : bmi < 25 ? "Bình thường" : bmi < 30 ? "Thừa cân" : "Béo phì";
         let shape = "Chưa đủ dữ liệu", whr = "N/A";
@@ -809,10 +772,19 @@
             else if(chest > hip*1.05) shape = "Tam giác ngược 🔻"; else if(waist >= hip || waist >= chest) shape = "Quả táo 🍎"; else shape = "Chữ nhật 📏";
         }
 
+        // Tính BMR & TDEE
         let bmr = 10 * w + 6.25 * h - 5 * age + (gender === 'male' ? 5 : -161);
         let tdee = bmr * 1.2; 
-        let targetIn = goal === 'lose' ? Math.round(tdee - 300) : (goal === 'gain' ? Math.round(tdee + 300) : Math.round(tdee));
+        
+        // Tính toán Mục tiêu Nạp dựa trên cân nặng mục tiêu
+        let diff = Math.round(week_goal * 1100);
+        let targetIn = tdee;
+        if(goal === 'lose') targetIn = Math.round(tdee - diff);
+        if(goal === 'gain') targetIn = Math.round(tdee + diff);
         let targetOut = goal === 'lose' ? 300 : (goal === 'gain' ? 150 : 0);
+
+        // Lưu setting LocalStorage để giữ state
+        localStorage.setItem(`bm_plan_${currentUser.id}`, JSON.stringify({ goal, week_goal }));
 
         const payload = { user_id: currentUser.id, record_date: selectedDateStr, weight: w, height: h, chest, waist, hip, bmi: `${bmi} (${bmiEval})`, body_shape: shape, ai_recommended_in: targetIn, ai_recommended_out: targetOut };
         const ex = cloudMetrics[selectedDateStr];
@@ -833,6 +805,18 @@
             document.getElementById('res-shape').innerText = md.body_shape; document.getElementById('res-cal-in').innerText = md.ai_recommended_in + " kcal"; document.getElementById('res-cal-out').innerText = md.ai_recommended_out + " kcal";
             document.getElementById('metrics-result-box').style.display = 'block';
         } else { document.getElementById('body-metrics-form').reset(); document.getElementById('metrics-result-box').style.display = 'none'; }
+
+        // Khôi phục Setting Kế hoạch cân nặng
+        const planStr = localStorage.getItem(`bm_plan_${currentUser?.id}`);
+        if(planStr) {
+            const plan = JSON.parse(planStr);
+            document.getElementById('bm-goal').value = plan.goal;
+            document.getElementById('bm-goal-week').value = plan.week_goal;
+        } else {
+            document.getElementById('bm-goal').value = 'lose';
+            document.getElementById('bm-goal-week').value = '0.5';
+        }
+        updateGoalMath();
 
         const { data: logs } = await supabaseClient.from('daily_logs').select('*').eq('user_id', currentUser.id).eq('log_date', selectedDateStr);
         cloudLogs = logs || []; updateMainAppUI();
@@ -860,6 +844,7 @@
             dsContent.innerHTML = `<div class="ds-data"><span class="ds-in">Tổng Nạp: ${totalIn}</span><span class="ds-out">Tổng Đốt: ${totalOut}</span></div>`;
         }
 
+        // Thay vì 2000, lấy chính xác mục tiêu đã xử lý toán học (Target đã trừ/cộng thâm hụt) từ Database
         let targetIn = 2000, targetOut = 0;
         const md = cloudMetrics[selectedDateStr]; if(md && md.ai_recommended_in) { targetIn = md.ai_recommended_in; targetOut = md.ai_recommended_out; }
         
