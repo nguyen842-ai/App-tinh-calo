@@ -30,7 +30,7 @@
             --text-main: #1a103c; 
             --text-muted: #555555;
             --heading-color: #392B73;
-            --box-bg: rgba(255, 255, 255, 0.25); /* Tăng độ trong suốt */
+            --box-bg: rgba(255, 255, 255, 0.25);
             --box-border: rgba(255, 255, 255, 0.4);
             --input-bg: rgba(255, 255, 255, 0.6);
             --input-text: #1a103c;
@@ -44,7 +44,7 @@
             --text-main: #f5f6fa; 
             --text-muted: #a4b0be;
             --heading-color: #a29bfe;
-            --box-bg: rgba(0, 0, 0, 0.35); /* Tăng độ trong suốt */
+            --box-bg: rgba(0, 0, 0, 0.35);
             --box-border: rgba(255, 255, 255, 0.15);
             --input-bg: rgba(0, 0, 0, 0.4);
             --input-text: #ffffff;
@@ -104,32 +104,10 @@
         }
 
         /* CỠ CHỮ */
-        body.font-large { font-size: 18px; }
-        body.font-large input, body.font-large select { font-size: 16px; padding: 16px; }
-        body.font-large button { font-size: 16px; }
-        body.font-large .header-title { font-size: 36px; }
-        body.font-large .section h2, body.font-large .section h3 { font-size: 20px; }
-        body.font-large .card p { font-size: 28px; }
-        body.font-large .list-header, body.font-large li { font-size: 16px; }
-        body.font-large .cal-day { font-size: 16px; }
-        body.font-large .nav-item { font-size: 12px; }
+        body.font-large { font-size: 18px; } body.font-large input, body.font-large select { font-size: 16px; padding: 16px; } body.font-large button { font-size: 16px; } body.font-large .header-title { font-size: 36px; } body.font-large .section h2, body.font-large .section h3 { font-size: 20px; } body.font-large .card p { font-size: 28px; } body.font-large .list-header, body.font-large li { font-size: 16px; } body.font-large .cal-day { font-size: 16px; } body.font-large .nav-item { font-size: 12px; }
+        body.font-small { font-size: 14px; } body.font-small input, body.font-small select { font-size: 16px; padding: 12px; } body.font-small button { font-size: 13px; } body.font-small .header-title { font-size: 28px; } body.font-small .section h2, body.font-small .section h3 { font-size: 16px; } body.font-small .card p { font-size: 20px; } body.font-small .list-header, body.font-small li { font-size: 13px; } body.font-small .cal-day { font-size: 13px; } body.font-small .nav-item { font-size: 10px; }
 
-        body.font-small { font-size: 14px; }
-        body.font-small input, body.font-small select { font-size: 16px; padding: 12px; }
-        body.font-small button { font-size: 13px; }
-        body.font-small .header-title { font-size: 28px; }
-        body.font-small .section h2, body.font-small .section h3 { font-size: 16px; }
-        body.font-small .card p { font-size: 20px; }
-        body.font-small .list-header, body.font-small li { font-size: 13px; }
-        body.font-small .cal-day { font-size: 13px; }
-        body.font-small .nav-item { font-size: 10px; }
-
-        .main-header {
-            background: transparent;
-            padding-left: 0; padding-right: 0; padding-bottom: 20px;
-            padding-top: calc(15px + env(safe-area-inset-top, 0px));
-            text-align: left; margin: 0 0 10px 0;
-        }
+        .main-header { background: transparent; padding-left: 0; padding-right: 0; padding-bottom: 20px; padding-top: calc(15px + env(safe-area-inset-top, 0px)); text-align: left; margin: 0 0 10px 0; }
         .header-subtitle { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: #ffffff; font-weight: 800; margin-bottom: 4px; text-shadow: 0 2px 8px rgba(0,0,0,0.8);}
         .header-title { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.9); line-height: 1.2; margin-bottom: 4px;}
         .header-desc { font-size: 14px; color: #ffffff; font-style: italic; font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,0.8);}
@@ -152,7 +130,6 @@
         input[type="date"] { appearance: none; -webkit-appearance: none; width: 100%; }
         input:focus, select:focus { border-color: var(--iris-bloom); }
         
-        /* FORM LABELS */
         .input-wrap { flex: 1; display: flex; flex-direction: column; }
         .input-label { font-size: 12px; font-weight: 800; color: var(--heading-color); margin-bottom: 5px; padding-left: 5px; text-transform: uppercase; }
 
@@ -442,9 +419,12 @@
             <div class="main-grid">
                 <div class="section">
                     <h2>🍔 Ăn Uống (In)</h2>
-                    <label class="ai-camera-btn" for="camera-input">📷 QUÉT MÓN ĂN (AI PORTION)</label>
+                    
+                    <!-- THÊM Ô GỢI Ý MÓN ĂN & ĐỔI TÊN NÚT -->
+                    <input type="text" id="image-hint" placeholder="Nhập gợi ý tên món (không bắt buộc)..." style="margin-bottom: 10px;">
+                    <label class="ai-camera-btn" for="camera-input">📷 QUÉT MÓN ĂN TỪ ẢNH</label>
                     <input type="file" id="camera-input" accept="image/*">
-                    <div id="ai-status">⏳ AI đang phân tích khẩu phần...</div>
+                    <div id="ai-status">⏳ Hệ thống đang xử lý...</div>
                     <div id="ai-advice-box"></div>
 
                     <form class="form-group" id="food-form">
@@ -612,7 +592,6 @@
         }
     }, {passive: true});
 
-    // Toggle Hiện Ẩn cài đặt
     function toggleSettings() {
         const content = document.getElementById('settings-content');
         const icon = document.getElementById('settings-toggle-icon');
@@ -625,7 +604,7 @@
         }
     }
 
-    // 2. SUPABASE AUTH & KHỞI TẠO DỮ LIỆU
+    // 2. SUPABASE AUTH & DATA LAYER (TỐI ƯU HÓA EGRESS & CACHE)
     const SUPABASE_URL = 'https://qsfwgjzejggvawcxjkxp.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_6uLn0e1rJtFFBr_hhHjkYA_Carb1WqC';
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -635,6 +614,11 @@
     let cloudMetrics = {}; 
     let cloudLogs = [];
     let aiBaseData = { cal:0, carb:0, pro:0, fat:0, sugar:0 };
+    
+    // BIẾN QUẢN LÝ CACHE
+    let displayDate = new Date(); 
+    let cachedCalendarMonths = {}; 
+    let cloudLogsCache = {};       
 
     window.addEventListener('beforeunload', () => {
         if (sessionStorage.getItem('no_remember') === 'true') {
@@ -664,9 +648,18 @@
 
     async function handleLogout() { await supabaseClient.auth.signOut(); }
 
-    function showApp() {
-        document.getElementById('auth-screen').style.display = 'none'; document.getElementById('main-app').style.display = 'block'; document.getElementById('bottom-nav').style.display = 'flex';
-        updateHeaderInfo(); renderCalendar(); fetchAllDataFromCloud(); initDashboardWidgets(); loadSettings();
+    // FLOW KHỞI TẠO CHUẨN
+    async function showApp() {
+        document.getElementById('auth-screen').style.display = 'none'; 
+        document.getElementById('main-app').style.display = 'block'; 
+        document.getElementById('bottom-nav').style.display = 'flex';
+        updateHeaderInfo(); 
+        initDashboardWidgets(); 
+        loadSettings();
+        
+        await fetchMonthCalendarData(); 
+        loadDataForSelectedDate(); 
+        loadMoodForToday();
     }
 
     function updateHeaderInfo() {
@@ -706,13 +699,30 @@
         if (currentUser) localStorage.setItem(`theme_${currentUser.id}`, theme);
     }
 
-    // 4. LỊCH & TÍNH TOÁN CHỈ SỐ CƠ THỂ
-    let displayDate = new Date(); 
-    async function fetchAllDataFromCloud() {
+    // 4. LỊCH (LAZY LOAD) VÀ TÍNH TOÁN CƠ THỂ
+    async function fetchMonthCalendarData() {
         if (!currentUser) return;
-        const { data: metricsData } = await supabaseClient.from('body_metrics').select('*').eq('user_id', currentUser.id);
-        cloudMetrics = {}; if (metricsData) metricsData.forEach(row => { cloudMetrics[row.record_date] = row; });
-        renderCalendar(); loadDataForSelectedDate(); loadMoodForToday();
+        const y = displayDate.getFullYear(), m = displayDate.getMonth() + 1;
+        const monthKey = `${y}-${String(m).padStart(2, '0')}`;
+        
+        if (cachedCalendarMonths[monthKey]) return renderCalendar();
+
+        const startDate = `${monthKey}-01`;
+        const endDate = m === 12 ? `${y+1}-01-01` : `${y}-${String(m + 1).padStart(2, '0')}-01`;
+
+        const { data } = await supabaseClient.from('body_metrics')
+            .select('record_date')
+            .eq('user_id', currentUser.id)
+            .gte('record_date', startDate)
+            .lt('record_date', endDate);
+
+        if (data) {
+            data.forEach(row => {
+                if (!cloudMetrics[row.record_date]) cloudMetrics[row.record_date] = { _isPartial: true };
+            });
+        }
+        cachedCalendarMonths[monthKey] = true;
+        renderCalendar();
     }
 
     function renderCalendar() {
@@ -732,8 +742,8 @@
     }
 
     function selectDate(dateStr) { selectedDateStr = dateStr; renderCalendar(); loadDataForSelectedDate(); }
-    document.getElementById('prev-month').addEventListener('click', () => { displayDate.setMonth(displayDate.getMonth() - 1); renderCalendar(); });
-    document.getElementById('next-month').addEventListener('click', () => { displayDate.setMonth(displayDate.getMonth() + 1); renderCalendar(); });
+    document.getElementById('prev-month').addEventListener('click', () => { displayDate.setMonth(displayDate.getMonth() - 1); fetchMonthCalendarData(); });
+    document.getElementById('next-month').addEventListener('click', () => { displayDate.setMonth(displayDate.getMonth() + 1); fetchMonthCalendarData(); });
 
     function updateGoalMath() {
         const goal = document.getElementById('bm-goal').value, weekInput = document.getElementById('bm-goal-week'), monthInput = document.getElementById('bm-goal-month'), desc = document.getElementById('goal-math-desc');
@@ -747,7 +757,7 @@
 
     document.getElementById('body-metrics-form').addEventListener('submit', async function(e) {
         e.preventDefault();
-        const btn = document.getElementById('btn-save-metrics'); btn.innerText = "Đang xử lý..."; btn.disabled = true;
+        const btn = document.getElementById('btn-save-metrics'); btn.innerText = "Đang lưu..."; btn.disabled = true;
 
         const age = parseInt(document.getElementById('bm-age').value), gender = document.getElementById('bm-gender').value;
         const w = parseFloat(document.getElementById('bm-weight').value), h = parseFloat(document.getElementById('bm-height').value);
@@ -759,28 +769,26 @@
         localStorage.setItem(`bm_plan_${currentUser.id}`, JSON.stringify({ goal, week_goal }));
 
         const bmi = (w / Math.pow(h/100, 2)).toFixed(1);
-        let bmiEval = bmi < 18.5 ? "Thiếu cân" : bmi < 25 ? "Bình thường" : bmi < 30 ? "Thừa cân" : "Béo phì";
-        let shape = "Chưa đủ dữ liệu", whr = "N/A";
-        if(waist && hip) {
-            whr = (waist / hip).toFixed(2);
-            if(waist < chest*0.8 && waist < hip*0.8) shape = "Đồng hồ cát ⌛"; else if(hip > chest*1.05) shape = "Quả lê 🍐";
-            else if(chest > hip*1.05) shape = "Tam giác ngược 🔻"; else if(waist >= hip || waist >= chest) shape = "Quả táo 🍎"; else shape = "Chữ nhật 📏";
-        }
-
-        let bmr = 10 * w + 6.25 * h - 5 * age + (gender === 'male' ? 5 : -161);
-        let tdee = bmr * 1.2; 
-        let diff = Math.round(week_goal * 1100);
+        let bmiEval = bmi < 18.5 ? "Thiếu cân" : bmi < 25 ? "Bình thường" : bmi < 30 ? "Thừa cân" : "Béo phì", shape = "Chưa đủ dữ liệu", whr = "N/A";
+        if(waist && hip) { whr = (waist / hip).toFixed(2); if(waist < chest*0.8 && waist < hip*0.8) shape = "Đồng hồ cát ⌛"; else if(hip > chest*1.05) shape = "Quả lê 🍐"; else if(chest > hip*1.05) shape = "Tam giác ngược 🔻"; else if(waist >= hip || waist >= chest) shape = "Quả táo 🍎"; else shape = "Chữ nhật 📏"; }
+        
+        let bmr = 10 * w + 6.25 * h - 5 * age + (gender === 'male' ? 5 : -161), tdee = bmr * 1.2, diff = Math.round(week_goal * 1100);
         let targetIn = goal === 'lose' ? Math.round(tdee - diff) : (goal === 'gain' ? Math.round(tdee + diff) : tdee);
         let targetOut = goal === 'lose' ? 300 : (goal === 'gain' ? 150 : 0);
 
-        const healthWarn = document.getElementById('health-warning');
-        if (goal === 'lose' && (targetIn < (gender==='female'?1200:1500) || diff > 800)) { healthWarn.style.display = 'block'; } else { healthWarn.style.display = 'none'; }
-
         const payload = { user_id: currentUser.id, record_date: selectedDateStr, weight: w, height: h, chest, waist, hip, bmi: `${bmi} (${bmiEval})`, body_shape: shape, ai_recommended_in: targetIn, ai_recommended_out: targetOut };
         const ex = cloudMetrics[selectedDateStr];
-        if(ex && ex.id) await supabaseClient.from('body_metrics').update(payload).eq('id', ex.id); else await supabaseClient.from('body_metrics').insert([payload]);
 
-        btn.innerText = "Lưu & Tính tự động"; btn.disabled = false; await fetchAllDataFromCloud(); 
+        if(ex && !ex._isPartial) await supabaseClient.from('body_metrics').update(payload).eq('user_id', currentUser.id).eq('record_date', selectedDateStr); 
+        else await supabaseClient.from('body_metrics').insert([payload]);
+
+        cloudMetrics[selectedDateStr] = payload;
+        
+        document.getElementById('health-warning').style.display = (goal === 'lose' && (targetIn < (gender==='female'?1200:1500) || diff > 800)) ? 'block' : 'none';
+        btn.innerText = "Lưu & Tính tự động"; btn.disabled = false; 
+        
+        renderCalendar(); 
+        loadDataForSelectedDate();
     });
 
     async function loadDataForSelectedDate() {
@@ -788,27 +796,46 @@
         document.getElementById('ds-date').innerText = `${parts[2]}/${parts[1]}/${parts[0]}`;
         document.getElementById('selected-date-title').innerText = `Chỉ số Cơ thể ngày ${parts[2]}/${parts[1]}/${parts[0]}`;
         
+        // 1. TẢI CHỈ SỐ CƠ THỂ
+        if (!cloudMetrics[selectedDateStr] || cloudMetrics[selectedDateStr]._isPartial) {
+            const { data } = await supabaseClient.from('body_metrics')
+                .select('weight, height, chest, waist, hip, bmi, body_shape, ai_recommended_in, ai_recommended_out')
+                .eq('user_id', currentUser.id)
+                .eq('record_date', selectedDateStr)
+                .maybeSingle(); 
+            cloudMetrics[selectedDateStr] = data || null;
+        }
+
         const md = cloudMetrics[selectedDateStr];
         if(md) {
             ['weight','height','chest','waist','hip'].forEach(k => document.getElementById(`bm-${k}`).value = md[k] || '');
-            document.getElementById('res-bmi').innerText = md.bmi; document.getElementById('res-whr').innerText = (md.waist && md.hip) ? (md.waist/md.hip).toFixed(2) : "N/A";
-            document.getElementById('res-shape').innerText = md.body_shape; document.getElementById('res-cal-in').innerText = md.ai_recommended_in + " kcal"; document.getElementById('res-cal-out').innerText = md.ai_recommended_out + " kcal";
+            document.getElementById('res-bmi').innerText = md.bmi || ''; document.getElementById('res-whr').innerText = (md.waist && md.hip) ? (md.waist/md.hip).toFixed(2) : "N/A";
+            document.getElementById('res-shape').innerText = md.body_shape || ''; document.getElementById('res-cal-in').innerText = md.ai_recommended_in + " kcal"; document.getElementById('res-cal-out').innerText = md.ai_recommended_out + " kcal";
             document.getElementById('metrics-result-box').style.display = 'block';
         } else { document.getElementById('body-metrics-form').reset(); document.getElementById('metrics-result-box').style.display = 'none'; }
 
+        // Khôi phục setting form
         const savedAge = localStorage.getItem(`bm_age_${currentUser?.id}`); const savedGender = localStorage.getItem(`bm_gender_${currentUser?.id}`);
         if(savedAge) document.getElementById('bm-age').value = savedAge; if(savedGender) document.getElementById('bm-gender').value = savedGender;
-
         const planStr = localStorage.getItem(`bm_plan_${currentUser?.id}`);
         if(planStr) { const plan = JSON.parse(planStr); document.getElementById('bm-goal').value = plan.goal; document.getElementById('bm-goal-week').value = plan.week_goal; } 
         else { document.getElementById('bm-goal').value = 'lose'; document.getElementById('bm-goal-week').value = '0.5'; }
         updateGoalMath();
 
-        const { data: logs } = await supabaseClient.from('daily_logs').select('*').eq('user_id', currentUser.id).eq('log_date', selectedDateStr);
-        cloudLogs = logs || []; updateMainAppUI();
+        // 2. TẢI NHẬT KÝ VỚI SELECT TỐI THIỂU (CACHE)
+        if (!cloudLogsCache[selectedDateStr]) {
+            const { data } = await supabaseClient.from('daily_logs')
+                .select('id, log_type, item_name, calories, carb, protein, fat, sugar') 
+                .eq('user_id', currentUser.id)
+                .eq('log_date', selectedDateStr);
+            cloudLogsCache[selectedDateStr] = data || [];
+        }
+        
+        cloudLogs = cloudLogsCache[selectedDateStr]; 
+        updateMainAppUI(); 
     }
 
-    // 5. CẬP NHẬT TRANG CHỦ & MACROS & GHI CHÉP
+    // 5. CẬP NHẬT TRANG CHỦ & MACROS (OPTIMISTIC UI)
     function updateMainAppUI() {
         let inList = '', outList = '', totalIn = 0, totalOut = 0;
         let tCarb = 0, tPro = 0, tFat = 0, tSugar = 0;
@@ -862,24 +889,62 @@
 
     document.getElementById('food-form').addEventListener('submit', async function(e) {
         e.preventDefault(); const btn = document.getElementById('btn-add-food'); btn.disabled = true;
-        await supabaseClient.from('daily_logs').insert([{ 
-            user_id: currentUser.id, log_date: selectedDateStr, log_type: 'food', 
-            item_name: document.getElementById('food-name').value, 
+        
+        const newFood = {
+            log_type: 'food', item_name: document.getElementById('food-name').value, 
             calories: parseInt(document.getElementById('food-cal').value) || 0,
             carb: parseInt(document.getElementById('food-carb').value) || 0,
             protein: parseInt(document.getElementById('food-pro').value) || 0,
             fat: parseInt(document.getElementById('food-fat').value) || 0,
             sugar: parseInt(document.getElementById('food-sugar').value) || 0
-        }]);
-        btn.disabled = false; this.reset(); document.getElementById('food-size').value = "1"; document.getElementById('ai-advice-box').style.display = 'none'; loadDataForSelectedDate(); 
+        };
+
+        const { data } = await supabaseClient.from('daily_logs')
+            .insert([{ user_id: currentUser.id, log_date: selectedDateStr, ...newFood }])
+            .select('id').single(); 
+
+        if (data) {
+            newFood.id = data.id;
+            if (!cloudLogsCache[selectedDateStr]) { cloudLogsCache[selectedDateStr] = []; }
+            cloudLogsCache[selectedDateStr].push(newFood); 
+            cloudLogs = cloudLogsCache[selectedDateStr];
+            updateMainAppUI(); 
+        }
+        
+        btn.disabled = false; this.reset(); document.getElementById('food-size').value = "1"; document.getElementById('ai-advice-box').style.display = 'none'; document.getElementById('image-hint').value = "";
     });
 
     document.getElementById('workout-form').addEventListener('submit', async function(e) {
-        e.preventDefault(); await supabaseClient.from('daily_logs').insert([{ user_id: currentUser.id, log_date: selectedDateStr, log_type: 'workout', item_name: document.getElementById('workout-name').value, calories: parseInt(document.getElementById('workout-cal').value) || 0 }]);
-        this.reset(); loadDataForSelectedDate();
+        e.preventDefault(); const btn = document.getElementById('btn-add-workout'); btn.disabled = true;
+        
+        const newWorkout = {
+            log_type: 'workout', item_name: document.getElementById('workout-name').value, 
+            calories: parseInt(document.getElementById('workout-cal').value) || 0,
+            carb: 0, protein: 0, fat: 0, sugar: 0
+        };
+
+        const { data } = await supabaseClient.from('daily_logs')
+            .insert([{ user_id: currentUser.id, log_date: selectedDateStr, ...newWorkout }])
+            .select('id').single();
+
+        if (data) {
+            newWorkout.id = data.id;
+            if (!cloudLogsCache[selectedDateStr]) { cloudLogsCache[selectedDateStr] = []; }
+            cloudLogsCache[selectedDateStr].push(newWorkout);
+            cloudLogs = cloudLogsCache[selectedDateStr];
+            updateMainAppUI();
+        }
+        btn.disabled = false; this.reset();
     });
 
-    async function deleteLog(logId) { await supabaseClient.from('daily_logs').delete().eq('id', logId); loadDataForSelectedDate(); }
+    async function deleteLog(logId) { 
+        if (cloudLogsCache[selectedDateStr]) {
+            cloudLogsCache[selectedDateStr] = cloudLogsCache[selectedDateStr].filter(log => log.id !== logId);
+            cloudLogs = cloudLogsCache[selectedDateStr];
+            updateMainAppUI(); 
+        }
+        await supabaseClient.from('daily_logs').delete().eq('id', logId); 
+    }
 
     // 6. CHỨC NĂNG HỒ SƠ: TÂM TRẠNG, WIDGETS, ĐẾM NGƯỢC
     function saveMood(index, btnElem) {
@@ -936,14 +1001,25 @@
     }
     function deleteCountdown(index) { let savedList = JSON.parse(localStorage.getItem(`cd_list_${currentUser?.id}`)) || []; savedList.splice(index, 1); localStorage.setItem(`cd_list_${currentUser?.id}`, JSON.stringify(savedList)); loadCountdowns(); }
 
-    // 7. API AI QUÉT ẢNH VÀ TÍNH BÀI TẬP
+    // 7. API QUÉT ẢNH VÀ TÍNH BÀI TẬP
     document.getElementById('camera-input').addEventListener('change', function(e) {
         const file = e.target.files[0]; if (!file) return;
         document.getElementById('ai-status').style.display = 'block';
+        
+        // Lấy thông tin gợi ý món ăn từ người dùng
+        const userHint = document.getElementById('image-hint').value; 
+        
         const reader = new FileReader();
         reader.onloadend = async function() {
             try {
-                const response = await fetch('https://app-tinh-calo.vercel.app/api/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ imageBase64: reader.result.split(',')[1] }) });
+                const response = await fetch('https://app-tinh-calo.vercel.app/api/analyze', { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify({ 
+                        imageBase64: reader.result.split(',')[1],
+                        hint: userHint // Gửi thêm gợi ý cho hệ thống API
+                    }) 
+                });
                 const data = await response.json();
                 
                 if (data.cal) { 
@@ -961,7 +1037,7 @@
                     document.getElementById('ai-advice-box').innerHTML = advice; document.getElementById('ai-advice-box').style.display = 'block';
                     document.getElementById('ai-status').innerText = '✅ Phân tích xong! (Có thể đổi Size ở mục Tên món)'; 
                 }
-            } catch (error) { document.getElementById('ai-status').innerText = '❌ Lỗi mạng'; }
+            } catch (error) { document.getElementById('ai-status').innerText = '❌ Lỗi mạng hoặc hệ thống quá tải'; }
             e.target.value = ""; 
         };
         reader.readAsDataURL(file);
